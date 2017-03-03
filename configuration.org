@@ -277,7 +277,7 @@ A very good extension to =helm=...
 #+BEGIN_SRC emacs-lisp
   (use-package helm-git-grep
     :ensure t
-    :bind (("C-c g" . helm-git-grep-from-help)
+    :bind (("C-c g" . helm-git-grep)
            (:map isearch-mode-map
                     ("C-c g" . helm-git-grep-from-isearch))))
 #+END_SRC
