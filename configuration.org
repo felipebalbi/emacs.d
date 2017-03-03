@@ -88,7 +88,6 @@ Enable =auto-fill-mode= everywhere
 #+BEGIN_SRC emacs-lisp
   (auto-fill-mode 1)
 #+END_SRC
-
 * Setup a new home for =custom-file=
 
 Well, I don't want =custom= touching my beautiful =init.el=. Let's give
