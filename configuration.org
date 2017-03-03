@@ -1,0 +1,295 @@
+* Package System
+
+The first thing we need to do is initialize =emacs='s package
+system. That's achieved with the following =elisp= code.
+
+#+BEGIN_SRC emacs-lisp
+  (require 'package)
+  (add-to-list 'package-archives
+               '("melpa" . "https://melpa.org/packages/"))
+  (package-initialize)
+#+END_SRC
+
+* Basics
+
+This is where I'll setup some basic defaults for =emacs=. Things like
+=user-full-name=, =user-mail-address= and similar will be here.
+
+#+BEGIN_SRC emacs-lisp
+  (setq user-full-name "Felipe Balbi"
+        user-mail-address "felipe.balbi@linux.intel.com"
+        calendar-latitude 60.17
+        calendar-longitude 24.94
+        calendar-location-name "Helsinki, FI"
+        inhibit-startup-screen t
+        make-backup-files t)
+  (global-prettify-symbols-mode t)
+#+END_SRC
+
+I tend to hit =C-x C-c= by accident all the time. This little trick
+helps me a lot
+
+#+BEGIN_SRC emacs-lisp
+  (setq config-kill-emacs 'yes-or-no-p)
+#+END_SRC
+
+Numbers, numbers, numbers...
+
+#+BEGIN_SRC emacs-lisp
+  (setq column-number-mode t
+        fill-column 80
+        indent-tabs-mode t
+        linum-format "%4d")
+
+  (global-linum-mode t)
+#+END_SRC
+
+And I like to highlight current line
+
+#+BEGIN_SRC emacs-lisp
+  (when window-system (global-hl-line-mode))
+#+END_SRC
+
+* Setup a new home for =custom-file=
+
+Well, I don't want =custom= touching my beautiful =init.el=. Let's give
+it a dumping ground.
+
+#+BEGIN_SRC emacs-lisp
+  (unless (file-exists-p "~/.emacs.d/custom.el")
+    (with-temp-buffer (write-file "~/.emacs.d/custom.el")))
+
+  (setq custom-file "~/.emacs.d/custom.el")
+  (load custom-file)
+#+END_SRC
+
+* Bars Galore
+
+Don't you hate all these bars in =emacs=? I do, let's disable them:
+
+#+BEGIN_SRC emacs-lisp
+  (scroll-bar-mode -1)
+  (horizontal-scroll-bar-mode -1)
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+#+END_SRC
+
+* Install =use-package= if necessary
+
+I really want to be able to just move to a new computer and have all my
+configuration available in a way that I don't have to anything manually
+anymore and still get *my* =emacs= the way *I* like it.
+
+This is likely gonna cost me some init time, but every time =emacs=
+starts out, I'll check if we need to install =use-package= and
+conditionally install it.
+
+#+BEGIN_SRC emacs-lisp
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package))
+
+  (eval-when-compile
+    (require 'use-package))
+#+END_SRC
+
+* Setup =company-mode=
+
+Auto-completion is always useful, so I'll be using it as much as
+possible.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package company
+    :ensure t
+    :bind ("TAB" . company-indent-or-complete-common)
+    :defer 1
+    :config (global-company-mode))
+#+END_SRC
+
+* Setup =magit=
+
+I tend to use =magit= for most of my =git= needs. Let's set it up.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package magit
+    :ensure t
+    :defer 1)
+#+END_SRC
+
+* Setup =solarized-theme=
+
+I've gotten used to the look and feel of =solarized-dark= and plan to
+continue using it.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package solarized-theme
+    :if window-system
+    :ensure t
+    :config (load-theme 'solarized-dark t nil))
+#+END_SRC
+
+* Setup =geiser=
+
+=guile= is a language that lately I've been trying to get acquainted to
+and, as such, I need a cool way of communicating with a =REPL= from
+inside =emacs=. =gueiser= seems to be a good choice for that
+
+#+BEGIN_SRC emacs-lisp
+  (use-package geiser
+    :ensure t
+    :defer 1)
+#+END_SRC
+
+* Setup =paredit=
+
+This is probably the most awkward mode to get used to. Still, it's so
+darn helpful that I just have to use it.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package paredit
+    :ensure t
+    :config
+    (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
+    (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
+    (add-hook 'ielm-mode-hook             #'enable-paredit-mode)
+    (add-hook 'lisp-mode-hook             #'enable-paredit-mode)
+    (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
+    (add-hook 'scheme-mode-hook           #'enable-paredit-mode))
+#+END_SRC
+
+* Setup =helm=
+
+Oh, dear =helm=; how could I possibly live without you.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package helm
+    :ensure t
+    :bind (("M-x" . helm-M-x)
+           ("TAB" . helm-execute-persistent-action)
+           ("C-x r b" . helm-bookmarks)
+           ("M-y" . helm-show-kill-ring)
+           ("C-x C-y" . helm-find-files))
+    :config
+    (require 'helm-config)
+    (setq helm-split-window-in-side-p t
+          helm-move-to-line-cycle-in-source t
+          helm-ff-search-library-in-sexp t
+          helm-scroll-amount 8
+          helm-ff-file-name-history-use-recentf t)
+    (helm-mode t))
+#+END_SRC
+
+* Setup =helm-ls-git=
+
+A very good extension to =helm=...
+
+#+BEGIN_SRC emacs-lisp
+  (use-package helm-ls-git
+    :ensure t
+    :bind ("C-x C-d" . helm-browse-project))
+#+END_SRC
+
+* Setup =helm-git-grep=
+
+#+BEGIN_SRC emacs-lisp
+  (use-package helm-git-grep
+    :ensure t
+    :bind (("C-c g" . helm-git-grep-from-help)
+           (:map isearch-mode-map
+                    ("C-c g" . helm-git-grep-from-isearch))))
+#+END_SRC
+
+* Setup =powerline=
+
+=powerline= turns =emacs='s mode line into something so useful that I
+can't live without it anymore.
+
+Note that in order to use =powerline= we need to install a
+=powerline=-patched font. I kinda line DejaVu Sans and that's what I'll
+use.
+
+For the sake of documentation, here's how I've manually setup
+=powerline=-patched fonts.
+
+#+BEGIN_SRC sh :eval no
+  $ git clone https://github.com/powerline/fonts.git
+  $ cd fonts
+  $ ./install.sh
+#+END_SRC
+
+Now, let's get going with setting up =powerline=
+
+#+BEGIN_SRC emacs-lisp
+  (set-face-attribute 'default nil
+                      :font "DejaVu Sans Mono for Powerline:style=Book"
+                      :height 110)
+
+  (use-package powerline
+    :ensure t
+    :config (powerline-default-theme))
+#+END_SRC
+
+* Setup =org= and =org-bullets=
+
+=org= is =emacs='s organizer package. I use it a lot and really enjoy
+it. Let's set it up.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package org
+    :ensure t
+    :bind
+    (("C-c l" . org-store-link)
+     ("C-c a" . org-agenda)
+     ("C-c c" . org-capture)
+     ("C-c b" . org-iswitchb))
+    :config (require 'ox-odt nil t))
+
+  (use-package org-bullets
+    :ensure t
+    :config
+    (add-hook 'org-mode-hook
+              (lambda () (org-bullets-mode t)))
+    (setq org-hide-leading-stars t))
+#+END_SRC
+
+with that out of the way, let's configure our preferred =org-directory=
+location and point =org= to our org files.
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-directory "~/workspace/org"
+        org-default-notes-file (concat org-directory "/notes.org")
+        org-agenda-files (concat org-directory "/agenda.org")
+        org-ellipsis "↴"
+        org-src-fontify-natively t
+        org-src-tab-acts-natively t)
+#+END_SRC
+
+* Setup =magit=
+
+This is simple to configure.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package magit
+    :ensure t
+    :config (setq magit-diff-use-overlays nil
+                  magit-commit-arguments '("--signoff")))
+#+END_SRC
+
+* Setup =eshell=
+
+Really not much here, I just need a key chord to start =eshell= at will
+
+#+BEGIN_SRC emacs-lisp
+  (use-package eshell
+    :ensure t
+    :bind ("C-c t" . eshell))
+#+END_SRC
+
+* Enable some disabled commands
+
+Few commands I want to use but are disabled by default
+  
+#+BEGIN_SRC emacs-lisp
+  (put 'narrow-to-region 'disabled nil)
+  (put 'upcase-region 'disabled nil)
+#+END_SRC
