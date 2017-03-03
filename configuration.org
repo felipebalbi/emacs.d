@@ -131,6 +131,16 @@ conditionally install it.
     (require 'use-package))
 #+END_SRC
 
+* Setup =auto-fill-mode=
+
+I like to have =auto-fill-mode= enabled on all my text
+buffers. Easiest way of achieve that is to add =turn-on-auto-fill= to
+=text-mode-hook=
+
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'text-mode-hook 'turn-on-auto-fill)
+#+END_SRC
+
 * Setup =company-mode=
 
 Auto-completion is always useful, so I'll be using it as much as
@@ -211,7 +221,7 @@ As a complement to =paredit= I want my parens to be easy to see, hence =rainbow-
     (add-hook 'scheme-mode-hook           #'rainbow-delimiters-mode))
 #+END_SRC
 
-* Improve =prettify-symbols-mode= for other lisp-y modes
+* Setup =prettify-symbols-mode=
 
 I like to have nice looking =lambda= characters on all my lisp-y
 modes. Let's push the =lambda= character to other mode hooks too.
