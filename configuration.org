@@ -196,6 +196,22 @@ darn helpful that I just have to use it.
     (add-hook 'scheme-mode-hook           #'enable-paredit-mode))
 #+END_SRC
 
+* Setup =rainbow-delimiters=
+
+As a complement to =paredit= I want my parens to be easy to see, hence =rainbow-delimiters=
+
+#+BEGIN_SRC emacs-lisp
+  (use-package rainbow-delimiters
+    :ensure t
+    :config
+    (add-hook 'emacs-lisp-mode-hook       #'rainbow-delimiters-mode)
+    (add-hook 'eval-expression-minibuffer-setup-hook #'rainbow-delimiters-mode)
+    (add-hook 'ielm-mode-hook             #'rainbow-delimiters-mode)
+    (add-hook 'lisp-mode-hook             #'rainbow-delimiters-mode)
+    (add-hook 'lisp-interaction-mode-hook #'rainbow-delimiters-mode)
+    (add-hook 'scheme-mode-hook           #'rainbow-delimiters-mode))
+#+END_SRC
+
 * Setup =helm=
 
 Oh, dear =helm=; how could I possibly live without you.
