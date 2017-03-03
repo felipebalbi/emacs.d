@@ -26,6 +26,16 @@ This is where I'll setup some basic defaults for =emacs=. Things like
   (global-prettify-symbols-mode t)
 #+END_SRC
 
+Depending on the machine I am, I might need some extra
+configuration. For example, at the office I need a proxy to get
+through to the outside world. To cope with that, I'll add an optional
+=site-local.el= file on such machines and conditionally load it.
+
+#+BEGIN_SRC emacs-lisp
+  (if (file-exists-p "~/.emacs.d/site-local.el")
+      (load-file "~/.emacs.d/site-local.el"))
+#+END_SRC
+
 I tend to hit =C-x C-c= by accident all the time. This little trick
 helps me a lot
 
