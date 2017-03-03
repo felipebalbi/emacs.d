@@ -220,10 +220,11 @@ Oh, dear =helm=; how could I possibly live without you.
   (use-package helm
     :ensure t
     :bind (("M-x" . helm-M-x)
-           ("TAB" . helm-execute-persistent-action)
            ("C-x r b" . helm-bookmarks)
            ("M-y" . helm-show-kill-ring)
-           ("C-x C-y" . helm-find-files))
+           ("C-x C-y" . helm-find-files)
+           (:map helm-map
+                 ("TAB" . helm-execute-persistent-action)))
     :config
     (require 'helm-config)
     (setq helm-split-window-in-side-p t
