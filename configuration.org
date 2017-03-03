@@ -388,7 +388,7 @@ a bit useful and I kinda like it.
       :keybinding "g")
 
     (defengine wikipedia
-      "https://www.wikipedia.org/search-redirectr.php?language=en&go=Go&search=%s"
+      "https://en.wikipedia.org/w/index.php?title=Special:Search&go=Go&search=%s"
       :keybinding "w")
 
     (defengine wolfram-alpha
