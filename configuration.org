@@ -48,16 +48,45 @@ Numbers, numbers, numbers...
 #+BEGIN_SRC emacs-lisp
   (setq column-number-mode t
         fill-column 80
-        indent-tabs-mode t
         linum-format "%4d")
 
   (global-linum-mode t)
+#+END_SRC
+
+Some indentation configuration
+
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'sh-mode-hook
+            (lambda ()
+              (setq sh-basic-offset 2
+                    sh-indentation 2)))
+
+  (add-hook 'ruby-mode-hook
+            (lambda ()
+              (setq ruby-indent-level 2)))
+
+  (add-hook 'c-mode-hook
+            (lambda ()
+              (setq c-basic-offset 8
+                    c-block-comment-prefix "* "
+                    c-offsets-alist '((arglist-intro . ++)
+                                      (arglist-cont-nonempty . ++))
+                    c-default-style '((c-mode . "linux")
+                                      (awk-mode . "awk")
+                                      (other . "linux"))
+                    indent-tabs-mode t)))
 #+END_SRC
 
 And I like to highlight current line
 
 #+BEGIN_SRC emacs-lisp
   (when window-system (global-hl-line-mode))
+#+END_SRC
+
+Enable =auto-fill-mode= everywhere
+
+#+BEGIN_SRC emacs-lisp
+  (auto-fill-mode 1)
 #+END_SRC
 
 * Setup a new home for =custom-file=
@@ -295,6 +324,82 @@ Really not much here, I just need a key chord to start =eshell= at will
     :bind ("C-c t" . eshell))
 #+END_SRC
 
+* Setup =engine-mode=
+
+=engine-mode= helps me starting out searches from within =emacs=. It's
+a bit useful and I kinda like it.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package engine-mode
+    :ensure t
+    :config
+    (engine/set-keymap-prefix (kbd "C-c s"))
+
+    (defengine duckduckgo
+      "https://duckduckgo.com/?q=%s"
+      :keybinding "d")
+
+    (defengine google
+      "https://www.google.com/search?ie=utf-8&oe=utf-8&q=%s"
+      :keybinding "g")
+
+    (defengine wikipedia
+      "https://www.wikipedia.org/search-redirectr.php?language=en&go=Go&search=%s"
+      :keybinding "w")
+
+    (defengine wolfram-alpha
+      "https://www.wolfram-alpha.com/input/?i=%s")
+
+    (defengine youtube
+      "https://www.youtube.com/results?aq=f&oq=&search_query=%s"
+      :keybinding "y")
+
+    (engine-mode t))
+#+END_SRC
+
+* Setup =notmuch=
+
+I've been using =notmuch= for mailing for quite a while.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package notmuch
+    :ensure t
+    :config
+    (add-hook 'message-setup-hook 'mml-secure-message-sign-pgpmime)
+    (setq message-kill-buffer-on-exit t
+          message-send-email-function 'message-send-mail-with-sendmail
+          mail-specify-envelope-from t
+          sendmail-program "/usr/bin/msmtp"
+          notmuch-crypto-process-mime t
+          notmuch-show-indent-content nil)) ; my saved searches are missing. Should they be in site-local.el ?
+#+END_SRC
+
+* Setup =ledger-mode=
+
+I use =ledger-mode= for managing my finances.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package ledger-mode
+    :ensure t
+    :config
+    (add-to-list 'auto-mode-alist '("\\.ledger\\'" . ledger-mode))
+    (setq ledger-clear-whole-transactions t
+          ledger-reconcile-default-commodity "€"
+          ledger-reconcile-force-window-bottom t
+          ledger-master-file "~/workspace/accounting/general.ledger"
+          ledger-reports '(("bal" "%(binary) -f %(ledger-file) bal -B")
+                           ("reg" "%(binary) -f %(ledger-file) reg")
+                           ("payee" "%(binary) -f %(ledger-file) reg @%(payee)")
+                           ("account" "%(binary) -f %(ledger-file) reg %(account)"))))
+#+END_SRC
+
+* GnuPG 2
+
+We're gonna tell =emacs= to use =gpg2=
+
+#+BEGIN_SRC emacs-lisp
+  (setq epg-gpg-program "/usr/bin/gpg2")
+#+END_SRC
 * Enable some disabled commands
 
 Few commands I want to use but are disabled by default
