@@ -83,11 +83,6 @@ And I like to highlight current line
   (when window-system (global-hl-line-mode))
 #+END_SRC
 
-Enable =auto-fill-mode= everywhere
-
-#+BEGIN_SRC emacs-lisp
-  (auto-fill-mode 1)
-#+END_SRC
 * Setup a new home for =custom-file=
 
 Well, I don't want =custom= touching my beautiful =init.el=. Let's give
