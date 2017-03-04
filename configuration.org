@@ -22,7 +22,7 @@ This is where I'll setup some basic defaults for =emacs=. Things like
         calendar-longitude 24.94
         calendar-location-name "Helsinki, FI"
         inhibit-startup-screen t
-        make-backup-files t)
+        make-backup-files nil)
   (global-prettify-symbols-mode t)
 #+END_SRC
 
