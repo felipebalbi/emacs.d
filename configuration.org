@@ -407,7 +407,7 @@ I've been using =notmuch= for mailing for quite a while.
     :config
     (add-hook 'message-setup-hook 'mml-secure-message-sign-pgpmime)
     (setq message-kill-buffer-on-exit t
-          message-send-email-function 'message-send-mail-with-sendmail
+          message-send-mail-function 'message-send-mail-with-sendmail
           mail-specify-envelope-from t
           sendmail-program "/usr/bin/msmtp"
           notmuch-crypto-process-mime t
