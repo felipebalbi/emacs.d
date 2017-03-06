@@ -6,7 +6,7 @@ system. That's achieved with the following =elisp= code.
 #+BEGIN_SRC emacs-lisp
   (require 'package)
   (add-to-list 'package-archives
-               '("melpa" . "https://melpa.org/packages/"))
+               '("melpa" . "http://melpa.org/packages/"))
   (package-initialize)
 #+END_SRC
 
