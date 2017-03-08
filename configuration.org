@@ -201,6 +201,14 @@ darn helpful that I just have to use it.
     (add-hook 'scheme-mode-hook           #'enable-paredit-mode))
 #+END_SRC
 
+* Setup =show-parens=
+
+This makes it a lot easier to see matching parens
+
+#+BEGIN_SRC emacs-lisp
+  (show-paren-mode 1)
+#+END_SRC
+
 * Setup =rainbow-delimiters=
 
 As a complement to =paredit= I want my parens to be easy to see, hence =rainbow-delimiters=
