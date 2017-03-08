@@ -54,7 +54,16 @@ Numbers, numbers, numbers...
   (global-linum-mode t)
 #+END_SRC
 
-Some indentation configuration
+Some indentation configuration. First a default.
+
+#+BEGIN_SRC emacs-lisp
+  (setq c-default-style
+        '((c-mode . "linux")
+          (awk-mode . "awk")
+          (other . "linux")))
+#+END_SRC
+
+And now mode-specific hooks
 
 #+BEGIN_SRC emacs-lisp
   (add-hook 'sh-mode-hook
@@ -72,10 +81,12 @@ Some indentation configuration
                     c-block-comment-prefix "* "
                     c-offsets-alist '((arglist-intro . ++)
                                       (arglist-cont-nonempty . ++))
-                    c-default-style '((c-mode . "linux")
-                                      (awk-mode . "awk")
-                                      (other . "linux"))
-                    indent-tabs-mode t)))
+                    indent-tabs-mode t)
+              (c-set-style "linux")))
+
+  (add-hook 'awk-mode-hook
+            (lambda ()
+              (c-set-style "awk")))
 #+END_SRC
 
 And I like to highlight current line
