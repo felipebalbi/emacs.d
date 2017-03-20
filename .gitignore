@@ -29,4 +29,5 @@ override/cc-mode/
 site-lisp/.loaddefs.el
 site-lisp/.status.el
 srecode-map.el
+tramp
 var/
