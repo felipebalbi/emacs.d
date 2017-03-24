@@ -41,7 +41,7 @@ I tend to hit =C-x C-c= by accident all the time. This little trick
 helps me a lot
 
 #+BEGIN_SRC emacs-lisp
-  (setq config-kill-emacs 'yes-or-no-p)
+  (setq confirm-kill-emacs 'yes-or-no-p)
 #+END_SRC
 
 Numbers, numbers, numbers...
