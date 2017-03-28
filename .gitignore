@@ -26,6 +26,7 @@ info/
 logs/
 mirror
 override/cc-mode/
+request/
 site-lisp/.loaddefs.el
 site-lisp/.status.el
 srecode-map.el
