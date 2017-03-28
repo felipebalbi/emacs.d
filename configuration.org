@@ -95,6 +95,13 @@ And I like to highlight current line
   (when window-system (global-hl-line-mode))
 #+END_SRC
 
+I wanna see a simple clock in my modeline, so let's enable
+=display-time-mode=
+
+#+BEGIN_SRC emacs-lisp
+  (display-time-mode 1)
+#+END_SRC
+
 * Setup a new home for =custom-file=
 
 Well, I don't want =custom= touching my beautiful =init.el=. Let's give
