@@ -477,4 +477,5 @@ Few commands I want to use but are disabled by default
 #+BEGIN_SRC emacs-lisp
   (put 'narrow-to-region 'disabled nil)
   (put 'upcase-region 'disabled nil)
+  (put 'downcase-region 'disabled nil)
 #+END_SRC
