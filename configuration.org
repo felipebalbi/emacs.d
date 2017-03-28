@@ -362,6 +362,17 @@ location and point =org= to our org files.
         org-src-tab-acts-natively t)
 #+END_SRC
 
+* Setup =ox-ioslide=
+
+=ox-ioslide= helps us exporting =org= documents to Google I/O HTML5
+slides. This can come in very handy ;-)
+
+#+BEGIN_SRC emacs-lisp
+  (use-package ox-ioslide
+    :ensure t
+    :config (require 'ox-ioslide))
+#+END_SRC
+
 * Setup =magit=
 
 This is simple to configure.
