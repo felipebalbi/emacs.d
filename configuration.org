@@ -381,6 +381,17 @@ slides. This can come in very handy ;-)
     :config (require 'ox-ioslide))
 #+END_SRC
 
+* Setup =ox-rst=
+
+=ox-rst= will be used to export =org= documents to =ReST= format which
+is used as Linux' documentation source.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package ox-rst
+    :ensure t
+    :config (require 'ox-rst))
+#+END_SRC
+
 * Setup =magit=
 
 This is simple to configure.
