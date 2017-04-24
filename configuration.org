@@ -39,6 +39,12 @@ through to the outside world. To cope with that, I'll add an optional
         (org-babel-load-file filename)))
 #+END_SRC
 
+After that, let's increase =emacs=' garbage collector threshold:
+
+#+BEGIN_SRC emacs-lisp
+  (setq gc-cons-threshold 50000000)	; Stolen from Howard Abrams :-)
+#+END_SRC
+
 I tend to hit =C-x C-c= by accident all the time. This little trick
 helps me a lot
 
