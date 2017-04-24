@@ -171,16 +171,6 @@ possible.
     :config (global-company-mode))
 #+END_SRC
 
-* Setup =magit=
-
-I tend to use =magit= for most of my =git= needs. Let's set it up.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package magit
-    :ensure t
-    :defer 1)
-#+END_SRC
-
 * Setup =solarized-theme=
 
 I've gotten used to the look and feel of =solarized-dark= and plan to
