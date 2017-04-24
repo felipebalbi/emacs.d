@@ -369,8 +369,7 @@ slides. This can come in very handy ;-)
 
 #+BEGIN_SRC emacs-lisp
   (use-package ox-ioslide
-    :ensure t
-    :config (require 'ox-ioslide))
+    :ensure t)
 #+END_SRC
 
 * Setup =ox-rst=
@@ -380,8 +379,7 @@ is used as Linux' documentation source.
 
 #+BEGIN_SRC emacs-lisp
   (use-package ox-rst
-    :ensure t
-    :config (require 'ox-rst))
+    :ensure t)
 #+END_SRC
 
 * Setup =magit=
