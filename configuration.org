@@ -197,8 +197,7 @@ inside =emacs=. =gueiser= seems to be a good choice for that
 
 #+BEGIN_SRC emacs-lisp
   (use-package geiser
-    :ensure t
-    :defer 1)
+    :ensure t)
 #+END_SRC
 
 * Setup =paredit=
@@ -368,6 +367,11 @@ location and point =org= to our org files.
         org-src-tab-acts-natively t)
 #+END_SRC
 
+* Setup =org-jira=
+#+BEGIN_SRC emacs-lisp
+  (use-package org-jira
+    :ensure t)
+#+END_SRC
 * Setup =ox-ioslide=
 
 =ox-ioslide= helps us exporting =org= documents to Google I/O HTML5
@@ -440,6 +444,10 @@ a bit useful and I kinda like it.
       "https://www.youtube.com/results?aq=f&oq=&search_query=%s"
       :keybinding "y")
 
+    (defengine 17track
+      "http://www.17track.net/en/track?nums=%s"
+      :keybinding "t")
+
     (engine-mode t))
 #+END_SRC
 
@@ -477,6 +485,16 @@ I use =ledger-mode= for managing my finances.
                            ("reg" "%(binary) -f %(ledger-file) reg")
                            ("payee" "%(binary) -f %(ledger-file) reg @%(payee)")
                            ("account" "%(binary) -f %(ledger-file) reg %(account)"))))
+#+END_SRC
+
+* Setup =restclient=
+
+Well, maybe I could play a bit with =restclient= every now and again
+:-)
+
+#+BEGIN_SRC emacs-lisp
+  (use-package restclient
+    :ensure t)
 #+END_SRC
 
 * GnuPG 2
