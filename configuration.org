@@ -269,9 +269,11 @@ Oh, dear =helm=; how could I possibly live without you.
     :bind (("M-x" . helm-M-x)
            ("C-x r b" . helm-bookmarks)
            ("M-y" . helm-show-kill-ring)
-           ("C-x C-y" . helm-find-files)
-           (:map helm-map
-                 ("TAB" . helm-execute-persistent-action)))
+           ("C-x C-f" . helm-find-files)
+	   :map helm-find-files-map
+	   ("TAB" . helm-execute-persistent-action)
+	   :map help-map
+	   ("TAB" . helm-execute-persistent-action))
     :config
     (require 'helm-config)
     (setq helm-split-window-in-side-p t
