@@ -516,6 +516,7 @@ We may decide to play a little with =rust=
     :ensure t
     :config
     (add-hook 'rust-mode-hook 'flymake-rust-load)
+    (add-hook 'rust-mode-hook 'cargo-minor-mode)
     (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
     (setq flymake-rust-use-cargo 1))
 
