@@ -498,6 +498,30 @@ Well, maybe I could play a bit with =restclient= every now and again
   (use-package restclient
     :ensure t)
 #+END_SRC
+* Setup =rust=
+
+We may decide to play a little with =rust=
+
+#+BEGIN_SRC emacs-lisp
+  (use-package rust-mode
+    :ensure t)
+
+  (use-package cargo
+    :ensure t)
+
+  (use-package flycheck-rust
+    :ensure t)
+
+  (use-package flymake-rust
+    :ensure t
+    :config
+    (add-hook 'rust-mode-hook 'flymake-rust-load)
+    (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+    (setq flymake-rust-use-cargo 1))
+
+  (use-package rust-playground
+    :ensure t)
+#+END_SRC
 
 * GnuPG 2
 
@@ -506,6 +530,7 @@ We're gonna tell =emacs= to use =gpg2=
 #+BEGIN_SRC emacs-lisp
   (setq epg-gpg-program "/usr/bin/gpg2")
 #+END_SRC
+
 * Enable some disabled commands
 
 Few commands I want to use but are disabled by default
