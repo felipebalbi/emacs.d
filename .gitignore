@@ -32,3 +32,4 @@ site-lisp/.status.el
 srecode-map.el
 tramp
 var/
+*.tut
