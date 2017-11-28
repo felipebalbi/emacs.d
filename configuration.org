@@ -241,7 +241,7 @@ modes. Let's push the =lambda= character to other mode hooks too.
 #+BEGIN_SRC emacs-lisp
   (defun push-pretty-characters ()
     "Push pretty characters to mode-specific prettify-symbols-alist"
-    (push '("lambda" . 955) prettify-symbols-alist))
+    (push '("lambda" . #x03bb) prettify-symbols-alist))
 
   (add-hook 'emacs-lisp-mode-hook       #'push-pretty-characters)
   (add-hook 'eval-expression-minibuffer-setup-hook #'push-pretty-characters)
