@@ -176,7 +176,6 @@ continue using it.
 
 #+BEGIN_SRC emacs-lisp
   (use-package solarized-theme
-    :if window-system
     :ensure t
     :config (load-theme 'solarized-dark t nil))
 #+END_SRC
