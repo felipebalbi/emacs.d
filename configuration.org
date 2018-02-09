@@ -361,6 +361,16 @@ location and point =org= to our org files.
         org-src-tab-acts-natively t)
 #+END_SRC
 
+Some =org-templates=
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-capture-templates
+   '(("t" "Todo" entry (file+headline "~/org/todo.org" "Tasks")
+          "* TODO %?\n  %i\n  %a")
+     ("j" "Journal" entry (file+olp+datetree "~/org/journal.org")
+          "* %?\nEntered on %U\n  %i\n  %a")))
+#+END_SRC
+
 * Setup =org-jira=
 #+BEGIN_SRC emacs-lisp
   (use-package org-jira
