@@ -11,6 +11,7 @@
 archive/
 autoloads.el
 backups/
+bookmarks
 broken.el
 compile.log
 configuration.el
