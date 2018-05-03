@@ -169,15 +169,28 @@ possible.
     :config (global-company-mode))
 #+END_SRC
 
-* Setup =solarized-theme=
+* Setup =emacs-color-theme-solarized=
 
-I've gotten used to the look and feel of =solarized-dark= and plan to
-continue using it.
+I've gotten used to the look and feel of =emacs-color-theme-solarized=
+(specially with a dark background) and plan to continue using it. In
+order to use it, I need to first clone the github repository:
+
+#+BEGIN_SRC sh :eval no
+  $ git clone https://github.com/sellout/emacs-color-theme-solarized.git
+#+END_SRC
+
+After that, I just need to load the theme
 
 #+BEGIN_SRC emacs-lisp
-  (use-package solarized-theme
-    :ensure t
-    :config (load-theme 'solarized-dark t nil))
+  (add-to-list 'custom-theme-load-path "/home/balbi/workspace/emacs-color-theme-solarized")
+  (set-frame-parameter nil 'background-mode 'dark)
+  (load-theme 'solarized t)
+  (setq solarized-termcolors 256)
+  (add-hook 'after-make-frame-functions
+            (lambda (frame)
+	      (set-frame-parameter frame 'background-mode 'dark)
+	      (set-terminal-parameter frame 'background-mode 'dark)
+              (enable-theme 'solarized)))
 #+END_SRC
 
 * Setup =geiser=
