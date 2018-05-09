@@ -182,7 +182,7 @@ order to use it, I need to first clone the github repository:
 After that, I just need to load the theme
 
 #+BEGIN_SRC emacs-lisp
-  (add-to-list 'custom-theme-load-path "/home/balbi/workspace/emacs-color-theme-solarized")
+  (add-to-list 'custom-theme-load-path "/home/balbi/workspace/dotconfig/emacs-color-theme-solarized")
   (set-frame-parameter nil 'background-mode 'dark)
   (load-theme 'solarized t)
   (setq solarized-termcolors 256)
