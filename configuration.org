@@ -103,6 +103,12 @@ I wanna see a simple clock in my modeline, so let's enable
   (display-time-mode 1)
 #+END_SRC
 
+Better grep:
+
+#+BEGIN_SRC emacs-lisp
+  (setq grep-command "grep --color --nH -e")
+#+END_SRC
+
 * Setup a new home for =custom-file=
 
 Well, I don't want =custom= touching my beautiful =init.el=. Let's give
