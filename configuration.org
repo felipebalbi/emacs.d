@@ -6,9 +6,9 @@ system. That's achieved with the following =elisp= code.
 #+BEGIN_SRC emacs-lisp
   (require 'package)
   (add-to-list 'package-archives
-               '("melpa" . "https://melpa.org/packages/"))
+               '("melpa" . "http://melpa.org/packages/"))
   (add-to-list 'package-archives
-               '("org" . "https://orgmode.org/elpa/"))
+               '("org" . "http://orgmode.org/elpa/"))
   (package-initialize)
 #+END_SRC
 
@@ -55,11 +55,9 @@ helps me a lot
 Numbers, numbers, numbers...
 
 #+BEGIN_SRC emacs-lisp
-  (setq column-number-mode t
-        fill-column 80
-        linum-format "%4d")
-
-  (global-linum-mode t)
+  (setq fill-column 80)
+  (column-number-mode)
+  (global-display-line-numbers-mode)
 #+END_SRC
 
 Some indentation configuration using mode-specific hooks
@@ -484,12 +482,12 @@ I've been using =notmuch= for mailing for quite a while.
     :ensure t
     :config
     (add-hook 'message-setup-hook 'mml-secure-message-sign-pgpmime)
-    (setq message-kill-buffer-on-exit t
-          message-send-mail-function 'message-send-mail-with-sendmail
-          mail-specify-envelope-from t
-          sendmail-program "/usr/bin/msmtp"
-          notmuch-crypto-process-mime t
-          notmuch-show-indent-content nil)) ; my saved searches are missing. Should they be in site-local.el ?
+    (setq-default message-kill-buffer-on-exit t
+	  message-send-mail-function 'message-send-mail-with-sendmail
+	  mail-specify-envelope-from t
+	  sendmail-program "/usr/bin/msmtp"
+	  notmuch-crypto-process-mime t
+	  notmuch-show-indent-content nil)) ; my saved searches are missing. Should they be in site-local.el ?
 #+END_SRC
 
 * Setup =ledger-mode=
