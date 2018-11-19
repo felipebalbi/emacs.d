@@ -186,15 +186,15 @@ order to use it, I need to first clone the github repository:
 After that, I just need to load the theme
 
 #+BEGIN_SRC emacs-lisp
-  (add-to-list 'custom-theme-load-path "/home/balbi/workspace/dotconfig/emacs-color-theme-solarized")
+  (add-to-list 'custom-theme-load-path "~/workspace/dotconfig/emacs-color-theme-solarized")
   (set-frame-parameter nil 'background-mode 'dark)
   (load-theme 'solarized t)
   (setq solarized-termcolors 256)
   (add-hook 'after-make-frame-functions
-            (lambda (frame)
+	    (lambda (frame)
 	      (set-frame-parameter frame 'background-mode 'dark)
 	      (set-terminal-parameter frame 'background-mode 'dark)
-              (enable-theme 'solarized)))
+	      (enable-theme 'solarized)))
 #+END_SRC
 
 * Setup =geiser=
