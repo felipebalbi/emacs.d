@@ -355,7 +355,7 @@ it. Let's set it up.
     :bind
     (("C-c l" . org-store-link)
      ("C-c a" . org-agenda)
-     ("C-c c" . org-capture)
+     ("C-c c" . my/org-capture)
      ("C-c b" . org-iswitchb))
     :config (require 'ox-odt nil t))
 
@@ -371,22 +371,73 @@ with that out of the way, let's configure our preferred =org-directory=
 location and point =org= to our org files.
 
 #+BEGIN_SRC emacs-lisp
-  (setq org-directory "~/workspace/org"
-        org-default-notes-file (concat org-directory "/notes.org")
-        org-agenda-files (concat org-directory "/agenda.org")
-        org-ellipsis "↴"
-        org-src-fontify-natively t
-        org-src-tab-acts-natively t)
+  (setq-default org-directory "~/workspace/org"
+	org-default-notes-file (concat org-directory "/notes.org")
+	org-agenda-files (directory-files-recursively
+			  (concat org-directory "/projects") ".org")
+	org-archive-location (concat org-directory "/archive/"
+				     (format-time-string "%Y")
+				     ".org")
+	org-return-follows-link t
+	org-ellipsis "↴"
+	org-src-fontify-natively t
+	org-src-tab-acts-natively t)
+#+END_SRC
+
+Configuring some useful TODO keywords
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-todo-keywords
+	'((sequence "TODO(t@)" "IN PROGRESS(p@)" "|"
+		    "DONE(d@)" "CANCELED(c@)")))
+#+END_SRC
+
+Track completion of a task
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-log-done 'time)
+#+END_SRC
+
+Track notes into a drawer
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-log-into-drawer t)
+#+END_SRC
+
+Define priorities
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-highest-priority ?A
+	org-lowest-priority ?E
+	org-default-priotiy ?E)
 #+END_SRC
 
 Some =org-templates=
 
 #+BEGIN_SRC emacs-lisp
+  (defvar my/basic-org-capture-template
+    "* TODO %^{Task}
+  :PROPERTIES:
+  :Captured: %T
+  :END:
+  %?
+
+  %i
+  " "Default Task Data")
+
+  (defvar my/filename nil)
+
+  (defun my/org-capture ()
+    "Asks user for a filename and runs org-capture for that file"
+    (interactive)
+    (setq my/filename (helm-read-file-name
+		       "Choose File: "
+		       :initial-input (concat org-directory "/projects/")))
+    (org-capture))
+
   (setq org-capture-templates
-   '(("t" "Todo" entry (file+headline "~/workspace/org/todo.org" "Tasks")
-          "* TODO %?\n  %i\n  %a")
-     ("j" "Journal" entry (file+olp+datetree "~/workspace/org/journal.org")
-          "* %?\nEntered on %U\n  %i\n  %a")))
+	`(("t" "Todo" entry (file my/filename)
+	   ,my/basic-org-capture-template)))
 #+END_SRC
 
 * Setup =org-jira=
@@ -542,6 +593,13 @@ We may decide to play a little with =rust=
 
   (use-package rust-playground
     :ensure t)
+#+END_SRC
+* Setup =octave-mode=
+
+Use *.m as default extension for octave files
+
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
 #+END_SRC
 
 * GnuPG 2
