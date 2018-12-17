@@ -601,6 +601,15 @@ Use *.m as default extension for octave files
 #+BEGIN_SRC emacs-lisp
   (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
 #+END_SRC
+* Setup =julia-mode=
+
+Julia is a great language and I want to play a little with it, let's
+setup =julia-mode= to make that easier.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package julia-mode
+    :ensure t)
+#+END_SRC
 
 * GnuPG 2
 
