@@ -1,5 +1,6 @@
 *.elc
 *.org.el
+*.tut
 *~
 /auto-save-list/
 /devel/
@@ -24,6 +25,7 @@ ede-projects.el
 emms/
 eshell/
 info/
+kkcrc
 logs/
 mirror
 override/cc-mode/
@@ -33,4 +35,3 @@ site-lisp/.status.el
 srecode-map.el
 tramp
 var/
-*.tut
