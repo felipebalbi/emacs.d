@@ -150,6 +150,14 @@ conditionally install it.
     (require 'use-package))
 #+END_SRC
 
+* Setup =PATH= variable
+
+#+BEGIN_SRC emacs-lisp
+  (setenv "PATH"
+	  (concat "/home/balbi/.gem/ruby/2.6.0/bin:/home/balbi/.local/bin:/usr/lib/ccache:"
+		  (getenv "PATH")))
+#+END_SRC
+
 * Setup =auto-fill-mode=
 
 I like to have =auto-fill-mode= enabled on all my text
