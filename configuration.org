@@ -107,6 +107,12 @@ Better grep:
   (setq grep-command "grep --color --nH -e")
 #+END_SRC
 
+Always follow symlinks:
+
+#+BEGIN_SRC emacs-lisp
+  (setq vc-follow-symlinks t)
+#+END_SRC
+
 * Setup a new home for =custom-file=
 
 Well, I don't want =custom= touching my beautiful =init.el=. Let's give
@@ -152,10 +158,13 @@ conditionally install it.
 
 * Setup =PATH= variable
 
+All set =PATH= and =MANPATH= from shell, even when initialized from
+GUI helpers like =dmenu= or =Spotlight=
+
 #+BEGIN_SRC emacs-lisp
-  (setenv "PATH"
-	  (concat "/home/balbi/.gem/ruby/2.6.0/bin:/home/balbi/.local/bin:/usr/lib/ccache:"
-		  (getenv "PATH")))
+  (use-package exec-path-from-shell
+    :ensure t)
+  (exec-path-from-shell-initialize)
 #+END_SRC
 
 * Setup =auto-fill-mode=
@@ -618,6 +627,14 @@ setup =julia-mode= to make that easier.
   (use-package julia-mode
     :ensure t)
 #+END_SRC
+* Some extra keybindings for myself
+
+These are super helpful for day to day use
+
+#+BEGIN_SRC emacs-lisp
+  (define-key global-map (kbd "C-1") 'text-scale-increase)
+  (define-key global-map (kbd "C-0") 'text-scale-decrease)
+#+END_SRC
 
 * GnuPG 2
 
@@ -635,4 +652,5 @@ Few commands I want to use but are disabled by default
   (put 'narrow-to-region 'disabled nil)
   (put 'upcase-region 'disabled nil)
   (put 'downcase-region 'disabled nil)
+  (put 'dired-find-alternate-file 'disabled nil)
 #+END_SRC
