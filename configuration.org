@@ -637,6 +637,13 @@ setup =julia-mode= to make that easier.
 	   ("\\.markdown\\'" . markdown-mode))
     :init (setq markdown-command "pandoc"))
 #+END_SRC
+* Setup =swiper-helm=
+
+#+BEGIN_SRC emacs-lisp
+  (use-package swiper-helm
+    :ensure t
+    :bind ("C-s" . swiper-helm-from-isearch))
+#+END_SRC
 
 * Some extra keybindings for myself
 
