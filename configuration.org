@@ -73,6 +73,10 @@ Some indentation configuration using mode-specific hooks
 	    '(lambda ()
 	       (setq ruby-indent-level 2)))
 
+  (add-hook 'js-mode-hook
+	    '(lambda ()
+	       (setq js-indent-level 2)))
+
   (add-hook 'c-mode-hook
 	    '(lambda ()
 	       (c-set-style "linux")
