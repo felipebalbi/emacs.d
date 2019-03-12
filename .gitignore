@@ -29,6 +29,7 @@ kkcrc
 logs/
 mirror
 override/cc-mode/
+recentf
 request/
 site-lisp/.loaddefs.el
 site-lisp/.status.el
