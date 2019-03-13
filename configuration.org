@@ -652,7 +652,7 @@ setup =julia-mode= to make that easier.
 #+BEGIN_SRC emacs-lisp
   (use-package swiper-helm
     :ensure t
-    :bind ("C-s" . swiper-helm-from-isearch))
+    :bind ("C-s" . swiper-helm))
 #+END_SRC
 
 * Some extra keybindings for myself
