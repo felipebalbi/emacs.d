@@ -6,9 +6,7 @@ system. That's achieved with the following =elisp= code.
 #+BEGIN_SRC emacs-lisp
   (require 'package)
   (add-to-list 'package-archives
-               '("melpa" . "http://melpa.org/packages/"))
-  (add-to-list 'package-archives
-               '("org" . "http://orgmode.org/elpa/"))
+	       '("melpa" . "http://melpa.org/packages/"))
   (package-initialize)
 #+END_SRC
 
@@ -376,21 +374,31 @@ Now, let's get going with setting up =powerline=
 =org= is =emacs='s organizer package. I use it a lot and really enjoy
 it. Let's set it up.
 
+First we will be using our local copy of org git tree:
+
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'load-path "~/workspace/org-mode/lisp")
+  (add-to-list 'load-path "~/workspace/org-mode/contrib/lisp")
+#+END_SRC
+
 #+BEGIN_SRC emacs-lisp
   (use-package org
     :ensure t
+    :pin manual
     :bind
     (("C-c l" . org-store-link)
      ("C-c a" . org-agenda)
-     ("C-c c" . my/org-capture)
-     ("C-c b" . org-iswitchb))
-    :config (require 'ox-odt nil t))
+     ("C-c c" . org-capture)
+     ("C-c b" . org-switchb))
+    :config
+    (require 'ox-odt nil t)
+    (require 'org-notmuch nil t))
 
   (use-package org-bullets
     :ensure t
     :config
     (add-hook 'org-mode-hook
-              (lambda () (org-bullets-mode t)))
+	      (lambda () (org-bullets-mode t)))
     (setq org-hide-leading-stars t))
 #+END_SRC
 
@@ -401,10 +409,10 @@ location and point =org= to our org files.
   (setq-default org-directory "~/workspace/org"
 	org-default-notes-file (concat org-directory "/notes.org")
 	org-agenda-files (directory-files-recursively
-			  (concat org-directory "/projects") ".org")
+			  org-directory ".org")
 	org-archive-location (concat org-directory "/archive/"
 				     (format-time-string "%Y")
-				     ".org")
+				     ".org::")
 	org-return-follows-link t
 	org-ellipsis "↴"
 	org-src-fontify-natively t
@@ -442,29 +450,13 @@ Define priorities
 Some =org-templates=
 
 #+BEGIN_SRC emacs-lisp
-  (defvar my/basic-org-capture-template
-    "* TODO %^{Task}
-  :PROPERTIES:
-  :Captured: %T
-  :END:
-  %?
-
-  %i
-  " "Default Task Data")
-
-  (defvar my/filename nil)
-
-  (defun my/org-capture ()
-    "Asks user for a filename and runs org-capture for that file"
-    (interactive)
-    (setq my/filename (helm-read-file-name
-		       "Choose File: "
-		       :initial-input (concat org-directory "/projects/")))
-    (org-capture))
-
   (setq org-capture-templates
-	`(("t" "Todo" entry (file my/filename)
-	   ,my/basic-org-capture-template)))
+	'(
+	  ("t" "Todo" entry (file "todo.org")
+	   "* TODO %^{Task}\n:PROPERTIES:\n:Captured: %T\n:END:\n%?\n\n%i")
+	  ("n" "Note" entry (file+datetree "notes.org")
+	   "* %?\nEntered on %U\n  %i\n  %a")
+	  ))
 #+END_SRC
 
 * Setup =org-jira=
