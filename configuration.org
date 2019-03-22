@@ -551,13 +551,15 @@ I've been using =notmuch= for mailing for quite a while.
   (use-package notmuch
     :ensure t
     :config
+    (require 'smtpmail)
     (add-hook 'message-setup-hook 'mml-secure-message-sign-pgpmime)
     (setq-default message-kill-buffer-on-exit t
-	  message-send-mail-function 'message-send-mail-with-sendmail
-	  mail-specify-envelope-from t
-	  sendmail-program "/usr/bin/msmtp"
-	  notmuch-crypto-process-mime t
-	  notmuch-show-indent-content nil)) ; my saved searches are missing. Should they be in site-local.el ?
+		  mail-specify-envelope-from t
+		  message-send-mail-function 'message-smtpmail-send-it
+		  smtpmail-smtp-server "smtp.intel.com"
+		  smtpmail-smtp-service 25
+		  notmuch-crypto-process-mime t
+		  notmuch-show-indent-content nil)) ; my saved searches are missing. Should they be in site-local.el ?
 #+END_SRC
 
 * Setup =ledger-mode=
