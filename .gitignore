@@ -35,4 +35,5 @@ site-lisp/.loaddefs.el
 site-lisp/.status.el
 srecode-map.el
 tramp
+transient/
 var/
