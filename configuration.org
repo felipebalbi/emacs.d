@@ -641,12 +641,28 @@ setup =julia-mode= to make that easier.
 	   ("\\.markdown\\'" . markdown-mode))
     :init (setq markdown-command "pandoc"))
 #+END_SRC
-* Setup =swiper-helm=
+* Setup =helm-swoop=
 
 #+BEGIN_SRC emacs-lisp
-  (use-package swiper-helm
+  (use-package helm-swoop
     :ensure t
-    :bind ("C-s" . swiper-helm))
+    :bind
+    ("C-s" . helm-swoop)
+    ("C-r" . helm-swoop)
+    ("C-c M-i" . helm-multi-swoop)
+    ("C-c M-I" . helm-multi-swoop-all)
+    ("C-c M-m" . helm-multi-swoop-current-mode)
+    :config
+    (define-key helm-swoop-map (kbd "M-i") 'helm-multi-swoop-all-from-helm-swoop)
+    (define-key helm-swoop-map (kbd "C-r") 'helm-previous-line)
+    (define-key helm-swoop-map (kbd "C-s") 'helm-next-line)
+    (define-key helm-swoop-map (kbd "M-m") 'helm-multi-swoop-current-mode-from-helm-swoop)
+    (define-key helm-multi-swoop-map (kbd "C-r") 'helm-previous-line)
+    (define-key helm-multi-swoop-map (kbd "C-s") 'helm-next-line)
+    (setq helm-multi-swoop-edit-save t)
+    (setq helm-swoop-split-with-multiple-windows nil)
+    (setq helm-swoop-split-direction 'split-window-vertically)
+    (setq helm-swoop-use-fuzzy-match t))
 #+END_SRC
 
 * Some extra keybindings for myself
