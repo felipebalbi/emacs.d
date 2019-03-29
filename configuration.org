@@ -416,7 +416,10 @@ location and point =org= to our org files.
 	org-return-follows-link t
 	org-ellipsis "↴"
 	org-src-fontify-natively t
-	org-src-tab-acts-natively t)
+	org-src-tab-acts-natively t
+	org-enforce-todo-dependencies t
+	org-enforce-todo-checkbox-dependencies t
+	org-agenda-dim-blocked-tasks t)
 #+END_SRC
 
 Configuring some useful TODO keywords
@@ -424,7 +427,8 @@ Configuring some useful TODO keywords
 #+BEGIN_SRC emacs-lisp
   (setq org-todo-keywords
 	'((sequence "TODO(t@)" "IN PROGRESS(p@)" "|"
-		    "DONE(d@)" "CANCELED(c@)")))
+		    "DONE(d@)" "CANCELED(c@)"
+		    "BLOCKED(b@)" "AWAITING(a@)")))
 #+END_SRC
 
 Track completion of a task
