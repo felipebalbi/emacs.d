@@ -166,7 +166,9 @@ GUI helpers like =dmenu= or =Spotlight=
 
 #+BEGIN_SRC emacs-lisp
   (use-package exec-path-from-shell
-    :ensure t)
+    :ensure t
+    :config
+    (add-to-list 'exec-path-from-shell-variables "SSH_AUTH_SOCK"))
   (exec-path-from-shell-initialize)
 #+END_SRC
 
