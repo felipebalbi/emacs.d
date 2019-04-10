@@ -394,7 +394,8 @@ First we will be using our local copy of org git tree:
      ("C-c b" . org-switchb))
     :config
     (require 'ox-odt nil t)
-    (require 'org-notmuch nil t))
+    (require 'org-notmuch nil t)
+    (add-to-list 'org-modules 'org-habit))
 
   (use-package org-bullets
     :ensure t
