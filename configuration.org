@@ -690,6 +690,21 @@ setup =julia-mode= to make that easier.
     (add-hook 'mmm-mode-hook
 	      (lambda ()
 		(set-face-background 'mmm-default-submode-face nil))))
+  #+END_SRC
+
+* Setup =slime=
+
+I've started reading Land Of Lisp and will, therefore, play around
+with Common Lisp. For that, I'll be using =slime=. Initially with
+=clisp= backend (to follow the book as closely as possible), but I
+plan on switching to =sbcl= later on.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package slime
+    :ensure t
+    :config
+    (setq inferior-lisp-program "/usr/local/bin/clisp")
+    (setq slime-contribs '(slime-fancy)))
 #+END_SRC
 
 * Some extra keybindings for myself
