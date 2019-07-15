@@ -5,8 +5,13 @@ system. That's achieved with the following =elisp= code.
 
 #+BEGIN_SRC emacs-lisp
   (require 'package)
-  (add-to-list 'package-archives
-	       '("melpa" . "http://melpa.org/packages/"))
+
+  ;; (add-to-list 'package-archives
+  ;; 	     '("melpa" . "http://melpa.org/packages/"))
+
+  (setq package-archives '(("melpa" . "http://melpa.org/packages/")
+			   ("gnu" . "http://mirrors.163.com/elpa/gnu/")))
+
   (package-initialize)
 #+END_SRC
 * Basics
