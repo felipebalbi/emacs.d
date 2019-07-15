@@ -687,6 +687,19 @@ setup =julia-mode= to make that easier.
 
   #+RESULTS:
 
+* Setup =vue-mode=
+
+  Install it
+
+#+BEGIN_SRC emacs-lisp
+  (use-package vue-mode
+    :ensure t
+    :init
+    (add-hook 'mmm-mode-hook
+	      (lambda ()
+		(set-face-background 'mmm-default-submode-face nil))))
+#+END_SRC
+
 * Some extra keybindings for myself
 
 These are super helpful for day to day use
