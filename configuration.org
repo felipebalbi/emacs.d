@@ -61,6 +61,8 @@ Numbers, numbers, numbers...
   (column-number-mode)
 
   (add-hook 'prog-mode-hook #'display-line-numbers-mode)
+  (add-hook 'sgml-mode-hook #'display-line-numbers-mode)
+
 #+END_SRC
 
 Some indentation configuration using mode-specific hooks
@@ -172,8 +174,10 @@ GUI helpers like =dmenu= or =Spotlight=
   (use-package exec-path-from-shell
     :ensure t
     :config
-    (add-to-list 'exec-path-from-shell-variables "SSH_AUTH_SOCK"))
-  (exec-path-from-shell-initialize)
+    (add-to-list 'exec-path-from-shell-variables "SSH_AUTH_SOCK")
+    :init
+    (exec-path-from-shell-initialize))
+
 #+END_SRC
 
 * Setup =auto-fill-mode=
