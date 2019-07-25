@@ -199,28 +199,16 @@ possible.
     :config (global-company-mode))
 #+END_SRC
 
-* Setup =emacs-color-theme-solarized=
+* Setup =night-owl-theme
 
-I've gotten used to the look and feel of =emacs-color-theme-solarized=
-(specially with a dark background) and plan to continue using it. In
-order to use it, I need to first clone the github repository:
-
-#+BEGIN_SRC sh :eval no
-  $ git clone https://github.com/sellout/emacs-color-theme-solarized.git
-#+END_SRC
-
-After that, I just need to load the theme
+  Switched to Night Owl Theme after using it under =vscode=. Let's
+  give it a go here.
 
 #+BEGIN_SRC emacs-lisp
-  (add-to-list 'custom-theme-load-path "~/workspace/dotconfig/emacs-color-theme-solarized")
-  (set-frame-parameter nil 'background-mode 'dark)
-  (load-theme 'solarized t)
-  (setq solarized-termcolors 256)
-  (add-hook 'after-make-frame-functions
-	    (lambda (frame)
-	      (set-frame-parameter frame 'background-mode 'dark)
-	      (set-terminal-parameter frame 'background-mode 'dark)
-	      (enable-theme 'solarized)))
+  (use-package night-owl-theme
+    :ensure t
+    :config
+    (load-theme 'night-owl t))
 #+END_SRC
 
 * Setup =geiser=
