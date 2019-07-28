@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# name: Vue scaffold
+# contributor: Felipe Balbi
+# key: vbase
+# --
+
+<template>
+ <div>
+ </div>
+</template>
+
+<script>
+export default {
+}
+</script>
+
+<style scoped>
+</style>

@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Vue Component
+# key: vcomp
+# --
+
+components: {
+  $0
+}

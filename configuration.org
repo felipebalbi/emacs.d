@@ -693,7 +693,8 @@ setup =julia-mode= to make that easier.
 	  yas-wrap-around-region t)
 
     (with-eval-after-load 'yasnippet
-      (setq yas-snippet-dirs '(yasnippet-snippets-dir)))
+      (setq yas-snippet-dirs (list yasnippet-snippets-dir
+				     "~/.emacs.d/personal-snippets")))
 
     (yas-reload-all)
     (yas-global-mode))
@@ -713,8 +714,10 @@ setup =julia-mode= to make that easier.
     :init
     (add-hook 'mmm-mode-hook
 	      (lambda ()
-		 (set-face-background 'mmm-default-submode-face nil)))
-    (add-hook 'vue-mode-hook 'display-line-numbers-mode))
+		(set-face-background 'mmm-default-submode-face nil)
+		(setq mmm-submode-decoration-level 0)))
+    (add-hook 'vue-mode-hook 'display-line-numbers-mode)
+    (add-hook 'vue-mode-hook 'smartparens-strict-mode))
 
   #+END_SRC
 
