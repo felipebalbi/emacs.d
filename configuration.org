@@ -61,7 +61,6 @@ Numbers, numbers, numbers...
   (column-number-mode)
 
   (add-hook 'prog-mode-hook #'display-line-numbers-mode)
-  (add-hook 'sgml-mode-hook #'display-line-numbers-mode)
 
 #+END_SRC
 
@@ -69,25 +68,25 @@ Some indentation configuration using mode-specific hooks
 
 #+BEGIN_SRC emacs-lisp
   (add-hook 'sh-mode-hook
-	    '(lambda ()
+	    (lambda ()
 	       (setq sh-basic-offset 2
 		     sh-indentation 2)))
 
   (add-hook 'ruby-mode-hook
-	    '(lambda ()
+	    (lambda ()
 	       (setq ruby-indent-level 2)))
 
   (add-hook 'js-mode-hook
-	    '(lambda ()
+	    (lambda ()
 	       (setq js-indent-level 2)
 	       (setq indent-tabs-mode nil)))
 
   (add-hook 'sgml-mode-hook
-	    'lambda ()
-	    (setq indent-tabs-mode nil))
+	    (lambda ()
+	      (setq indent-tabs-mode nil)))
 
   (add-hook 'c-mode-hook
-	    '(lambda ()
+	    (lambda ()
 	       (c-set-style "linux")
 	       (setq c-basic-offset 8
 		     c-block-comment-prefix "* ")
@@ -97,7 +96,7 @@ Some indentation configuration using mode-specific hooks
 	       (setq indent-tabs-mode t)))
 
   (add-hook 'awk-mode-hook
-	    '(lambda ()
+	    (lambda ()
 	       (c-set-style "awk")))
 #+END_SRC
 
@@ -208,7 +207,7 @@ possible.
     :config (global-company-mode))
 #+END_SRC
 
-* Setup =night-owl-theme
+* Setup =night-owl-theme=
 
   Switched to Night Owl Theme after using it under =vscode=. Let's
   give it a go here.
@@ -292,7 +291,7 @@ We also have a rather cute symbol for =function= on =js-mode=.
   (add-hook 'scheme-mode-hook           #'push-pretty-characters)
 
   (add-hook 'js-mode-hook (lambda ()
-			    (push '("function" . ?ƒ) prettify-symbols-alist)))
+			     (push '("function" . ?ƒ) prettify-symbols-alist)))
 #+END_SRC
 
 * Setup =helm=
@@ -684,19 +683,6 @@ setup =julia-mode= to make that easier.
 
   #+RESULTS:
 
-* Setup =vue-mode=
-
-  Install it
-
-#+BEGIN_SRC emacs-lisp
-  (use-package vue-mode
-    :ensure t
-    :init
-    (add-hook 'mmm-mode-hook
-	      (lambda ()
-		(set-face-background 'mmm-default-submode-face nil))))
-  #+END_SRC
-
 * Setup =yasnippet=
 
 #+BEGIN_SRC emacs-lisp
@@ -715,6 +701,22 @@ setup =julia-mode= to make that easier.
   (use-package yasnippet-snippets
     :ensure t)
 #+END_SRC
+
+* Setup =vue-mode=
+
+  Install it
+
+#+BEGIN_SRC emacs-lisp
+  (use-package vue-mode
+    :ensure t
+    :config (setq indent-tabs-mode nil)
+    :init
+    (add-hook 'mmm-mode-hook
+	      (lambda ()
+		 (set-face-background 'mmm-default-submode-face nil)))
+    (add-hook 'vue-mode-hook 'display-line-numbers-mode))
+
+  #+END_SRC
 
 * Setup =lsp-mode=
 
