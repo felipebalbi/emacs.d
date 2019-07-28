@@ -79,7 +79,12 @@ Some indentation configuration using mode-specific hooks
 
   (add-hook 'js-mode-hook
 	    '(lambda ()
-	       (setq js-indent-level 2)))
+	       (setq js-indent-level 2)
+	       (setq indent-tabs-mode nil)))
+
+  (add-hook 'sgml-mode-hook
+	    'lambda ()
+	    (setq indent-tabs-mode nil))
 
   (add-hook 'c-mode-hook
 	    '(lambda ()
