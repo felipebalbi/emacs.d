@@ -466,11 +466,6 @@ Some =org-templates=
 	  ))
 #+END_SRC
 
-* Setup =org-jira=
-#+BEGIN_SRC emacs-lisp
-  (use-package org-jira
-    :ensure t)
-#+END_SRC
 * Setup =ox-ioslide=
 
 =ox-ioslide= helps us exporting =org= documents to Google I/O HTML5
@@ -597,6 +592,7 @@ Well, maybe I could play a bit with =restclient= every now and again
   (use-package restclient
     :ensure t)
 #+END_SRC
+
 * Setup =rust=
 
 We may decide to play a little with =rust=
@@ -622,6 +618,7 @@ We may decide to play a little with =rust=
   (use-package rust-playground
     :ensure t)
 #+END_SRC
+
 * Setup =octave-mode=
 
 Use *.m as default extension for octave files
@@ -629,6 +626,7 @@ Use *.m as default extension for octave files
 #+BEGIN_SRC emacs-lisp
   (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
 #+END_SRC
+
 * Setup =julia-mode=
 
 Julia is a great language and I want to play a little with it, let's
@@ -638,6 +636,7 @@ setup =julia-mode= to make that easier.
   (use-package julia-mode
     :ensure t)
 #+END_SRC
+
 * Setup =markdown-mode=
 
 #+BEGIN_SRC emacs-lisp
@@ -648,6 +647,7 @@ setup =julia-mode= to make that easier.
 	   ("\\.markdown\\'" . markdown-mode))
     :init (setq markdown-command "pandoc"))
 #+END_SRC
+
 * Setup =helm-swoop=
 
 #+BEGIN_SRC emacs-lisp
@@ -744,7 +744,9 @@ setup =julia-mode= to make that easier.
 
 * Setup =lsp-mode=
 
-  Install it
+  Note that for this to work we need =yarn=, =eslint=,
+  =vue-language-server=, and =prettier= installed. All of these can be
+  found on Arch Linux's repositories.
 
 #+BEGIN_SRC emacs-lisp
   (use-package lsp-mode
@@ -808,6 +810,7 @@ Few commands I want to use but are disabled by default
   (put 'downcase-region 'disabled nil)
   (put 'dired-find-alternate-file 'disabled nil)
 #+END_SRC
+
 * All The Icons
 
 #+BEGIN_SRC emacs-lisp
@@ -819,3 +822,4 @@ Few commands I want to use but are disabled by default
     :config
     (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
 #+END_SRC
+
