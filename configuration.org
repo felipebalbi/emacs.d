@@ -750,7 +750,8 @@ setup =julia-mode= to make that easier.
   (use-package lsp-mode
     :ensure t
     :hook (vue-mode . lsp)
-    :commands lsp)
+    :commands lsp
+    :config (setq lsp-prefer-flymake nil))
 
   (use-package lsp-ui
     :ensure t
