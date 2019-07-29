@@ -703,6 +703,27 @@ setup =julia-mode= to make that easier.
     :ensure t)
 #+END_SRC
 
+* Setup =flycheck=
+
+  Install it
+
+#+BEGIN_SRC emacs-lisp
+  (use-package flycheck
+    :ensure t
+    :hook (vue-mode . flycheck-mode)
+    :config (flycheck-add-mode 'javascript-eslint 'vue-mode))
+#+END_SRC
+
+* Setup =smartparens=
+
+  Install it
+
+#+BEGIN_SRC emacs-lisp
+  (use-package smartparens
+    :ensure t
+    :hook (vue-mode . smartparens-strict-mode))
+#+END_SRC
+
 * Setup =vue-mode=
 
   Install it
