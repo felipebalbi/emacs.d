@@ -354,16 +354,14 @@ For the sake of documentation, here's how I've manually setup
 =powerline=-patched fonts.
 
 #+BEGIN_SRC sh :eval no
-  $ git clone https://github.com/powerline/fonts.git
-  $ cd fonts
-  $ ./install.sh
+  $ yay -Sy nerd-fonts-complete
 #+END_SRC
 
 Now, let's get going with setting up =powerline=
 
 #+BEGIN_SRC emacs-lisp
   (set-face-attribute 'default nil
-		      :family "Fura Mono for Powerline"
+		      :family "FuraMono Nerd Font:style=Regular"
 		      :height 140
 		      :weight 'normal
 		      :width 'normal)
