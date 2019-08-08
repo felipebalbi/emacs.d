@@ -14,6 +14,7 @@ system. That's achieved with the following =elisp= code.
 
   (package-initialize)
 #+END_SRC
+
 * Basics
 
 This is where I'll setup some basic defaults for =emacs=. Things like
