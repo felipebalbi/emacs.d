@@ -362,8 +362,10 @@ Now, let's get going with setting up =powerline=
 
 #+BEGIN_SRC emacs-lisp
   (set-face-attribute 'default nil
-		      :font "DejaVu Sans Mono for Powerline:style=Book"
-		      :height 120)
+		      :family "Fura Mono for Powerline"
+		      :height 140
+		      :weight 'normal
+		      :width 'normal)
 
   (use-package powerline
     :ensure t
