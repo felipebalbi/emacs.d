@@ -361,7 +361,7 @@ Now, let's get going with setting up =powerline=
 
 #+BEGIN_SRC emacs-lisp
   (set-face-attribute 'default nil
-		      :family "FuraMono Nerd Font:style=Regular"
+		      :family "FuraCode Nerd Font"
 		      :height 140
 		      :weight 'normal
 		      :width 'normal)
