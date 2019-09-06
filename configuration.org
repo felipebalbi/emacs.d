@@ -561,6 +561,11 @@ I've been using =notmuch= for mailing for quite a while.
 		  smtpmail-smtp-server "smtp.intel.com"
 		  smtpmail-smtp-service 25
 		  notmuch-crypto-process-mime t
+		  notmuch-show-stash-mlarchive-link-alist '(("Lore" . "https://lore.kernel.org/r/")
+							    ("Gmane" . "https://mid.gmane.org/")
+							    ("MARC" . "https://marc.info/?i=")
+							    ("Mail Archive, The" . "https://mid.mail-archive.com/"))
+
 		  notmuch-show-indent-content nil)) ; my saved searches are missing. Should they be in site-local.el ?
 #+END_SRC
 
