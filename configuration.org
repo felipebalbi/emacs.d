@@ -177,6 +177,7 @@ GUI helpers like =dmenu= or =Spotlight=
 
 #+BEGIN_SRC emacs-lisp
   (use-package exec-path-from-shell
+    :unless (string-equal system-type "windows-nt")
     :ensure t
     :init
     (exec-path-from-shell-initialize)
@@ -685,8 +686,6 @@ setup =julia-mode= to make that easier.
     (use-package impatient-mode
       :ensure t)
   #+END_SRC
-
-  #+RESULTS:
 
 * Setup =yasnippet=
 
