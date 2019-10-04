@@ -783,7 +783,7 @@ plan on switching to =sbcl= later on.
   (use-package slime
     :ensure t
     :config
-    (setq inferior-lisp-program "/usr/local/bin/clisp")
+    (setq inferior-lisp-program "/usr/local/bin/sbcl")
     (setq slime-contribs '(slime-fancy)))
 #+END_SRC
 
