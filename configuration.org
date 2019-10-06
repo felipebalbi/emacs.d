@@ -782,19 +782,16 @@ setup =julia-mode= to make that easier.
     :ensure t)
 #+END_SRC
 
-* Setup =slime=
+* Setup =sly=
 
 I've started reading Land Of Lisp and will, therefore, play around
-with Common Lisp. For that, I'll be using =slime=. Initially with
-=clisp= backend (to follow the book as closely as possible), but I
-plan on switching to =sbcl= later on.
+with Common Lisp. For that, I'll be using =sly= with =sbcl=
 
 #+BEGIN_SRC emacs-lisp
-  (use-package slime
+  (use-package sly
     :ensure t
     :config
-    (setq inferior-lisp-program "/usr/bin/sbcl")
-    (setq slime-contribs '(slime-fancy)))
+    (setq inferior-lisp-program "sbcl"))
 #+END_SRC
 
 * Some extra keybindings for myself
