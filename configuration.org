@@ -396,7 +396,8 @@ First we will be using our local copy of org git tree:
     :config
     (require 'ox-odt nil t)
     (require 'org-notmuch nil t)
-    (add-to-list 'org-modules 'org-habit))
+    (add-to-list 'org-modules 'org-habit)
+    (add-to-list 'org-babel-load-languages '(dot . t)))
 
   (use-package org-bullets
     :ensure t
