@@ -800,6 +800,29 @@ with Common Lisp. For that, I'll be using =sly= with =sbcl=
     (setq inferior-lisp-program "sbcl"))
 #+END_SRC
 
+* Setup =js2-mode=
+
+  #+BEGIN_SRC emacs-lisp
+    (use-package js2-mode
+      :ensure t)
+  #+END_SRC
+
+* Setup =js-comint=
+
+  I'll need to rely on NodeJS for some University Courses. Might as
+  well get that inside emacs
+
+  #+BEGIN_SRC emacs-lisp
+    (use-package js-comint
+      :ensure t
+      :config
+      (add-hook 'js2-mode-hook
+		(lambda ()
+		  (local-set-key (kbd "C-x C-e") 'js-send-last-sexp)
+		  (local-set-key (kbd "C-c b") 'js-send-buffer)
+		  (local-set-key (kbd "C-c C-b") 'js-send-buffer-and-go))))
+  #+END_SRC
+
 * Some extra keybindings for myself
 
 These are super helpful for day to day use
