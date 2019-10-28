@@ -69,36 +69,40 @@ Some indentation configuration using mode-specific hooks
 
 #+BEGIN_SRC emacs-lisp
   (add-hook 'sh-mode-hook
-	    (lambda ()
-	       (setq sh-basic-offset 2
-		     sh-indentation 2)))
+            (lambda ()
+              (setq sh-basic-offset 2
+                    sh-indentation 2)))
 
   (add-hook 'ruby-mode-hook
-	    (lambda ()
-	       (setq ruby-indent-level 2)))
+            (lambda ()
+              (setq ruby-indent-level 2)))
 
   (add-hook 'js-mode-hook
-	    (lambda ()
-	       (setq js-indent-level 2)
-	       (setq indent-tabs-mode nil)))
+            (lambda ()
+              (setq js-indent-level 2)
+              (setq indent-tabs-mode nil)))
 
   (add-hook 'sgml-mode-hook
-	    (lambda ()
-	      (setq indent-tabs-mode nil)))
+            (lambda ()
+              (setq indent-tabs-mode nil)))
 
   (add-hook 'c-mode-hook
-	    (lambda ()
-	       (c-set-style "linux")
-	       (setq c-basic-offset 8
-		     c-block-comment-prefix "* ")
-	       (c-set-offset 'arglist-intro '++)
-	       (c-set-offset 'arglist-cont '++)
-	       (c-set-offset 'arglist-cont-nonempty '++)
-	       (setq indent-tabs-mode t)))
+            (lambda ()
+              (c-set-style "linux")
+              (setq c-basic-offset 8
+                    c-block-comment-prefix "* ")
+              (c-set-offset 'arglist-intro '++)
+              (c-set-offset 'arglist-cont '++)
+              (c-set-offset 'arglist-cont-nonempty '++)
+              (setq indent-tabs-mode t)))
+
+  (add-hook 'lisp-mode-hook
+            (lambda ()
+              (setq-default indent-tabs-mode nil)))
 
   (add-hook 'awk-mode-hook
-	    (lambda ()
-	       (c-set-style "awk")))
+            (lambda ()
+              (c-set-style "awk")))
 #+END_SRC
 
 And I like to highlight current line
@@ -560,8 +564,9 @@ I've been using =notmuch= for mailing for quite a while.
     (setq-default message-kill-buffer-on-exit t
 		  mail-specify-envelope-from t
 		  message-send-mail-function 'message-smtpmail-send-it
-		  smtpmail-smtp-server "smtp.intel.com"
-		  smtpmail-smtp-service 25
+		  smtpmail-smtp-server "smtp.gmail.com"
+		  smtpmail-smtp-service 587
+		  smtpmail-smtp-user "balbif@gmail.com"
 		  notmuch-crypto-process-mime t
 		  notmuch-show-stash-mlarchive-link-alist '(("Lore" . "https://lore.kernel.org/r/")
 							    ("Gmane" . "https://mid.gmane.org/")
