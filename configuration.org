@@ -22,7 +22,7 @@ This is where I'll setup some basic defaults for =emacs=. Things like
 
 #+BEGIN_SRC emacs-lisp
   (setq user-full-name "Felipe Balbi"
-	user-mail-address "balbif@gmail.com"
+	user-mail-address "balbi@kernel.org"
 	calendar-latitude 60.17
 	calendar-longitude 24.94
 	calendar-location-name "Helsinki, FI"
