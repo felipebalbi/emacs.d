@@ -31,6 +31,14 @@ This is where I'll setup some basic defaults for =emacs=. Things like
   (global-prettify-symbols-mode t)
 #+END_SRC
 
+If I'm running on windows, let's make things a little saner.
+
+#+BEGIN_SRC emacs-lisp
+  (if (eq system-type 'windows-net
+	  (setq-default visible-bell t
+			buffer-file-coding-system 'utf-8-unix)))
+#+END_SRC
+
 Depending on the machine I am, I might need some extra
 configuration. For example, at the office I need a proxy to get
 through to the outside world. To cope with that, I'll add an optional
