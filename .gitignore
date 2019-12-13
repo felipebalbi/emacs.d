@@ -38,3 +38,4 @@ tramp
 transient/
 var/
 /.lsp-session-v1
+/server/
