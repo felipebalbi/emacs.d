@@ -837,6 +837,19 @@ with Common Lisp. For that, I'll be using =sly= with =sbcl=
 		  (local-set-key (kbd "C-c C-b") 'js-send-buffer-and-go))))
   #+END_SRC
 
+* Setup =projectile=
+
+  Let's give =projectile= a shot.
+
+  #+BEGIN_SRC emacs-lisp
+    (use-package projectile
+      :ensure t
+      :bind (:map projectile-mode-map
+		  ("s-p" . projectile-command-map))
+      :config
+      (projectile-mode +1))
+  #+END_SRC
+
 * Some extra keybindings for myself
 
 These are super helpful for day to day use
