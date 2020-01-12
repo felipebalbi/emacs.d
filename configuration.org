@@ -239,7 +239,11 @@ inside =emacs=. =gueiser= seems to be a good choice for that
 
 #+BEGIN_SRC emacs-lisp
   (use-package geiser
-    :ensure t)
+    :ensure t
+    :config
+    (setq geiser-active-implementations '(chez)
+	  geiser-scheme-implementation 'chez
+	  geiser-chez-binary "chez"))
 #+END_SRC
 
 * Setup =paredit=
