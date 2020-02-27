@@ -416,8 +416,7 @@ First we will be using our local copy of org git tree:
     (require 'ox-odt nil t)
     (require 'org-notmuch nil t)
     (setq org-latex-pdf-process
-	  '("%latex -interaction nonstopmode -output-directory %o %f" "%latex -interaction nonstopmode -output-directory %o %f"
-	    "%latex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+	  '("latexmk -f -pdf %f"))
     (setq org-latex-listings 'minted)
     (setq org-latex-minted-options
 	  '(("linenos=true")))
