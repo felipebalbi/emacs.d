@@ -443,7 +443,7 @@ location and point =org= to our org files.
 				     (format-time-string "%Y")
 				     ".org::")
 	org-return-follows-link t
-	org-ellipsis "↴"
+	org-ellipsis "⤵"
 	org-src-fontify-natively t
 	org-src-tab-acts-natively t
 	org-enforce-todo-dependencies t
