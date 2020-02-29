@@ -421,7 +421,30 @@ First we will be using our local copy of org git tree:
     (setq org-latex-minted-options
 	  '(("linenos=true")))
     (add-to-list 'org-modules 'org-habit)
-    (org-babel-do-load-languages 'org-babel-load-languages '((dot . t))))
+    (org-babel-do-load-languages 'org-babel-load-languages '((dot . t)))
+    (add-to-list 'org-latex-classes
+		 '("scrreprt" "\\documentclass[11pt]{scrreprt}"
+		   ("\\chapter{%s}" . "\\chapter*{%s}")
+		   ("\\section{%s}" . "\\section*{%s}")
+		   ("\\subsection{%s}" . "\\subsection*{%s}")
+		   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+		   ("\\paragraph{%s}" . "\\paragraph*{%s}")
+		   ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+    (add-to-list 'org-latex-classes
+		 '("scrbook" "\\documentclass[11pt]{scrbook}"
+		   ("\\chapter{%s}" . "\\chapter*{%s}")
+		   ("\\section{%s}" . "\\section*{%s}")
+		   ("\\subsection{%s}" . "\\subsection*{%s}")
+		   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+		   ("\\paragraph{%s}" . "\\paragraph*{%s}")
+		   ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+    (add-to-list 'org-latex-classes
+		 '("scrartcl" "\\documentclass[11pt]{scrartcl}"
+		   ("\\section{%s}" . "\\section*{%s}")
+		   ("\\subsection{%s}" . "\\subsection*{%s}")
+		   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+		   ("\\paragraph{%s}" . "\\paragraph*{%s}")
+		   ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
 
   (use-package org-bullets
     :ensure t
