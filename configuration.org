@@ -440,8 +440,8 @@ First we will be using our local copy of org git tree:
 		   ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
     (add-to-list 'org-latex-classes
 		 '("notes" "\\documentclass[11pt]{scrbook}"
-		   ("\\chapter{%s}" . "\\addchap{%s}")
-		   ("\\section{%s}" . "\\addsec{%s}")
+		   ("\\addchap{%s}" . "\\addchap{%s}")
+		   ("\\addsec{%s}" . "\\addsec{%s}")
 		   ("\\subsection{%s}" . "\\subsection*{%s}")
 		   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
 		   ("\\paragraph{%s}" . "\\paragraph*{%s}")
