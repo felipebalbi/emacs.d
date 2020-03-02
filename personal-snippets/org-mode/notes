@@ -4,6 +4,7 @@
 # --
 #+LATEX_CLASS: notes
 #+LATEX_CLASS_OPTIONS: [a4paper, twoside=false]
+#+LATEX_HEADER: \usepackage{chngcntr}
 #+LATEX_HEADER: \counterwithout{figure}{chapter}
 #+LATEX_HEADER: \usepackage{amsmath}
 #+LATEX_HEADER: \usepackage{amssymb}
@@ -17,4 +18,4 @@
 #+LANGUAGE: en
 #+AUTHOR: Felipe Balbi
 #+OPTIONS: ':t ^:{} toc:t
-$0
+#+INCLUDE: $0notes/week1.org
