@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: week
+# key: <wk
+# --
+* Week ${1:number}
+
+  Learning objectives:
+
+  - ${2:objective}
+
+  Essential Reading
+
+  - ${3:objective}
+
+** $0

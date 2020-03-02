@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: figure
+# key: <fig
+# --
+#+CAPTION: ${1:caption}
+#+NAME: fig:${2:name}
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    $0
+  \end{tikzpicture}
+\end{figure}

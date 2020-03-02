@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# name: notes
+# key: notes
+# --
+#+LATEX_CLASS: notes
+#+LATEX_CLASS_OPTIONS: [a4paper, twoside=false]
+#+LATEX_HEADER: \counterwithout{figure}{chapter}
+#+LATEX_HEADER: \usepackage{amsmath}
+#+LATEX_HEADER: \usepackage{amssymb}
+#+LATEX_HEADER: \usepackage{pgfplots}
+#+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usetikzlibrary{arrows}
+#+LATEX_HEADER: \usetikzlibrary {arrows.meta}
+#+LATEX_HEADER: \tikzset{node distance=3cm}
+#+LATEX_HEADER: \tikzset{>=Stealth}
+#+TITLE: ${1:course} Course Notes
+#+LANGUAGE: en
+#+AUTHOR: Felipe Balbi
+#+OPTIONS: ':t ^:{} toc:t
+$0
