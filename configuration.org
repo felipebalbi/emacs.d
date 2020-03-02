@@ -754,14 +754,10 @@ setup =julia-mode= to make that easier.
 	  yas-wrap-around-region t)
 
     (with-eval-after-load 'yasnippet
-      (setq yas-snippet-dirs (list yasnippet-snippets-dir
-				     "~/.emacs.d/personal-snippets")))
+      (setq yas-snippet-dirs (list "~/.emacs.d/personal-snippets")))
 
     (yas-reload-all)
     (yas-global-mode))
-
-  (use-package yasnippet-snippets
-    :ensure t)
 #+END_SRC
 
 * Setup =flycheck=
