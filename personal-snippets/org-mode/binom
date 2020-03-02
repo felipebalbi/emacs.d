@@ -1,4 +1,5 @@
 # -*- mode: snippet -*-
+# expand-env: ((yas-indent-line 'fixed))
 # name: binom
 # key: binom
 # --

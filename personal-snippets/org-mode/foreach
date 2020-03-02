@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# expand-env: ((yas-indent-line 'fixed))
+# name: foreach
+# key: <for
+# --
+\foreach \\${1:var} in {${2:start}, ..., ${3:end}} {
+  $0
+}

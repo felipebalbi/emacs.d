@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# expand-env: ((yas-indent-line 'fixed))
+# name: algorithm
+# key: <alg
+# --
+#+NAME: alg:${1:algorithm}
+#+CAPTION: ${2:caption}
+\begin{algorithm}
+  \begin{algorithmic}[1]
+    \Function{${3:function}}{$${4:varlist}$}
+      $0
+    \EndFunction
+  \end{algorithmic}
+\end{algorithm}
