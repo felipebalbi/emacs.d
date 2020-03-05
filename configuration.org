@@ -379,12 +379,12 @@ Now, let's get going with setting up =powerline=
   (if (or (string-equal system-type "windows-nt")
 	  (string-equal system-type "darwin"))
       (setq os-agnostic-font-family "Fira Code")
-    (setq os-agnostic-font-family "FuraCode Nerd Font"))
+    (setq os-agnostic-font-family "Fira Mono"))
 
   (set-face-attribute 'default nil
 		      :family os-agnostic-font-family
 		      :height 140
-		      :weight 'normal
+		      :weight 'regular
 		      :width 'normal)
 
   (use-package powerline
