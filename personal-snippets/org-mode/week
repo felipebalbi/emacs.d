@@ -4,12 +4,8 @@
 # --
 * Week ${1:number}
 
-  Learning objectives:
+  Key Concepts
 
-  - ${2:objective}
-
-  Essential Reading
-
-  - ${3:objective}
+  - ${2:concept}
 
 ** $0
