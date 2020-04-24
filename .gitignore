@@ -40,3 +40,4 @@ srecode-map.el
 tramp
 transient/
 var/
+/url/
