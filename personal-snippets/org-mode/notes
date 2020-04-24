@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
 # name: notes
-# key: notes
+# key: <notes
 # --
 #+LATEX_CLASS: notes
 #+LATEX_CLASS_OPTIONS: [a4paper, twoside=false]
