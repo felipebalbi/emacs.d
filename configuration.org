@@ -129,7 +129,7 @@ I wanna see a simple clock in my modeline, so let's enable
 Better grep:
 
 #+BEGIN_SRC emacs-lisp
-  (setq grep-command "grep --color --nH -e")
+  (setq grep-command "grep --color -nH -e")
 #+END_SRC
 
 Always follow symlinks:
