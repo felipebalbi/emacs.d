@@ -422,7 +422,9 @@ First we will be using our local copy of org git tree:
     (setq org-latex-minted-options
 	  '(("linenos=true")))
     (add-to-list 'org-modules 'org-habit)
-    (org-babel-do-load-languages 'org-babel-load-languages '((dot . t)))
+    (org-babel-do-load-languages 'org-babel-load-languages '((emacs-lisp . t)
+							     (C . t)
+							     (dot . t)))
     (add-to-list 'org-latex-classes
 		 '("scrreprt" "\\documentclass[11pt]{scrreprt}"
 		   ("\\chapter{%s}" . "\\chapter*{%s}")
