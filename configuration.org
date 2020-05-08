@@ -103,6 +103,13 @@ Some indentation configuration using mode-specific hooks
 	      (c-set-offset 'arglist-cont-nonempty '++)
 	      (setq indent-tabs-mode t)))
 
+  (add-hook 'c++-mode-hook
+	    (lambda ()
+	      (c-set-style "gnu")
+	      (setq c-basic-offset 4)
+	      (setq c-block-comment-prefix "* ")
+	      (setq indent-tabs-mode nil)))
+
   (add-hook 'lisp-mode-hook
 	    (lambda ()
 	      (setq indent-tabs-mode nil)))
