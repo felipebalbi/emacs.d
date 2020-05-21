@@ -893,6 +893,17 @@ with Common Lisp. For that, I'll be using =sly= with =sbcl=
       (projectile-mode +1))
   #+END_SRC
 
+* Setup =dotnet= and =csharp-mode=
+
+#+BEGIN_SRC emacs-lisp
+  (use-package csharp-mode
+    :ensure t)
+
+  (use-package dotnet
+    :ensure t
+    :hook (csharp-mode . dotnet-mode))
+#+END_SRC
+
 * Some extra keybindings for myself
 
 These are super helpful for day to day use
