@@ -904,6 +904,15 @@ with Common Lisp. For that, I'll be using =sly= with =sbcl=
     :hook (csharp-mode . dotnet-mode))
 #+END_SRC
 
+* Setup =haskell-mode=
+
+  Learning me some haskell.
+
+  #+BEGIN_SRC emacs-lisp
+    (use-package haskell-mode
+      :ensure t)
+  #+END_SRC
+
 * Some extra keybindings for myself
 
 These are super helpful for day to day use
