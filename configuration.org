@@ -89,8 +89,6 @@ Some indentation configuration using mode-specific hooks
 	      (setq js-indent-level 2)
 	      (setq indent-tabs-mode nil)))
 
-  (add-hook 'js-mode-hook #'prettier-js-mode)
-
   (add-hook 'sgml-mode-hook
 	    (lambda ()
 	      (setq indent-tabs-mode nil)))
@@ -853,15 +851,14 @@ with Common Lisp. For that, I'll be using =sly= with =sbcl=
 
   #+BEGIN_SRC emacs-lisp
     (use-package prettier-js
-      :ensure t)
+      :ensure t
+      :hook ((js2-mode web-mode js-mode) . prettier-js-mode))
 
     (use-package js2-mode
-      :ensure t
-      :hook (prettier-js-mode . js2-mode))
+      :ensure t)
 
     (use-package web-mode
-      :ensure t
-      :hook (prettier-js-mode . web-mode))
+      :ensure t)
   #+END_SRC
 
 * Setup =js-comint=
