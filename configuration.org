@@ -226,16 +226,15 @@ possible.
     :config (global-company-mode))
 #+END_SRC
 
-* Setup =night-owl-theme=
+* Setup =dracula-theme=
 
-  Switched to Night Owl Theme after using it under =vscode=. Let's
-  give it a go here.
-
+  Switching to Dracula. Let's see how it behaves
+  
 #+BEGIN_SRC emacs-lisp
-  (use-package night-owl-theme
+  (use-package dracula-theme
     :ensure t
     :config
-    (load-theme 'night-owl t))
+    (load-theme 'dracula t))
 #+END_SRC
 
 * Setup =geiser=
