@@ -884,7 +884,7 @@ with Common Lisp. For that, I'll be using =sly= with =sbcl=
     (use-package projectile
       :ensure t
       :bind (:map projectile-mode-map
-		  ("s-p" . projectile-command-map))
+		  ("C-c p" . projectile-command-map))
       :config
       (projectile-mode +1))
   #+END_SRC
