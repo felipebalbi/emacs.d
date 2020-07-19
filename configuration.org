@@ -249,7 +249,7 @@ inside =emacs=. =gueiser= seems to be a good choice for that
     :config
     (setq geiser-active-implementations '(chez)
 	  geiser-scheme-implementation 'chez
-	  geiser-chez-binary "chez"))
+	  geiser-chez-binary "scheme"))
 #+END_SRC
 
 * Setup =paredit=
