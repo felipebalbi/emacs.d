@@ -421,6 +421,7 @@ First we will be using our local copy of org git tree:
      ("C-c b" . org-switchb))
     :config
     (require 'ox-odt nil t)
+    (require 'ox-md nil t)
     (require 'org-notmuch nil t)
     (setq org-latex-pdf-process
 	  '("latexmk -xelatex -shell-escape -f -pdf %f"))
