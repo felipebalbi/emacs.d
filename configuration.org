@@ -625,9 +625,11 @@ I've been using =notmuch= for mailing for quite a while.
     (setq-default message-kill-buffer-on-exit t
 		  mail-specify-envelope-from t
 		  message-send-mail-function 'message-smtpmail-send-it
-		  smtpmail-smtp-server "smtp.gmail.com"
+		  mml-secure-smime-sign-with-sender t
+		  mml-secure-openpgp-sign-with-sender t
+		  smtpmail-smtp-server "mail.kernel.org"
 		  smtpmail-smtp-service 587
-		  smtpmail-smtp-user "balbif@gmail.com"
+		  smtpmail-smtp-user "balbi"
 		  notmuch-crypto-process-mime t
 		  notmuch-show-stash-mlarchive-link-alist '(("Lore" . "https://lore.kernel.org/r/")
 							    ("Gmane" . "https://mid.gmane.org/")
