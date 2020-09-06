@@ -779,8 +779,10 @@ setup =julia-mode= to make that easier.
 #+BEGIN_SRC emacs-lisp
   (use-package flycheck
     :ensure t
-    :hook (vue-mode . flycheck-mode)
-    :config (flycheck-add-mode 'javascript-eslint 'vue-mode))
+    :hook ((vue-mode python-mode) . flycheck-mode)
+    :config
+    (flycheck-add-mode 'javascript-eslint 'vue-mode)
+    (flycheck-add-mode 'python-pylint 'python-mode))
 #+END_SRC
 
 * Setup =smartparens=
