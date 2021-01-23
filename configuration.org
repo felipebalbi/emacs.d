@@ -218,19 +218,6 @@ buffers. Easiest way of achieve that is to add =turn-on-auto-fill= to
   (add-hook 'text-mode-hook 'turn-on-auto-fill)
 #+END_SRC
 
-* Setup =company-mode=
-
-Auto-completion is always useful, so I'll be using it as much as
-possible.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package company
-    :ensure t
-    :bind ("TAB" . company-indent-or-complete-common)
-    :defer 1
-    :config (global-company-mode))
-#+END_SRC
-
 * Setup =dracula-theme=
 
   Switching to Dracula. Let's see how it behaves
@@ -827,17 +814,20 @@ setup =julia-mode= to make that easier.
 #+BEGIN_SRC emacs-lisp
   (use-package lsp-mode
     :ensure t
-    :hook (vue-mode . lsp)
+    :hook ((vue-mode . lsp)
+	   (haskell-mode . lsp)
+	   (haskell-literate-mode . lsp))
     :commands lsp
     :config (setq lsp-prefer-flymake nil))
+
+  (use-package lsp-haskell
+    :ensure t
+    :config
+    (setq lsp-haskell-process-path-hie "haskell-language-server-wrapper"))
 
   (use-package lsp-ui
     :ensure t
     :commands lsp-ui-mode)
-
-  (use-package company-lsp
-    :ensure t
-    :commands company-lsp)
 
   (use-package helm-lsp
     :ensure t
