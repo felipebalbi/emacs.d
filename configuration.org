@@ -553,9 +553,7 @@ This is simple to configure.
   (use-package magit
     :ensure t
     :config (setq magit-diff-use-overlays nil
-		  magit-commit-arguments '("--signoff")
-		  split-width-threshold 0
-		  split-height-threshold nil)
+                  magit-commit-arguments '("--signoff"))
     :bind ("C-x g" . magit-status))
 #+END_SRC
 
