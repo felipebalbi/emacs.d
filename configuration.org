@@ -52,7 +52,7 @@ through to the outside world. To cope with that, I'll add an optional
 After that, let's increase =emacs=' garbage collector threshold:
 
 #+BEGIN_SRC emacs-lisp
-  (setq gc-cons-threshold 50000000)	; Stolen from Howard Abrams :-)
+  (setq gc-cons-threshold (* 100 1024 1024))	; Stolen from Howard Abrams :-)
 #+END_SRC
 
 I tend to hit =C-x C-c= by accident all the time. This little trick
