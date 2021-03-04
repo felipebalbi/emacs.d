@@ -162,6 +162,21 @@ Always follow symlinks:
   (setq vc-follow-symlinks t)
 #+END_SRC
 
+* Fira Code Font
+
+ #+BEGIN_SRC emacs-lisp
+   (if (or (string-equal system-type "windows-nt")
+	   (string-equal system-type "darwin"))
+       (setq os-agnostic-font-family "Fira Code")
+     (setq os-agnostic-font-family "Fira Mono"))
+
+   (set-face-attribute 'default nil
+		       :family os-agnostic-font-family
+		       :height 140
+		       :weight 'regular
+		       :width 'normal)
+ #+END_SRC
+
 * Disable lockfiles
 
 #+BEGIN_SRC emacs-lisp
