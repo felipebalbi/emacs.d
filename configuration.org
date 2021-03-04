@@ -222,7 +222,6 @@ GUI helpers like =dmenu= or =Spotlight=
 #+BEGIN_SRC emacs-lisp
   (use-package exec-path-from-shell
     :unless (string-equal system-type "windows-nt")
-    :ensure t
     :init
     (exec-path-from-shell-initialize)
     (exec-path-from-shell-copy-env "SSH_AUTH_SOCK"))
@@ -245,7 +244,6 @@ buffers. Easiest way of achieve that is to add =turn-on-auto-fill= to
   
 #+BEGIN_SRC emacs-lisp
   (use-package dracula-theme
-    :ensure t
     :demand t
     :config
     (load-theme 'dracula t))
@@ -259,7 +257,6 @@ inside =emacs=. =gueiser= seems to be a good choice for that
 
 #+BEGIN_SRC emacs-lisp
   (use-package geiser
-    :ensure t
     :config
     (setq geiser-active-implementations '(chez)
 	  geiser-scheme-implementation 'chez
@@ -273,7 +270,6 @@ darn helpful that I just have to use it.
 
 #+BEGIN_SRC emacs-lisp
   (use-package paredit
-    :ensure t
     :hook ((emacs-lisp-mode
 	    ielm-mode
 	    lisp-mode
@@ -297,7 +293,6 @@ As a complement to =paredit= I want my parens to be easy to see, hence =rainbow-
 
 #+BEGIN_SRC emacs-lisp
   (use-package rainbow-delimiters
-    :ensure t
     :config
     (add-hook 'emacs-lisp-mode-hook       #'rainbow-delimiters-mode)
     (add-hook 'eval-expression-minibuffer-setup-hook #'rainbow-delimiters-mode)
@@ -336,7 +331,6 @@ Oh, dear =helm=; how could I possibly live without you.
 
 #+BEGIN_SRC emacs-lisp
   (use-package helm
-    :ensure t
     :bind (("M-x" . helm-M-x)
            ("C-x r b" . helm-bookmarks)
            ("M-y" . helm-show-kill-ring)
@@ -363,7 +357,6 @@ A very good extension to =helm=...
 
 #+BEGIN_SRC emacs-lisp
   (use-package helm-ls-git
-    :ensure t
     :bind ("C-x C-d" . helm-browse-project))
 #+END_SRC
 
@@ -371,7 +364,6 @@ A very good extension to =helm=...
 
 #+BEGIN_SRC emacs-lisp
   (use-package helm-git-grep
-    :ensure t
     :bind (("C-c g" . helm-git-grep)
            (:map isearch-mode-map
                     ("C-c g" . helm-git-grep-from-isearch))))
@@ -381,7 +373,6 @@ A very good extension to =helm=...
 
 #+BEGIN_SRC emacs-lisp
   (use-package doom-modeline
-    :ensure t
     :demand t
     :hook (after-init . doom-modeline-mode)
     :config (setq find-file-visit-truename t))
@@ -401,7 +392,6 @@ First we will be using our local copy of org git tree:
 
 #+BEGIN_SRC emacs-lisp
   (use-package org
-    :ensure t
     :pin org
     :bind
     (("C-c l" . org-store-link)
@@ -454,7 +444,6 @@ First we will be using our local copy of org git tree:
 		   ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
 
   (use-package org-bullets
-    :ensure t
     :hook (org-mode . org-bullets-mode)
     :config
     (setq org-hide-leading-stars t))
@@ -527,8 +516,7 @@ Some =org-templates=
 slides. This can come in very handy ;-)
 
 #+BEGIN_SRC emacs-lisp
-  (use-package ox-ioslide
-    :ensure t)
+  (use-package ox-ioslide)
 #+END_SRC
 
 * Setup =ox-rst=
@@ -537,8 +525,7 @@ slides. This can come in very handy ;-)
 is used as Linux' documentation source.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package ox-rst
-    :ensure t)
+  (use-package ox-rst)
 #+END_SRC
 
 * Setup =magit=
@@ -547,7 +534,6 @@ This is simple to configure.
 
 #+BEGIN_SRC emacs-lisp
   (use-package magit
-    :ensure t
     :config (setq magit-diff-use-overlays nil
                   magit-commit-arguments '("--signoff"))
     :bind ("C-x g" . magit-status))
@@ -559,7 +545,6 @@ Really not much here, I just need a key chord to start =eshell= at will
 
 #+BEGIN_SRC emacs-lisp
   (use-package eshell
-    :ensure t
     :bind ("C-c t" . eshell))
 #+END_SRC
 
@@ -570,7 +555,6 @@ a bit useful and I kinda like it.
 
 #+BEGIN_SRC emacs-lisp
   (use-package engine-mode
-    :ensure t
     :config
     (engine/set-keymap-prefix (kbd "C-c s"))
 
@@ -606,7 +590,6 @@ I've been using =notmuch= for mailing for quite a while.
 
 #+BEGIN_SRC emacs-lisp
   (use-package notmuch
-    :ensure t
     :config
     (require 'smtpmail)
     (add-hook 'message-setup-hook 'mml-secure-message-sign-pgpmime)
@@ -633,7 +616,6 @@ I use =ledger-mode= for managing my finances.
 
 #+BEGIN_SRC emacs-lisp
   (use-package ledger-mode
-    :ensure t
     :config
     (add-to-list 'auto-mode-alist '("\\.ledger\\'" . ledger-mode))
     (setq ledger-clear-whole-transactions t
@@ -652,8 +634,7 @@ Well, maybe I could play a bit with =restclient= every now and again
 :-)
 
 #+BEGIN_SRC emacs-lisp
-  (use-package restclient
-    :ensure t)
+  (use-package restclient)
 #+END_SRC
 
 * Setup =octave-mode=
@@ -668,7 +649,6 @@ Use *.m as default extension for octave files
 
 #+BEGIN_SRC emacs-lisp
   (use-package markdown-mode
-    :ensure t
     :mode (("README\\.md\\'" . gfm-mode)
 	   ("\\.md\\'" . markdown-mode)
 	   ("\\.markdown\\'" . markdown-mode))
@@ -679,7 +659,6 @@ Use *.m as default extension for octave files
 
 #+BEGIN_SRC emacs-lisp
   (use-package helm-swoop
-    :ensure t
     :bind
     ("C-s" . helm-swoop)
     ("C-r" . helm-swoop)
@@ -704,15 +683,13 @@ Use *.m as default extension for octave files
   huh? =impatient-mode= to the rescue.
 
   #+BEGIN_SRC emacs-lisp
-    (use-package impatient-mode
-      :ensure t)
+    (use-package impatient-mode)
   #+END_SRC
 
 * Setup =yasnippet=
 
 #+BEGIN_SRC emacs-lisp
   (use-package yasnippet
-    :ensure t
     :config
     (setq yas-verbosity 1
 	  yas-wrap-around-region t)
@@ -730,7 +707,6 @@ Use *.m as default extension for octave files
 
 #+BEGIN_SRC emacs-lisp
   (use-package flycheck
-    :ensure t
     :hook ((vue-mode python-mode) . flycheck-mode)
     :config
     (flycheck-add-mode 'javascript-eslint 'vue-mode)
@@ -744,7 +720,6 @@ with Common Lisp. For that, I'll be using =sly= with =sbcl=
 
 #+BEGIN_SRC emacs-lisp
   (use-package sly
-    :ensure t
     :config
     (setq inferior-lisp-program "sbcl"))
 #+END_SRC
@@ -753,14 +728,11 @@ with Common Lisp. For that, I'll be using =sly= with =sbcl=
 
   #+BEGIN_SRC emacs-lisp
     (use-package prettier-js
-      :ensure t
       :hook ((js2-mode web-mode js-mode) . prettier-js-mode))
 
-    (use-package js2-mode
-      :ensure t)
+    (use-package js2-mode)
 
-    (use-package web-mode
-      :ensure t)
+    (use-package web-mode)
   #+END_SRC
 
 * Setup =js-comint=
@@ -770,7 +742,6 @@ with Common Lisp. For that, I'll be using =sly= with =sbcl=
 
   #+BEGIN_SRC emacs-lisp
     (use-package js-comint
-      :ensure t
       :config
       (add-hook 'js-mode-hook
 		(lambda ()
@@ -785,7 +756,6 @@ with Common Lisp. For that, I'll be using =sly= with =sbcl=
 
   #+BEGIN_SRC emacs-lisp
     (use-package haskell-mode
-      :ensure t
       :init
       (add-hook 'haskell-mode-hook #'interactive-haskell-mode)
       (add-hook 'haskell-mode-hook #'haskell-indentation-mode))
@@ -822,11 +792,9 @@ Few commands I want to use but are disabled by default
 * All The Icons
 
 #+BEGIN_SRC emacs-lisp
-  (use-package all-the-icons
-    :ensure t)
+  (use-package all-the-icons)
 
   (use-package all-the-icons-dired
-    :ensure t
     :config
     (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
 #+END_SRC
