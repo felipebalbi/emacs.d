@@ -1,3 +1,24 @@
+#+TITLE: Emacs Configuration
+
+* Garbage Collection
+
+Let's increase =emacs=' garbage collector threshold and inhibit font
+cache compression:
+
+#+BEGIN_SRC emacs-lisp
+  (setq gc-cons-threshold (* 100 1024 1024)
+	inhibit-compacting-font-caches t)
+
+    (defun fb/display-startup-time ()
+      (message "Emacs loaded in %s with %d garbage collections."
+	       (format "%.2f seconds"
+		       (float-time
+			 (time-subtract after-init-time before-init-time)))
+	       gcs-done))
+
+    (add-hook 'emacs-startup-hook #'fb/display-startup-time)
+#+END_SRC
+
 * Package System
 
 The first thing we need to do is initialize =emacs='s package
@@ -47,13 +68,6 @@ through to the outside world. To cope with that, I'll add an optional
   (let ((filename (concat "~/.emacs.d/" (system-name) ".org.gpg")))
     (if (file-exists-p filename)
         (org-babel-load-file filename)))
-#+END_SRC
-
-After that, let's increase =emacs=' garbage collector threshold:
-
-#+BEGIN_SRC emacs-lisp
-  (setq gc-cons-threshold (* 100 1024 1024)
-	inhibit-compacting-font-caches t)
 #+END_SRC
 
 I tend to hit =C-x C-c= by accident all the time. This little trick
