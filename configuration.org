@@ -478,9 +478,8 @@ First we will be using our local copy of org git tree:
 
   (use-package org-bullets
     :ensure t
+    :hook (org-mode . org-bullets-mode)
     :config
-    (add-hook 'org-mode-hook
-	      (lambda () (org-bullets-mode t)))
     (setq org-hide-leading-stars t))
 #+END_SRC
 
