@@ -376,39 +376,14 @@ A very good extension to =helm=...
                     ("C-c g" . helm-git-grep-from-isearch))))
 #+END_SRC
 
-* Setup =powerline=
-
-=powerline= turns =emacs='s mode line into something so useful that I
-can't live without it anymore.
-
-Note that in order to use =powerline= we need to install a
-=powerline=-patched font. I kinda line Fira Code/Mono and that's what
-I'll use.
-
-For the sake of documentation, here's how I've manually setup
-=powerline=-patched fonts.
-
-#+BEGIN_SRC sh :eval no
-  $ yay -Sy nerd-fonts-complete
-#+END_SRC
-
-Now, let's get going with setting up =powerline=
+* Setup =doom-modeline=
 
 #+BEGIN_SRC emacs-lisp
-  (if (or (string-equal system-type "windows-nt")
-	  (string-equal system-type "darwin"))
-      (setq os-agnostic-font-family "Fira Code")
-    (setq os-agnostic-font-family "Fira Mono"))
-
-  (set-face-attribute 'default nil
-		      :family os-agnostic-font-family
-		      :height 140
-		      :weight 'regular
-		      :width 'normal)
-
-  (use-package powerline
+  (use-package doom-modeline
     :ensure t
-    :config (powerline-default-theme))
+    :demand t
+    :hook (after-init . doom-modeline-mode)
+    :config (setq find-file-visit-truename t))
 #+END_SRC
 
 * Setup =org= and =org-bullets=
