@@ -77,8 +77,7 @@ Some indentation configuration using mode-specific hooks
 #+BEGIN_SRC emacs-lisp
   (add-hook 'sh-mode-hook
 	    (lambda ()
-	      (setq sh-basic-offset 2
-		    sh-indentation 2)))
+	      (setq sh-basic-offset 2)))
 
   (add-hook 'ruby-mode-hook
 	    (lambda ()
