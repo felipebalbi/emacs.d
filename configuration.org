@@ -31,6 +31,10 @@ system. That's achieved with the following =elisp= code.
 
   (add-to-list 'package-archives
 	       '("melpa" . "http://melpa.org/packages/"))
+  (add-to-list 'package-archives
+	       '("org" . "https://orgmode.org/elpa/"))
+  (add-to-list 'package-archives
+	       '("elpa" . "https://elpa.gnu.org/packages/"))
 
   (package-initialize)
 #+END_SRC
