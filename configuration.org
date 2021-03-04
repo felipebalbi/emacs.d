@@ -245,6 +245,7 @@ buffers. Easiest way of achieve that is to add =turn-on-auto-fill= to
 #+BEGIN_SRC emacs-lisp
   (use-package dracula-theme
     :ensure t
+    :demand t
     :config
     (load-theme 'dracula t))
 #+END_SRC
