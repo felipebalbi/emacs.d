@@ -661,48 +661,12 @@ Well, maybe I could play a bit with =restclient= every now and again
     :ensure t)
 #+END_SRC
 
-* Setup =rust=
-
-We may decide to play a little with =rust=
-
-#+BEGIN_SRC emacs-lisp
-  (use-package rust-mode
-    :ensure t)
-
-  (use-package cargo
-    :ensure t)
-
-  (use-package flycheck-rust
-    :ensure t)
-
-  (use-package flymake-rust
-    :ensure t
-    :config
-    (add-hook 'rust-mode-hook 'flymake-rust-load)
-    (add-hook 'rust-mode-hook 'cargo-minor-mode)
-    (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
-    (setq flymake-rust-use-cargo 1))
-
-  (use-package rust-playground
-    :ensure t)
-#+END_SRC
-
 * Setup =octave-mode=
 
 Use *.m as default extension for octave files
 
 #+BEGIN_SRC emacs-lisp
   (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
-#+END_SRC
-
-* Setup =julia-mode=
-
-Julia is a great language and I want to play a little with it, let's
-setup =julia-mode= to make that easier.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package julia-mode
-    :ensure t)
 #+END_SRC
 
 * Setup =markdown-mode=
@@ -778,63 +742,6 @@ setup =julia-mode= to make that easier.
     (flycheck-add-mode 'python-pylint 'python-mode))
 #+END_SRC
 
-* Setup =smartparens=
-
-  Install it
-
-#+BEGIN_SRC emacs-lisp
-  (use-package smartparens
-    :ensure t
-    :hook (vue-mode . smartparens-strict-mode))
-#+END_SRC
-
-* Setup =vue-mode=
-
-  Install it
-
-#+BEGIN_SRC emacs-lisp
-  (use-package vue-mode
-    :ensure t
-    :config (setq indent-tabs-mode nil)
-    :init
-    (add-hook 'mmm-mode-hook
-	      (lambda ()
-		(set-face-background 'mmm-default-submode-face nil)
-		(setq mmm-submode-decoration-level 0)))
-    (add-hook 'vue-mode-hook 'display-line-numbers-mode)
-    (add-hook 'vue-mode-hook 'smartparens-strict-mode))
-
-  #+END_SRC
-
-* Setup =lsp-mode=
-
-  Note that for this to work we need =yarn=, =eslint=,
-  =vue-language-server=, and =prettier= installed. All of these can be
-  found on Arch Linux's repositories.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package lsp-mode
-    :ensure t
-    :hook ((vue-mode . lsp)
-	   (haskell-mode . lsp)
-	   (haskell-literate-mode . lsp))
-    :commands lsp
-    :config (setq lsp-prefer-flymake nil))
-
-  (use-package lsp-haskell
-    :ensure t
-    :config
-    (setq lsp-haskell-process-path-hie "haskell-language-server-wrapper"))
-
-  (use-package lsp-ui
-    :ensure t
-    :commands lsp-ui-mode)
-
-  (use-package helm-lsp
-    :ensure t
-    :commands helm-lsp-workspace-symbol)
-#+END_SRC
-
 * Setup =sly=
 
 I've started reading Land Of Lisp and will, therefore, play around
@@ -876,30 +783,6 @@ with Common Lisp. For that, I'll be using =sly= with =sbcl=
 		  (local-set-key (kbd "C-c b") 'js-send-buffer)
 		  (local-set-key (kbd "C-c C-b") 'js-send-buffer-and-go))))
   #+END_SRC
-
-* Setup =projectile=
-
-  Let's give =projectile= a shot.
-
-  #+BEGIN_SRC emacs-lisp
-    (use-package projectile
-      :ensure t
-      :bind (:map projectile-mode-map
-		  ("C-c p" . projectile-command-map))
-      :config
-      (projectile-mode +1))
-  #+END_SRC
-
-* Setup =dotnet= and =csharp-mode=
-
-#+BEGIN_SRC emacs-lisp
-  (use-package csharp-mode
-    :ensure t)
-
-  (use-package dotnet
-    :ensure t
-    :hook (csharp-mode . dotnet-mode))
-#+END_SRC
 
 * Setup =haskell-mode=
 
