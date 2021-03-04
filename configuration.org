@@ -402,6 +402,7 @@ First we will be using our local copy of org git tree:
 #+BEGIN_SRC emacs-lisp
   (use-package org
     :ensure t
+    :pin org
     :bind
     (("C-c l" . org-store-link)
      ("C-c a" . org-agenda)
