@@ -415,6 +415,7 @@ First we will be using our local copy of org git tree:
      ("C-c c" . org-capture)
      ("C-c b" . org-switchb))
     :config
+    (require 'org-tempo nil t)
     (require 'ox-odt nil t)
     (require 'ox-md nil t)
     (require 'org-notmuch nil t)
