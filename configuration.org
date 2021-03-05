@@ -205,6 +205,7 @@ Don't you hate all these bars in =emacs=? I do, let's disable them:
   (horizontal-scroll-bar-mode -1)
   (menu-bar-mode -1)
   (tool-bar-mode -1)
+  (tooltip-mode -1)
 #+END_SRC
 
 * Install =use-package= if necessary
