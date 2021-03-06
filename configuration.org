@@ -813,7 +813,17 @@
       (add-hook 'haskell-mode-hook #'haskell-indentation-mode))
   #+end_src
 
-* Some extra keybindings for myself
+* All The Icons
+
+  #+begin_src emacs-lisp
+    (use-package all-the-icons)
+
+    (use-package all-the-icons-dired
+      :hook (dired-mode . all-the-icons-dired-mode))
+  #+end_src
+
+* Outro
+** Some extra keybindings for myself
 
   These are super helpful for day to day use
 
@@ -822,15 +832,7 @@
     (define-key global-map (kbd "C-0") 'text-scale-decrease)
   #+end_src
 
-* GnuPG 2
-
-  We're gonna tell =emacs= to use =gpg2=
-
-  #+begin_src emacs-lisp
-    (setq epg-gpg-program "/usr/bin/gpg2")
-  #+end_src
-
-* Enable some disabled commands
+** Enable some disabled commands
 
   Few commands I want to use but are disabled by default
   
@@ -840,13 +842,16 @@
     (put 'downcase-region 'disabled nil)
     (put 'dired-find-alternate-file 'disabled nil)
   #+end_src
+** GnuPG 2
 
-* All The Icons
+  We're gonna tell =emacs= to use =gpg2=
 
   #+begin_src emacs-lisp
-    (use-package all-the-icons)
-
-    (use-package all-the-icons-dired
-      :hook (dired-mode . all-the-icons-dired-mode))
+    (setq epg-gpg-program "/usr/bin/gpg2")
   #+end_src
+** Reduce Garbage Collection Threshold
+
+   #+begin_src emacs-lisp
+     (setq gc-cons-threshold (* 2 1024 1024))
+   #+end_src
 
