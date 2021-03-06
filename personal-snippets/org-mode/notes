@@ -14,7 +14,8 @@
 #+LATEX_HEADER: \usetikzlibrary {arrows.meta}
 #+LATEX_HEADER: \tikzset{node distance=3cm}
 #+LATEX_HEADER: \tikzset{>=Stealth}
-#+TITLE: ${1:course} Course Notes
+#+TITLE: ${1:course} (${2:code})
+#+SUBTITLE: Course Notes
 #+LANGUAGE: en
 #+AUTHOR: Felipe Balbi
 #+OPTIONS: ':t ^:{} toc:t
