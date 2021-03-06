@@ -1,767 +1,798 @@
 #+TITLE: Emacs Configuration
 
-* Garbage Collection
+* Early Configuration
+** Increase Garbage Collection Threshold
 
-Let's increase =emacs=' garbage collector threshold and inhibit font
-cache compression:
+   Let's increase =emacs=' garbage collector threshold and inhibit font
+   cache compression:
 
-#+BEGIN_SRC emacs-lisp
-  (setq gc-cons-threshold (* 100 1024 1024)
-	inhibit-compacting-font-caches t)
+   #+begin_src emacs-lisp
+     (setq gc-cons-threshold (* 100 1024 1024)
+	   inhibit-compacting-font-caches t)
+   #+end_src
 
-    (defun fb/display-startup-time ()
-      (message "Emacs loaded in %s with %d garbage collections."
-	       (format "%.2f seconds"
-		       (float-time
+** Track Initialization Time
+
+   This little snippet from [[https://www.youtube.com/channel/UCAiiOTio8Yu69c3XnR7nQBQ][System Crafters]] helps us track
+   =emacs= initialization time
+
+   #+begin_src emacs-lisp
+     (defun fb/display-startup-time ()
+       (message "Emacs loaded in %s with %d garbage collections."
+		(format "%.2f seconds"
+			(float-time
 			 (time-subtract after-init-time before-init-time)))
-	       gcs-done))
+		gcs-done))
 
-    (add-hook 'emacs-startup-hook #'fb/display-startup-time)
-#+END_SRC
+     (add-hook 'emacs-startup-hook #'fb/display-startup-time)
+   #+end_src
 
-* Package System
+** Package System
 
-The first thing we need to do is initialize =emacs='s package
-system. That's achieved with the following =elisp= code.
+   The first thing we need to do is initialize =emacs='s package
+   system. That's achieved with the following =elisp= code.
 
-#+BEGIN_SRC emacs-lisp
-  (require 'package)
+   #+begin_src emacs-lisp
+     (require 'package)
 
-  (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+     (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
-  (add-to-list 'package-archives
-	       '("melpa" . "http://melpa.org/packages/"))
-  (add-to-list 'package-archives
-	       '("org" . "https://orgmode.org/elpa/"))
-  (add-to-list 'package-archives
-	       '("elpa" . "https://elpa.gnu.org/packages/"))
+     (add-to-list 'package-archives
+		  '("melpa" . "http://melpa.org/packages/"))
+     (add-to-list 'package-archives
+		  '("org" . "https://orgmode.org/elpa/"))
+     (add-to-list 'package-archives
+		  '("elpa" . "https://elpa.gnu.org/packages/"))
 
-  (package-initialize)
-#+END_SRC
+     (package-initialize)
+   #+end_src
 
-* Basics
+* The Basics
 
-This is where I'll setup some basic defaults for =emacs=. Things like
-=user-full-name=, =user-mail-address= and similar will be here.
+** User Name, Email, etc
 
-#+BEGIN_SRC emacs-lisp
-  (setq user-full-name "Felipe Balbi"
-	user-mail-address "balbi@kernel.org"
-	calendar-latitude 60.17
-	calendar-longitude 24.94
-	calendar-location-name "Helsinki, FI"
-	inhibit-startup-screen t
-	make-backup-files nil)
-  (global-prettify-symbols-mode t)
-#+END_SRC
+   This is where I'll setup some basic defaults for =emacs=. Things
+   like =user-full-name=, =user-mail-address= and similar will be
+   here.
 
-If I'm running on windows, let's make things a little saner.
+   #+begin_src emacs-lisp
+     (setq user-full-name "Felipe Balbi"
+	   user-mail-address "balbi@kernel.org"
+	   calendar-latitude 60.17
+	   calendar-longitude 24.94
+	   calendar-location-name "Helsinki, FI"
+	   inhibit-startup-screen t
+	   make-backup-files nil)
+     (global-prettify-symbols-mode t)
+   #+end_src
 
-#+BEGIN_SRC emacs-lisp
-  (if (eq system-type 'windows-nt)
-      (setq-default visible-bell t
-		    buffer-file-coding-system 'utf-8-unix))
-#+END_SRC
+** Windows Specific Settings
 
-Depending on the machine I am, I might need some extra
-configuration. For example, at the office I need a proxy to get
-through to the outside world. To cope with that, I'll add an optional
-=site-local.el= file on such machines and conditionally load it.
+   If I'm running on windows, let's make things a little saner.
 
-#+BEGIN_SRC emacs-lisp
-  (let ((filename (concat "~/.emacs.d/" (system-name) ".org.gpg")))
-    (if (file-exists-p filename)
-        (org-babel-load-file filename)))
-#+END_SRC
+   #+begin_src emacs-lisp
+     (if (eq system-type 'windows-nt)
+	 (setq-default visible-bell t
+		       buffer-file-coding-system 'utf-8-unix))
+   #+end_src
 
-I tend to hit =C-x C-c= by accident all the time. This little trick
-helps me a lot
+** Host Specific Settings
 
-#+BEGIN_SRC emacs-lisp
-  (setq confirm-kill-emacs 'yes-or-no-p)
-#+END_SRC
+   Depending on the machine I am, I might need some extra
+   configuration. For example, at the office I need a proxy to get
+   through to the outside world. To cope with that, I'll add an
+   optional =site-local.el= file on such machines and conditionally
+   load it.
 
-Numbers, numbers, numbers...
+   #+begin_src emacs-lisp
+     (let ((filename (concat "~/.emacs.d/" (system-name) ".org.gpg")))
+       (if (file-exists-p filename)
+	   (org-babel-load-file filename)))
+   #+end_src
 
-#+BEGIN_SRC emacs-lisp
-  (setq fill-column 80)
-  (column-number-mode)
+** Prevent Accidentally closing =emacs=
 
-  (add-hook 'prog-mode-hook #'display-line-numbers-mode)
-#+END_SRC
+   I tend to hit =C-x C-c= by accident all the time. This little trick
+   helps me a lot
 
-Some indentation configuration using mode-specific hooks
+   #+begin_src emacs-lisp
+     (setq confirm-kill-emacs 'yes-or-no-p)
+   #+end_src
 
-#+BEGIN_SRC emacs-lisp
-  (add-hook 'sh-mode-hook
-	    (lambda ()
-	      (setq sh-basic-offset 2)))
+** Numbers, numbers, numbers
 
-  (add-hook 'ruby-mode-hook
-	    (lambda ()
-	      (setq ruby-indent-level 2)))
+   #+begin_src emacs-lisp
+     (setq fill-column 80)
+     (column-number-mode)
 
-  (add-hook 'js-mode-hook
-	    (lambda ()
-	      (setq js-indent-level 2)
-	      (setq indent-tabs-mode nil)))
+     (add-hook 'prog-mode-hook #'display-line-numbers-mode)
+   #+end_src
 
-  (add-hook 'sgml-mode-hook
-	    (lambda ()
-	      (setq indent-tabs-mode nil)))
+** Indentation
 
-  (add-hook 'c-mode-hook
-	    (lambda ()
-	      (c-set-style "linux")
-	      (setq c-basic-offset 8
-		    c-block-comment-prefix "* ")
-	      (c-set-offset 'arglist-intro '++)
-	      (c-set-offset 'arglist-cont '++)
-	      (c-set-offset 'arglist-cont-nonempty '++)
-	      (setq indent-tabs-mode t)))
+   Some indentation configuration using mode-specific hooks
 
-  (add-hook 'c++-mode-hook
-	    (lambda ()
-	      (c-set-style "gnu")
-	      (setq c-basic-offset 4)
-	      (setq c-block-comment-prefix "* ")
-	      (setq indent-tabs-mode nil)))
+   #+begin_src emacs-lisp
+     (add-hook 'sh-mode-hook
+	       (lambda ()
+		 (setq sh-basic-offset 2)))
 
-  (add-hook 'lisp-mode-hook
-	    (lambda ()
-	      (setq indent-tabs-mode nil)))
+     (add-hook 'ruby-mode-hook
+	       (lambda ()
+		 (setq ruby-indent-level 2)))
 
-  (add-hook 'awk-mode-hook
-	    (lambda ()
-	      (c-set-style "awk")))
-#+END_SRC
+     (add-hook 'js-mode-hook
+	       (lambda ()
+		 (setq js-indent-level 2)
+		 (setq indent-tabs-mode nil)))
 
-And I like to highlight current line
+     (add-hook 'sgml-mode-hook
+	       (lambda ()
+		 (setq indent-tabs-mode nil)))
 
-#+BEGIN_SRC emacs-lisp
-  (when window-system (global-hl-line-mode))
-#+END_SRC
+     (add-hook 'c-mode-hook
+	       (lambda ()
+		 (c-set-style "linux")
+		 (setq c-basic-offset 8
+		       c-block-comment-prefix "* ")
+		 (c-set-offset 'arglist-intro '++)
+		 (c-set-offset 'arglist-cont '++)
+		 (c-set-offset 'arglist-cont-nonempty '++)
+		 (setq indent-tabs-mode t)))
 
-I wanna see a simple clock in my modeline, so let's enable
-=display-time-mode=
+     (add-hook 'c++-mode-hook
+	       (lambda ()
+		 (c-set-style "gnu")
+		 (setq c-basic-offset 4)
+		 (setq c-block-comment-prefix "* ")
+		 (setq indent-tabs-mode nil)))
 
-#+BEGIN_SRC emacs-lisp
-  (setq display-time-24hr-format t)
-  (display-time-mode 1)
-#+END_SRC
+     (add-hook 'lisp-mode-hook
+	       (lambda ()
+		 (setq indent-tabs-mode nil)))
 
-Better grep:
+     (add-hook 'awk-mode-hook
+	       (lambda ()
+		 (c-set-style "awk")))
+   #+end_src
 
-#+BEGIN_SRC emacs-lisp
-  (setq grep-command "grep --color -nH -e")
-#+END_SRC
+** Highlight Current Line
 
-Always follow symlinks:
+   And I like to highlight current line
 
-#+BEGIN_SRC emacs-lisp
-  (setq vc-follow-symlinks t)
-#+END_SRC
+   #+begin_src emacs-lisp
+     (when window-system (global-hl-line-mode))
+   #+end_src
 
-* Fira Code Font
+** Current Time
 
- #+BEGIN_SRC emacs-lisp
-   (if (or (string-equal system-type "windows-nt")
-	   (string-equal system-type "darwin"))
-       (setq os-agnostic-font-family "Fira Code")
-     (setq os-agnostic-font-family "Fira Mono"))
+   I wanna see a simple clock in my modeline, so let's enable
+   =display-time-mode=
 
-   (set-face-attribute 'default nil
-		       :family os-agnostic-font-family
-		       :height 140
-		       :weight 'regular
-		       :width 'normal)
- #+END_SRC
+   #+begin_src emacs-lisp
+     (setq display-time-24hr-format t)
+     (display-time-mode 1)
+   #+end_src
 
-* Disable lockfiles
+** Default =grep= options
 
-#+BEGIN_SRC emacs-lisp
-  (setq create-lockfiles nil)
-#+END_SRC
+   Better grep:
 
-* Setup a new home for =custom-file=
+   #+begin_src emacs-lisp
+     (setq grep-command "grep --color -nH -e")
+   #+end_src
 
-Well, I don't want =custom= touching my beautiful =init.el=. Let's give
-it a dumping ground.
+** Always follow symlinks
 
-#+BEGIN_SRC emacs-lisp
-  (unless (file-exists-p "~/.emacs.d/custom.el")
-    (with-temp-buffer (write-file "~/.emacs.d/custom.el")))
+   #+begin_src emacs-lisp
+     (setq vc-follow-symlinks t)
+   #+end_src
 
-  (setq custom-file "~/.emacs.d/custom.el")
-  (load custom-file)
-#+END_SRC
+** Default Font Faces
 
-* Bars Galore
+   I like to use =Fira Code Font= for pretty much everything.
 
-Don't you hate all these bars in =emacs=? I do, let's disable them:
+   #+begin_src emacs-lisp
+     (if (or (string-equal system-type "windows-nt")
+	     (string-equal system-type "darwin"))
+	 (setq os-agnostic-font-family "Fira Code")
+       (setq os-agnostic-font-family "Fira Mono"))
 
-#+BEGIN_SRC emacs-lisp
-  (scroll-bar-mode -1)
-  (horizontal-scroll-bar-mode -1)
-  (menu-bar-mode -1)
-  (tool-bar-mode -1)
-  (tooltip-mode -1)
-#+END_SRC
+     (set-face-attribute 'default nil
+			 :family os-agnostic-font-family
+			 :height 140
+			 :weight 'regular
+			 :width 'normal)
+   #+end_src
+
+** Disable lockfiles
+
+   #+begin_src emacs-lisp
+     (setq create-lockfiles nil)
+   #+end_src
+
+** Setup a new home for =custom-file=
+
+   Well, I don't want =custom= touching my beautiful =init.el=. Let's give
+   it a dumping ground.
+
+   #+begin_src emacs-lisp
+     (unless (file-exists-p "~/.emacs.d/custom.el")
+       (with-temp-buffer (write-file "~/.emacs.d/custom.el")))
+
+     (setq custom-file "~/.emacs.d/custom.el")
+     (load custom-file)
+   #+end_src
+
+** Bars, Menus, Tooltips
+
+   We really don't need bars for everything when you're using keyboard
+   only.
+
+   #+begin_src emacs-lisp
+     (scroll-bar-mode -1)
+     (horizontal-scroll-bar-mode -1)
+     (menu-bar-mode -1)
+     (tool-bar-mode -1)
+     (tooltip-mode -1)
+   #+end_src
 
 * Install =use-package= if necessary
 
-I really want to be able to just move to a new computer and have all my
-configuration available in a way that I don't have to anything manually
-anymore and still get *my* =emacs= the way *I* like it.
+  =use-package= let's me quickly and easily rebuild my configuration
+  by simply cloning this repository and opening =emacs=. The first
+  time, it will install all required packages.
 
-This is likely gonna cost me some init time, but every time =emacs=
-starts out, I'll check if we need to install =use-package= and
-conditionally install it.
+  #+begin_src emacs-lisp
+    (unless (package-installed-p 'use-package)
+      (package-refresh-contents)
+      (package-install 'use-package))
 
-#+BEGIN_SRC emacs-lisp
-  (unless (package-installed-p 'use-package)
-    (package-refresh-contents)
-    (package-install 'use-package))
+    (eval-when-compile
+      (require 'use-package))
+  #+end_src
 
-  (eval-when-compile
-    (require 'use-package))
+  While at that, also make sure that =use-package= will /ensure/ and
+  /defer/ by default
 
-  (setq use-package-always-ensure t
-	use-package-always-defer  t)
-#+END_SRC
+  #+begin_src emacs-lisp
+    (setq use-package-always-ensure t
+	  use-package-always-defer  t)
+  #+end_src
 
 * Setup =PATH= variable
 
-All set =PATH= and =MANPATH= from shell, even when initialized from
-GUI helpers like =dmenu= or =Spotlight=
+  Always set =PATH= and =MANPATH= from shell, even when initialized
+  from GUI helpers like =dmenu= or =Spotlight=
 
-#+BEGIN_SRC emacs-lisp
-  (use-package exec-path-from-shell
-    :unless (string-equal system-type "windows-nt")
-    :init
-    (exec-path-from-shell-initialize)
-    (exec-path-from-shell-copy-env "SSH_AUTH_SOCK"))
-
-#+END_SRC
+  #+begin_src emacs-lisp
+    (use-package exec-path-from-shell
+      :unless (string-equal system-type "windows-nt")
+      :demand t
+      :init
+      (exec-path-from-shell-initialize)
+      (exec-path-from-shell-copy-env "SSH_AUTH_SOCK"))
+  #+end_src
 
 * Setup =auto-fill-mode=
 
-I like to have =auto-fill-mode= enabled on all my text
-buffers. Easiest way of achieve that is to add =turn-on-auto-fill= to
-=text-mode-hook=
+  I like to have =auto-fill-mode= enabled on all my text
+  buffers. Easiest way of achieve that is to add =turn-on-auto-fill=
+  to =text-mode-hook=
 
-#+BEGIN_SRC emacs-lisp
-  (add-hook 'text-mode-hook 'turn-on-auto-fill)
-#+END_SRC
+  #+begin_src emacs-lisp
+    (add-hook 'text-mode-hook 'turn-on-auto-fill)
+  #+end_src
 
 * Setup =dracula-theme=
 
-  Switching to Dracula. Let's see how it behaves
+  The [[https://draculatheme.com/][Dracula Theme]] is very pleasing to the eyes.
   
-#+BEGIN_SRC emacs-lisp
-  (use-package dracula-theme
-    :demand t
-    :config
-    (load-theme 'dracula t))
-#+END_SRC
+  #+begin_src emacs-lisp
+    (use-package dracula-theme
+      :demand t
+      :config
+      (load-theme 'dracula t))
+  #+end_src
 
 * Setup =geiser=
 
-=guile= is a language that lately I've been trying to get acquainted to
-and, as such, I need a cool way of communicating with a =REPL= from
-inside =emacs=. =gueiser= seems to be a good choice for that
+  =guile= is a language that lately I've been trying to get acquainted to
+  and, as such, I need a cool way of communicating with a =REPL= from
+  inside =emacs=. =gueiser= seems to be a good choice for that
 
-#+BEGIN_SRC emacs-lisp
-  (use-package geiser
-    :config
-    (setq geiser-active-implementations '(chez)
-	  geiser-scheme-implementation 'chez
-	  geiser-chez-binary "scheme"))
-#+END_SRC
+  #+begin_src emacs-lisp
+    (use-package geiser
+      :config
+      (setq geiser-active-implementations '(chez)
+	    geiser-scheme-implementation 'chez
+	    geiser-chez-binary "scheme"))
+  #+end_src
 
 * Setup =paredit=
 
-This is probably the most awkward mode to get used to. Still, it's so
-darn helpful that I just have to use it.
+  This is probably the most awkward mode to get used to. Still, it's so
+  darn helpful that I just have to use it.
 
-#+BEGIN_SRC emacs-lisp
-  (use-package paredit
-    :hook ((emacs-lisp-mode
-	    ielm-mode
-	    lisp-mode
-	    lisp-interaction-mode
-	    scheme-mode) . enable-paredit-mode)
-    :init
-    (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode))
-#+END_SRC
+  #+begin_src emacs-lisp
+    (use-package paredit
+      :hook ((emacs-lisp-mode
+	      ielm-mode
+	      lisp-mode
+	      lisp-interaction-mode
+	      scheme-mode) . enable-paredit-mode)
+      :init
+      (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode))
+  #+end_src
 
 * Setup =show-parens=
 
-This makes it a lot easier to see matching parens
+  This makes it a lot easier to see matching parens
 
-#+BEGIN_SRC emacs-lisp
-  (show-paren-mode 1)
-#+END_SRC
+  #+begin_src emacs-lisp
+    (show-paren-mode 1)
+  #+end_src
 
 * Setup =rainbow-delimiters=
 
-As a complement to =paredit= I want my parens to be easy to see, hence =rainbow-delimiters=
+  As a complement to =paredit= I want my parens to be easy to see, hence =rainbow-delimiters=
 
-#+BEGIN_SRC emacs-lisp
-  (use-package rainbow-delimiters
-    :config
-    (add-hook 'emacs-lisp-mode-hook       #'rainbow-delimiters-mode)
-    (add-hook 'eval-expression-minibuffer-setup-hook #'rainbow-delimiters-mode)
-    (add-hook 'ielm-mode-hook             #'rainbow-delimiters-mode)
-    (add-hook 'lisp-mode-hook             #'rainbow-delimiters-mode)
-    (add-hook 'lisp-interaction-mode-hook #'rainbow-delimiters-mode)
-    (add-hook 'scheme-mode-hook           #'rainbow-delimiters-mode))
-#+END_SRC
+  #+begin_src emacs-lisp
+    (use-package rainbow-delimiters
+      :config
+      (add-hook 'emacs-lisp-mode-hook       #'rainbow-delimiters-mode)
+      (add-hook 'eval-expression-minibuffer-setup-hook #'rainbow-delimiters-mode)
+      (add-hook 'ielm-mode-hook             #'rainbow-delimiters-mode)
+      (add-hook 'lisp-mode-hook             #'rainbow-delimiters-mode)
+      (add-hook 'lisp-interaction-mode-hook #'rainbow-delimiters-mode)
+      (add-hook 'scheme-mode-hook           #'rainbow-delimiters-mode))
+  #+end_src
 
 * Setup =prettify-symbols-mode=
 
-I like to have nice looking =lambda= characters on all my lisp-y
-modes. Let's push the =lambda= character to other mode hooks too.
+  I like to have nice looking =lambda= characters on all my lisp-y
+  modes. Let's push the =lambda= character to other mode hooks too.
 
-We also have a rather cute symbol for =function= on =js-mode=.
+  We also have a rather cute symbol for =function= on =js-mode=.
 
-#+BEGIN_SRC emacs-lisp
-  (defun push-pretty-characters ()
-    "Push pretty characters to mode-specific prettify-symbols-alist"
-    (push '("lambda" . #x03bb) prettify-symbols-alist))
+  #+begin_src emacs-lisp
+    (defun push-pretty-characters ()
+      "Push pretty characters to mode-specific prettify-symbols-alist"
+      (push '("lambda" . #x03bb) prettify-symbols-alist))
 
-  (add-hook 'emacs-lisp-mode-hook       #'push-pretty-characters)
-  (add-hook 'eval-expression-minibuffer-setup-hook #'push-pretty-characters)
-  (add-hook 'ielm-mode-hook             #'push-pretty-characters)
-  (add-hook 'lisp-mode-hook             #'push-pretty-characters)
-  (add-hook 'lisp-interaction-mode-hook #'push-pretty-characters)
-  (add-hook 'scheme-mode-hook           #'push-pretty-characters)
+    (add-hook 'emacs-lisp-mode-hook       #'push-pretty-characters)
+    (add-hook 'eval-expression-minibuffer-setup-hook #'push-pretty-characters)
+    (add-hook 'ielm-mode-hook             #'push-pretty-characters)
+    (add-hook 'lisp-mode-hook             #'push-pretty-characters)
+    (add-hook 'lisp-interaction-mode-hook #'push-pretty-characters)
+    (add-hook 'scheme-mode-hook           #'push-pretty-characters)
 
-  (add-hook 'js-mode-hook (lambda ()
-			     (push '("function" . ?ƒ) prettify-symbols-alist)))
-#+END_SRC
+    (add-hook 'js-mode-hook (lambda ()
+			      (push '("function" . ?ƒ) prettify-symbols-alist)))
+  #+end_src
 
 * Setup =helm=
 
-Oh, dear =helm=; how could I possibly live without you.
+  Oh, dear =helm=; how could I possibly live without you.
 
-#+BEGIN_SRC emacs-lisp
-  (use-package helm
-    :bind (("M-x" . helm-M-x)
-           ("C-x r b" . helm-bookmarks)
-           ("M-y" . helm-show-kill-ring)
-           ("C-x C-f" . helm-find-files)
-	   :map helm-find-files-map
-	   ("TAB" . helm-execute-persistent-action)
-	   :map help-map
-	   ("TAB" . helm-execute-persistent-action))
-    :config
-    (require 'helm-config)
-    (setq helm-split-window-in-side-p t
-          helm-move-to-line-cycle-in-source t
-          helm-ff-search-library-in-sexp t
-          helm-scroll-amount 8
-          helm-ff-file-name-history-use-recentf t
-	  helm-mode-fuzzy-match t
-	  helm-completion-in-region-fuzzy-match t)
-    (helm-mode t))
-#+END_SRC
+  #+begin_src emacs-lisp
+    (use-package helm
+      :bind (("M-x" . helm-M-x)
+	     ("C-x r b" . helm-bookmarks)
+	     ("M-y" . helm-show-kill-ring)
+	     ("C-x C-f" . helm-find-files)
+	     :map helm-find-files-map
+	     ("TAB" . helm-execute-persistent-action)
+	     :map help-map
+	     ("TAB" . helm-execute-persistent-action))
+      :config
+      (require 'helm-config)
+      (setq helm-split-window-in-side-p t
+	    helm-move-to-line-cycle-in-source t
+	    helm-ff-search-library-in-sexp t
+	    helm-scroll-amount 8
+	    helm-ff-file-name-history-use-recentf t
+	    helm-mode-fuzzy-match t
+	    helm-completion-in-region-fuzzy-match t)
+      (helm-mode t))
+  #+end_src
 
 * Setup =helm-ls-git=
 
-A very good extension to =helm=...
+  A very good extension to =helm=...
 
-#+BEGIN_SRC emacs-lisp
-  (use-package helm-ls-git
-    :bind ("C-x C-d" . helm-browse-project))
-#+END_SRC
+  #+begin_src emacs-lisp
+    (use-package helm-ls-git
+      :bind ("C-x C-d" . helm-browse-project))
+  #+end_src
 
 * Setup =helm-git-grep=
 
-#+BEGIN_SRC emacs-lisp
-  (use-package helm-git-grep
-    :bind (("C-c g" . helm-git-grep)
-           (:map isearch-mode-map
-                    ("C-c g" . helm-git-grep-from-isearch))))
-#+END_SRC
+  #+begin_src emacs-lisp
+    (use-package helm-git-grep
+      :bind (("C-c g" . helm-git-grep)
+	     (:map isearch-mode-map
+		   ("C-c g" . helm-git-grep-from-isearch))))
+  #+end_src
 
 * Setup =doom-modeline=
 
-#+BEGIN_SRC emacs-lisp
-  (use-package doom-modeline
-    :demand t
-    :hook (after-init . doom-modeline-mode)
-    :config (setq find-file-visit-truename t))
-#+END_SRC
+  #+begin_src emacs-lisp
+    (use-package doom-modeline
+      :demand t
+      :hook (after-init . doom-modeline-mode)
+      :config (setq find-file-visit-truename t))
+  #+end_src
 
-* Setup =org= and =org-bullets=
+* Setup =org-mode=
+** Setup =org= and =org-bullets=
 
-=org= is =emacs='s organizer package. I use it a lot and really enjoy
-it. Let's set it up.
+   =org= is =emacs='s organizer package. I use it a lot and really enjoy
+   it. Let's set it up.
 
-First we will be using our local copy of org git tree:
+   First we will be using our local copy of org git tree:
 
-#+BEGIN_SRC emacs-lisp
-  (add-to-list 'load-path "~/workspace/org-mode/lisp")
-  (add-to-list 'load-path "~/workspace/org-mode/contrib/lisp")
-#+END_SRC
+   #+begin_src emacs-lisp
+     (add-to-list 'load-path "~/workspace/org-mode/lisp")
+     (add-to-list 'load-path "~/workspace/org-mode/contrib/lisp")
+   #+end_src
 
-#+BEGIN_SRC emacs-lisp
-  (use-package org
-    :pin org
-    :bind
-    (("C-c l" . org-store-link)
-     ("C-c a" . org-agenda)
-     ("C-c c" . org-capture)
-     ("C-c b" . org-switchb))
-    :config
-    (require 'org-tempo nil t)
-    (require 'ox-odt nil t)
-    (require 'ox-md nil t)
-    (require 'org-notmuch nil t)
-    (setq org-latex-pdf-process
-	  '("latexmk -xelatex -shell-escape -f -pdf %f"))
-    (setq org-latex-listings 'minted)
-    (setq org-latex-minted-options
-	  '(("linenos=true")))
-    (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
-    (add-to-list 'org-structure-template-alist '("cc" . "src c"))
-    (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
-    (add-to-list 'org-structure-template-alist '("hs" . "src haskell"))
-    (add-to-list 'org-modules 'org-habit)
-    (org-babel-do-load-languages 'org-babel-load-languages '((emacs-lisp . t)
-							     (C . t)
-							     (dot . t)))
-    (add-to-list 'org-latex-classes
-		 '("scrreprt" "\\documentclass[11pt]{scrreprt}"
-		   ("\\chapter{%s}" . "\\chapter*{%s}")
-		   ("\\section{%s}" . "\\section*{%s}")
-		   ("\\subsection{%s}" . "\\subsection*{%s}")
-		   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-		   ("\\paragraph{%s}" . "\\paragraph*{%s}")
-		   ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-    (add-to-list 'org-latex-classes
-		 '("scrbook" "\\documentclass[11pt]{scrbook}"
-		   ("\\chapter{%s}" . "\\chapter*{%s}")
-		   ("\\section{%s}" . "\\section*{%s}")
-		   ("\\subsection{%s}" . "\\subsection*{%s}")
-		   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-		   ("\\paragraph{%s}" . "\\paragraph*{%s}")
-		   ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-    (add-to-list 'org-latex-classes
-		 '("notes" "\\documentclass[11pt]{scrbook}"
-		   ("\\addchap{%s}" . "\\addchap{%s}")
-		   ("\\addsec{%s}" . "\\addsec{%s}")
-		   ("\\subsection*{%s}" . "\\subsection*{%s}")
-		   ("\\subsubsection*{%s}" . "\\subsubsection*{%s}")
-		   ("\\paragraph*{%s}" . "\\paragraph*{%s}")
-		   ("\\subparagraph*{%s}" . "\\subparagraph*{%s}")))
-    (add-to-list 'org-latex-classes
-		 '("scrartcl" "\\documentclass[11pt]{scrartcl}"
-		   ("\\section{%s}" . "\\section*{%s}")
-		   ("\\subsection{%s}" . "\\subsection*{%s}")
-		   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-		   ("\\paragraph{%s}" . "\\paragraph*{%s}")
-		   ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+   #+begin_src emacs-lisp
+     (use-package org
+       :pin org
+       :bind
+       (("C-c l" . org-store-link)
+	("C-c a" . org-agenda)
+	("C-c c" . org-capture)
+	("C-c b" . org-switchb))
+       :config
+       (require 'org-tempo nil t)
+       (require 'ox-odt nil t)
+       (require 'ox-md nil t)
+       (require 'org-notmuch nil t)
+       (setq org-latex-pdf-process
+	     '("latexmk -xelatex -shell-escape -f -pdf %f"))
+       (setq org-latex-listings 'minted)
+       (setq org-latex-minted-options
+	     '(("linenos=true")))
+       (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
+       (add-to-list 'org-structure-template-alist '("cc" . "src c"))
+       (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
+       (add-to-list 'org-structure-template-alist '("hs" . "src haskell"))
+       (add-to-list 'org-modules 'org-habit)
+       (org-babel-do-load-languages 'org-babel-load-languages '((emacs-lisp . t)
+								(C . t)
+								(dot . t)))
+       (add-to-list 'org-latex-classes
+		    '("scrreprt" "\\documentclass[11pt]{scrreprt}"
+		      ("\\chapter{%s}" . "\\chapter*{%s}")
+		      ("\\section{%s}" . "\\section*{%s}")
+		      ("\\subsection{%s}" . "\\subsection*{%s}")
+		      ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+		      ("\\paragraph{%s}" . "\\paragraph*{%s}")
+		      ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+       (add-to-list 'org-latex-classes
+		    '("scrbook" "\\documentclass[11pt]{scrbook}"
+		      ("\\chapter{%s}" . "\\chapter*{%s}")
+		      ("\\section{%s}" . "\\section*{%s}")
+		      ("\\subsection{%s}" . "\\subsection*{%s}")
+		      ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+		      ("\\paragraph{%s}" . "\\paragraph*{%s}")
+		      ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+       (add-to-list 'org-latex-classes
+		    '("notes" "\\documentclass[11pt]{scrbook}"
+		      ("\\addchap{%s}" . "\\addchap{%s}")
+		      ("\\addsec{%s}" . "\\addsec{%s}")
+		      ("\\subsection*{%s}" . "\\subsection*{%s}")
+		      ("\\subsubsection*{%s}" . "\\subsubsection*{%s}")
+		      ("\\paragraph*{%s}" . "\\paragraph*{%s}")
+		      ("\\subparagraph*{%s}" . "\\subparagraph*{%s}")))
+       (add-to-list 'org-latex-classes
+		    '("scrartcl" "\\documentclass[11pt]{scrartcl}"
+		      ("\\section{%s}" . "\\section*{%s}")
+		      ("\\subsection{%s}" . "\\subsection*{%s}")
+		      ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+		      ("\\paragraph{%s}" . "\\paragraph*{%s}")
+		      ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
 
-  (use-package org-bullets
-    :hook (org-mode . org-bullets-mode)
-    :config
-    (setq org-hide-leading-stars t))
-#+END_SRC
+     (use-package org-bullets
+       :hook (org-mode . org-bullets-mode)
+       :config
+       (setq org-hide-leading-stars t))
+   #+end_src
 
-with that out of the way, let's configure our preferred =org-directory=
-location and point =org= to our org files.
+   with that out of the way, let's configure our preferred =org-directory=
+   location and point =org= to our org files.
 
-#+BEGIN_SRC emacs-lisp
-  (setq-default org-directory "~/workspace/org"
-	org-default-notes-file (concat org-directory "/notes.org")
-	org-agenda-files (directory-files-recursively
-			  org-directory ".org")
-	org-archive-location (concat org-directory "/archive/"
-				     (format-time-string "%Y")
-				     ".org::")
-	org-return-follows-link t
-	org-ellipsis "⤵"
-	org-src-fontify-natively t
-	org-src-tab-acts-natively t
-	org-enforce-todo-dependencies t
-	org-enforce-todo-checkbox-dependencies t
-	org-agenda-dim-blocked-tasks t)
-#+END_SRC
+   #+begin_src emacs-lisp
+     (setq-default org-directory "~/workspace/org"
+		   org-default-notes-file (concat org-directory "/notes.org")
+		   org-agenda-files (directory-files-recursively
+				     org-directory ".org")
+		   org-archive-location (concat org-directory "/archive/"
+						(format-time-string "%Y")
+						".org::")
+		   org-return-follows-link t
+		   org-ellipsis "⤵"
+		   org-src-fontify-natively t
+		   org-src-tab-acts-natively t
+		   org-enforce-todo-dependencies t
+		   org-enforce-todo-checkbox-dependencies t
+		   org-agenda-dim-blocked-tasks t)
+   #+end_src
 
-Configuring some useful TODO keywords
+   Configuring some useful TODO keywords
 
-#+BEGIN_SRC emacs-lisp
-  (setq org-todo-keywords
-	'((sequence "TODO(t@)" "IN PROGRESS(p@)" "|"
-		    "DONE(d@)" "CANCELED(c@)"
-		    "BLOCKED(b@)" "AWAITING(a@)")))
-#+END_SRC
+   #+begin_src emacs-lisp
+     (setq org-todo-keywords
+	   '((sequence "TODO(t@)" "IN PROGRESS(p@)" "|"
+		       "DONE(d@)" "CANCELED(c@)"
+		       "BLOCKED(b@)" "AWAITING(a@)")))
+   #+end_src
 
-Track completion of a task
+   Track completion of a task
 
-#+BEGIN_SRC emacs-lisp
-  (setq org-log-done 'time)
-#+END_SRC
+   #+begin_src emacs-lisp
+     (setq org-log-done 'time)
+   #+end_src
 
-Track notes into a drawer
+   Track notes into a drawer
 
-#+BEGIN_SRC emacs-lisp
-  (setq org-log-into-drawer t)
-#+END_SRC
+   #+begin_src emacs-lisp
+     (setq org-log-into-drawer t)
+   #+end_src
 
-Define priorities
+   Define priorities
 
-#+BEGIN_SRC emacs-lisp
-  (setq org-highest-priority ?A
-	org-lowest-priority ?E
-	org-default-priotiy ?E)
-#+END_SRC
+   #+begin_src emacs-lisp
+     (setq org-highest-priority ?A
+	   org-lowest-priority ?E
+	   org-default-priotiy ?E)
+   #+end_src
 
-Some =org-templates=
+   Some =org-templates=
 
-#+BEGIN_SRC emacs-lisp
-  (setq org-capture-templates
-	'(
-	  ("t" "Todo" entry (file "todo.org")
-	   "* TODO %^{Task}\n:PROPERTIES:\n:Captured: %T\n:END:\n%?\n\n%i")
-	  ("n" "Note" entry (file+datetree "notes.org")
-	   "* %?\nEntered on %U\n  %i\n  %a")
-	  ))
-#+END_SRC
+   #+begin_src emacs-lisp
+     (setq org-capture-templates
+	   '(
+	     ("t" "Todo" entry (file "todo.org")
+	      "* TODO %^{Task}\n:PROPERTIES:\n:Captured: %T\n:END:\n%?\n\n%i")
+	     ("n" "Note" entry (file+datetree "notes.org")
+	      "* %?\nEntered on %U\n  %i\n  %a")
+	     ))
+   #+end_src
 
-* Setup =ox-ioslide=
+** Setup =ox-ioslide=
 
-=ox-ioslide= helps us exporting =org= documents to Google I/O HTML5
-slides. This can come in very handy ;-)
+   =ox-ioslide= helps us exporting =org= documents to Google I/O HTML5
+   slides. This can come in very handy ;-)
 
-#+BEGIN_SRC emacs-lisp
-  (use-package ox-ioslide)
-#+END_SRC
+   #+begin_src emacs-lisp
+     (use-package ox-ioslide)
+   #+end_src
 
-* Setup =ox-rst=
+** Setup =ox-rst=
 
-=ox-rst= will be used to export =org= documents to =ReST= format which
-is used as Linux' documentation source.
+   =ox-rst= will be used to export =org= documents to =ReST= format which
+   is used as Linux' documentation source.
 
-#+BEGIN_SRC emacs-lisp
-  (use-package ox-rst)
-#+END_SRC
+   #+begin_src emacs-lisp
+     (use-package ox-rst)
+   #+end_src
 
 * Setup =magit=
 
-This is simple to configure.
+  This is simple to configure.
 
-#+BEGIN_SRC emacs-lisp
-  (use-package magit
-    :config (setq magit-diff-use-overlays nil
-                  magit-commit-arguments '("--signoff"))
-    :bind ("C-x g" . magit-status))
-#+END_SRC
+  #+begin_src emacs-lisp
+    (use-package magit
+      :config (setq magit-diff-use-overlays nil
+		    magit-commit-arguments '("--signoff"))
+      :bind ("C-x g" . magit-status))
+  #+end_src
 
 * Setup =eshell=
 
-Really not much here, I just need a key chord to start =eshell= at will
+  Really not much here, I just need a key chord to start =eshell= at will
 
-#+BEGIN_SRC emacs-lisp
-  (use-package eshell
-    :bind ("C-c t" . eshell))
-#+END_SRC
+  #+begin_src emacs-lisp
+    (use-package eshell
+      :bind ("C-c t" . eshell))
+  #+end_src
 
 * Setup =engine-mode=
 
-=engine-mode= helps me starting out searches from within =emacs=. It's
-a bit useful and I kinda like it.
+  =engine-mode= helps me starting out searches from within =emacs=. It's
+  a bit useful and I kinda like it.
 
-#+BEGIN_SRC emacs-lisp
-  (use-package engine-mode
-    :config
-    (engine/set-keymap-prefix (kbd "C-c s"))
+  #+begin_src emacs-lisp
+    (use-package engine-mode
+      :config
+      (engine/set-keymap-prefix (kbd "C-c s"))
 
-    (defengine duckduckgo
-      "https://duckduckgo.com/?q=%s"
-      :keybinding "d")
+      (defengine duckduckgo
+	"https://duckduckgo.com/?q=%s"
+	:keybinding "d")
 
-    (defengine google
-      "https://www.google.com/search?ie=utf-8&oe=utf-8&q=%s"
-      :keybinding "g")
+      (defengine google
+	"https://www.google.com/search?ie=utf-8&oe=utf-8&q=%s"
+	:keybinding "g")
 
-    (defengine wikipedia
-      "https://en.wikipedia.org/w/index.php?title=Special:Search&go=Go&search=%s"
-      :keybinding "w")
+      (defengine wikipedia
+	"https://en.wikipedia.org/w/index.php?title=Special:Search&go=Go&search=%s"
+	:keybinding "w")
 
-    (defengine wolfram-alpha
-      "https://www.wolfram-alpha.com/input/?i=%s")
+      (defengine wolfram-alpha
+	"https://www.wolfram-alpha.com/input/?i=%s")
 
-    (defengine youtube
-      "https://www.youtube.com/results?aq=f&oq=&search_query=%s"
-      :keybinding "y")
+      (defengine youtube
+	"https://www.youtube.com/results?aq=f&oq=&search_query=%s"
+	:keybinding "y")
 
-    (defengine 17track
-      "http://www.17track.net/en/track?nums=%s"
-      :keybinding "t")
+      (defengine 17track
+	"http://www.17track.net/en/track?nums=%s"
+	:keybinding "t")
 
-    (engine-mode t))
-#+END_SRC
+      (engine-mode t))
+  #+end_src
 
 * Setup =notmuch=
 
-I've been using =notmuch= for mailing for quite a while.
+  I've been using =notmuch= for mailing for quite a while.
 
-#+BEGIN_SRC emacs-lisp
-  (use-package notmuch
-    :config
-    (require 'smtpmail)
-    (add-hook 'message-setup-hook 'mml-secure-message-sign-pgpmime)
-    (setq-default message-kill-buffer-on-exit t
-		  mail-specify-envelope-from t
-		  message-send-mail-function 'message-smtpmail-send-it
-		  mml-secure-smime-sign-with-sender t
-		  mml-secure-openpgp-sign-with-sender t
-		  smtpmail-smtp-server "mail.kernel.org"
-		  smtpmail-smtp-service 587
-		  smtpmail-smtp-user "balbi"
-		  notmuch-crypto-process-mime t
-		  notmuch-show-stash-mlarchive-link-alist '(("Lore" . "https://lore.kernel.org/r/")
-							    ("Gmane" . "https://mid.gmane.org/")
-							    ("MARC" . "https://marc.info/?i=")
-							    ("Mail Archive, The" . "https://mid.mail-archive.com/"))
+  #+begin_src emacs-lisp
+    (use-package notmuch
+      :config
+      (require 'smtpmail)
+      (add-hook 'message-setup-hook 'mml-secure-message-sign-pgpmime)
+      (setq-default message-kill-buffer-on-exit t
+		    mail-specify-envelope-from t
+		    message-send-mail-function 'message-smtpmail-send-it
+		    mml-secure-smime-sign-with-sender t
+		    mml-secure-openpgp-sign-with-sender t
+		    smtpmail-smtp-server "mail.kernel.org"
+		    smtpmail-smtp-service 587
+		    smtpmail-smtp-user "balbi"
+		    notmuch-crypto-process-mime t
+		    notmuch-show-stash-mlarchive-link-alist '(("Lore" . "https://lore.kernel.org/r/")
+							      ("Gmane" . "https://mid.gmane.org/")
+							      ("MARC" . "https://marc.info/?i=")
+							      ("Mail Archive, The" . "https://mid.mail-archive.com/"))
 
-		  notmuch-show-indent-content nil)) ; my saved searches are missing. Should they be in site-local.el ?
-#+END_SRC
+		    notmuch-show-indent-content nil)) ; my saved searches are missing. Should they be in site-local.el ?
+  #+end_src
 
 * Setup =ledger-mode=
 
-I use =ledger-mode= for managing my finances.
+  I use =ledger-mode= for managing my finances.
 
-#+BEGIN_SRC emacs-lisp
-  (use-package ledger-mode
-    :config
-    (add-to-list 'auto-mode-alist '("\\.ledger\\'" . ledger-mode))
-    (setq ledger-clear-whole-transactions t
-          ledger-reconcile-default-commodity "€"
-          ledger-reconcile-force-window-bottom t
-          ledger-master-file "~/workspace/accounting/general.ledger"
-          ledger-reports '(("bal" "%(binary) -f %(ledger-file) bal -B")
-                           ("reg" "%(binary) -f %(ledger-file) reg")
-                           ("payee" "%(binary) -f %(ledger-file) reg @%(payee)")
-                           ("account" "%(binary) -f %(ledger-file) reg %(account)"))))
-#+END_SRC
+  #+begin_src emacs-lisp
+    (use-package ledger-mode
+      :config
+      (add-to-list 'auto-mode-alist '("\\.ledger\\'" . ledger-mode))
+      (setq ledger-clear-whole-transactions t
+	    ledger-reconcile-default-commodity "€"
+	    ledger-reconcile-force-window-bottom t
+	    ledger-master-file "~/workspace/accounting/general.ledger"
+	    ledger-reports '(("bal" "%(binary) -f %(ledger-file) bal -B")
+			     ("reg" "%(binary) -f %(ledger-file) reg")
+			     ("payee" "%(binary) -f %(ledger-file) reg @%(payee)")
+			     ("account" "%(binary) -f %(ledger-file) reg %(account)"))))
+  #+end_src
 
 * Setup =restclient=
 
-Well, maybe I could play a bit with =restclient= every now and again
-:-)
+  Well, maybe I could play a bit with =restclient= every now and again
+  :-)
 
-#+BEGIN_SRC emacs-lisp
-  (use-package restclient)
-#+END_SRC
+  #+begin_src emacs-lisp
+    (use-package restclient)
+  #+end_src
 
 * Setup =octave-mode=
 
-Use *.m as default extension for octave files
+  Use *.m as default extension for octave files
 
-#+BEGIN_SRC emacs-lisp
-  (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
-#+END_SRC
+  #+begin_src emacs-lisp
+    (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
+  #+end_src
 
 * Setup =markdown-mode=
 
-#+BEGIN_SRC emacs-lisp
-  (use-package markdown-mode
-    :mode (("README\\.md\\'" . gfm-mode)
-	   ("\\.md\\'" . markdown-mode)
-	   ("\\.markdown\\'" . markdown-mode))
-    :init (setq markdown-command "pandoc"))
-#+END_SRC
+  #+begin_src emacs-lisp
+    (use-package markdown-mode
+      :mode (("README\\.md\\'" . gfm-mode)
+	     ("\\.md\\'" . markdown-mode)
+	     ("\\.markdown\\'" . markdown-mode))
+      :init (setq markdown-command "pandoc"))
+  #+end_src
 
 * Setup =helm-swoop=
 
-#+BEGIN_SRC emacs-lisp
-  (use-package helm-swoop
-    :bind
-    ("C-s" . helm-swoop)
-    ("C-r" . helm-swoop)
-    ("C-c M-i" . helm-multi-swoop)
-    ("C-c M-I" . helm-multi-swoop-all)
-    ("C-c M-m" . helm-multi-swoop-current-mode)
-    :config
-    (define-key helm-swoop-map (kbd "M-i") 'helm-multi-swoop-all-from-helm-swoop)
-    (define-key helm-swoop-map (kbd "C-r") 'helm-previous-line)
-    (define-key helm-swoop-map (kbd "C-s") 'helm-next-line)
-    (define-key helm-swoop-map (kbd "M-m") 'helm-multi-swoop-current-mode-from-helm-swoop)
-    (define-key helm-multi-swoop-map (kbd "C-r") 'helm-previous-line)
-    (define-key helm-multi-swoop-map (kbd "C-s") 'helm-next-line)
-    (setq helm-multi-swoop-edit-save t)
-    (setq helm-swoop-split-with-multiple-windows nil)
-    (setq helm-swoop-split-direction 'split-window-vertically))
-#+END_SRC
+  #+begin_src emacs-lisp
+    (use-package helm-swoop
+      :bind
+      ("C-s" . helm-swoop)
+      ("C-r" . helm-swoop)
+      ("C-c M-i" . helm-multi-swoop)
+      ("C-c M-I" . helm-multi-swoop-all)
+      ("C-c M-m" . helm-multi-swoop-current-mode)
+      :config
+      (define-key helm-swoop-map (kbd "M-i") 'helm-multi-swoop-all-from-helm-swoop)
+      (define-key helm-swoop-map (kbd "C-r") 'helm-previous-line)
+      (define-key helm-swoop-map (kbd "C-s") 'helm-next-line)
+      (define-key helm-swoop-map (kbd "M-m") 'helm-multi-swoop-current-mode-from-helm-swoop)
+      (define-key helm-multi-swoop-map (kbd "C-r") 'helm-previous-line)
+      (define-key helm-multi-swoop-map (kbd "C-s") 'helm-next-line)
+      (setq helm-multi-swoop-edit-save t)
+      (setq helm-swoop-split-with-multiple-windows nil)
+      (setq helm-swoop-split-direction 'split-window-vertically))
+  #+end_src
 
 * Setup =impatient-mode=
 
   Who wants to constantly reload web pages while you're writing them,
   huh? =impatient-mode= to the rescue.
 
-  #+BEGIN_SRC emacs-lisp
+  #+begin_src emacs-lisp
     (use-package impatient-mode)
-  #+END_SRC
+  #+end_src
 
 * Setup =yasnippet=
 
-#+BEGIN_SRC emacs-lisp
-  (use-package yasnippet
-    :config
-    (setq yas-verbosity 1
-	  yas-wrap-around-region t)
+  #+begin_src emacs-lisp
+    (use-package yasnippet
+      :config
+      (setq yas-verbosity 1
+	    yas-wrap-around-region t)
 
-    (with-eval-after-load 'yasnippet
-      (setq yas-snippet-dirs (list "~/.emacs.d/personal-snippets")))
+      (with-eval-after-load 'yasnippet
+	(setq yas-snippet-dirs (list "~/.emacs.d/personal-snippets")))
 
-    (yas-reload-all)
-    (yas-global-mode))
-#+END_SRC
+      (yas-reload-all)
+      (yas-global-mode))
+  #+end_src
 
 * Setup =flycheck=
 
   Install it
 
-#+BEGIN_SRC emacs-lisp
-  (use-package flycheck
-    :hook ((vue-mode python-mode) . flycheck-mode)
-    :config
-    (flycheck-add-mode 'javascript-eslint 'vue-mode)
-    (flycheck-add-mode 'python-pylint 'python-mode))
-#+END_SRC
+  #+begin_src emacs-lisp
+    (use-package flycheck
+      :hook ((vue-mode python-mode) . flycheck-mode)
+      :config
+      (flycheck-add-mode 'javascript-eslint 'vue-mode)
+      (flycheck-add-mode 'python-pylint 'python-mode))
+  #+end_src
 
 * Setup =sly=
 
-I've started reading Land Of Lisp and will, therefore, play around
-with Common Lisp. For that, I'll be using =sly= with =sbcl=
+  I've started reading Land Of Lisp and will, therefore, play around
+  with Common Lisp. For that, I'll be using =sly= with =sbcl=
 
-#+BEGIN_SRC emacs-lisp
-  (use-package sly
-    :config
-    (setq inferior-lisp-program "sbcl"))
-#+END_SRC
+  #+begin_src emacs-lisp
+    (use-package sly
+      :config
+      (setq inferior-lisp-program "sbcl"))
+  #+end_src
 
 * Setup =js2-mode= and =web-mode=
 
-  #+BEGIN_SRC emacs-lisp
+  #+begin_src emacs-lisp
     (use-package prettier-js
       :hook ((js2-mode web-mode js-mode) . prettier-js-mode))
 
     (use-package js2-mode)
 
     (use-package web-mode)
-  #+END_SRC
+  #+end_src
 
 * Setup =js-comint=
 
   I'll need to rely on NodeJS for some University Courses. Might as
   well get that inside emacs
 
-  #+BEGIN_SRC emacs-lisp
+  #+begin_src emacs-lisp
     (use-package js-comint
       :config
       (add-hook 'js-mode-hook
@@ -769,54 +800,54 @@ with Common Lisp. For that, I'll be using =sly= with =sbcl=
 		  (local-set-key (kbd "C-c C-c") 'js-send-last-sexp)
 		  (local-set-key (kbd "C-c b") 'js-send-buffer)
 		  (local-set-key (kbd "C-c C-b") 'js-send-buffer-and-go))))
-  #+END_SRC
+  #+end_src
 
 * Setup =haskell-mode=
 
   Learning me some haskell.
 
-  #+BEGIN_SRC emacs-lisp
+  #+begin_src emacs-lisp
     (use-package haskell-mode
       :init
       (add-hook 'haskell-mode-hook #'interactive-haskell-mode)
       (add-hook 'haskell-mode-hook #'haskell-indentation-mode))
-  #+END_SRC
+  #+end_src
 
 * Some extra keybindings for myself
 
-These are super helpful for day to day use
+  These are super helpful for day to day use
 
-#+BEGIN_SRC emacs-lisp
-  (define-key global-map (kbd "C-1") 'text-scale-increase)
-  (define-key global-map (kbd "C-0") 'text-scale-decrease)
-#+END_SRC
+  #+begin_src emacs-lisp
+    (define-key global-map (kbd "C-1") 'text-scale-increase)
+    (define-key global-map (kbd "C-0") 'text-scale-decrease)
+  #+end_src
 
 * GnuPG 2
 
-We're gonna tell =emacs= to use =gpg2=
+  We're gonna tell =emacs= to use =gpg2=
 
-#+BEGIN_SRC emacs-lisp
-  (setq epg-gpg-program "/usr/bin/gpg2")
-#+END_SRC
+  #+begin_src emacs-lisp
+    (setq epg-gpg-program "/usr/bin/gpg2")
+  #+end_src
 
 * Enable some disabled commands
 
-Few commands I want to use but are disabled by default
+  Few commands I want to use but are disabled by default
   
-#+BEGIN_SRC emacs-lisp
-  (put 'narrow-to-region 'disabled nil)
-  (put 'upcase-region 'disabled nil)
-  (put 'downcase-region 'disabled nil)
-  (put 'dired-find-alternate-file 'disabled nil)
-#+END_SRC
+  #+begin_src emacs-lisp
+    (put 'narrow-to-region 'disabled nil)
+    (put 'upcase-region 'disabled nil)
+    (put 'downcase-region 'disabled nil)
+    (put 'dired-find-alternate-file 'disabled nil)
+  #+end_src
 
 * All The Icons
 
-#+BEGIN_SRC emacs-lisp
-  (use-package all-the-icons)
+  #+begin_src emacs-lisp
+    (use-package all-the-icons)
 
-  (use-package all-the-icons-dired
-    :config
-    (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
-#+END_SRC
+    (use-package all-the-icons-dired
+      :config
+      (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
+  #+end_src
 
