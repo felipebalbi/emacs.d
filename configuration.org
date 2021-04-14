@@ -752,6 +752,7 @@
 
   #+begin_src emacs-lisp
     (use-package yasnippet
+      :demand t
       :config
       (setq yas-verbosity 1
 	    yas-wrap-around-region t)
