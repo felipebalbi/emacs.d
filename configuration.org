@@ -469,6 +469,7 @@
        (add-to-list 'org-structure-template-alist '("cc" . "src c"))
        (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
        (add-to-list 'org-structure-template-alist '("hs" . "src haskell"))
+       (add-to-list 'org-structure-template-alist '("jss" . "src js"))
        (add-to-list 'org-modules 'org-habit)
        (org-babel-do-load-languages 'org-babel-load-languages '((emacs-lisp . t)
 								(C . t)
