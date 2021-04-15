@@ -836,6 +836,15 @@
 	     ("C-S-c C-S-c" . mc/edit-lines)))
   #+end_src
 
+* Setup =dts-mode=
+
+  #+begin_src emacs-lisp
+    (use-package dts-mode
+      :pin elpa)
+  #+end_src
+
+  #+RESULTS:
+
 * All The Icons
 
   #+begin_src emacs-lisp
