@@ -381,48 +381,42 @@
 			      (push '("function" . ?ƒ) prettify-symbols-alist)))
   #+end_src
 
-* Setup =helm=
+* Setup =ivy=, =counsel=, and =swiper=
 
-  Oh, dear =helm=; how could I possibly live without you.
+  Okay, I'm a bit tired of =helm=. Let's switch over to =ivy= and
+  figure out what I've been missing.
 
   #+begin_src emacs-lisp
-    (use-package helm
-      :bind (("M-x" . helm-M-x)
-	     ("C-x r b" . helm-bookmarks)
-	     ("M-y" . helm-show-kill-ring)
-	     ("C-x C-f" . helm-find-files)
-	     :map helm-find-files-map
-	     ("TAB" . helm-execute-persistent-action)
-	     :map help-map
-	     ("TAB" . helm-execute-persistent-action))
+    (use-package ivy
+      :demand t
       :config
-      (require 'helm-config)
-      (setq helm-split-window-in-side-p t
-	    helm-move-to-line-cycle-in-source t
-	    helm-ff-search-library-in-sexp t
-	    helm-scroll-amount 8
-	    helm-ff-file-name-history-use-recentf t
-	    helm-mode-fuzzy-match t
-	    helm-completion-in-region-fuzzy-match t)
-      (helm-mode t))
-  #+end_src
+      (setq ivy-use-virtual-buffers t)
+      (setq ivy-count-format "(%d/%d) ")
+      (ivy-mode t))
 
-* Setup =helm-ls-git=
+    (use-package swiper
+      :demand t
+      :after ivy
+      :bind (("C-s" . swiper)
+	     ("C-r" . swiper)))
 
-  A very good extension to =helm=...
-
-  #+begin_src emacs-lisp
-    (use-package helm-ls-git
-      :bind ("C-x C-d" . helm-browse-project))
-  #+end_src
-
-* Setup =helm-git-grep=
-
-  #+begin_src emacs-lisp
-    (use-package helm-git-grep
-      :bind (("C-c g" . helm-git-grep)
-	     (:map isearch-mode-map
-		   ("C-c g" . helm-git-grep-from-isearch))))
+    (use-package counsel
+      :demand t
+      :after ivy
+      :init
+      (counsel-mode t)
+      :bind (("C-c O" . counsel-org-file)
+	     ("C-c d" . counsel-linux-app)
+	     ("C-c g" . counsel-git-grep)
+	     ("C-c o" . counsel-outline)
+	     ("C-h S" . counsel-lookup-symbol)
+	     ("C-h f" . counsel-describe-function)
+	     ("C-h v" . counsel-describe-variable)
+	     ("C-x C-d" . counsel-git)
+	     ("C-x C-f" . counsel-find-file)
+	     ("C-x b" . counsel-switch-buffer)
+	     ("M-x" . counsel-M-x)
+	     ("M-y" . counsel-yank-pop)))
   #+end_src
 
 * Setup =doom-modeline=
@@ -716,28 +710,6 @@
 	     ("\\.md\\'" . markdown-mode)
 	     ("\\.markdown\\'" . markdown-mode))
       :init (setq markdown-command "pandoc"))
-  #+end_src
-
-* Setup =helm-swoop=
-
-  #+begin_src emacs-lisp
-    (use-package helm-swoop
-      :bind
-      ("C-s" . helm-swoop)
-      ("C-r" . helm-swoop)
-      ("C-c M-i" . helm-multi-swoop)
-      ("C-c M-I" . helm-multi-swoop-all)
-      ("C-c M-m" . helm-multi-swoop-current-mode)
-      :config
-      (define-key helm-swoop-map (kbd "M-i") 'helm-multi-swoop-all-from-helm-swoop)
-      (define-key helm-swoop-map (kbd "C-r") 'helm-previous-line)
-      (define-key helm-swoop-map (kbd "C-s") 'helm-next-line)
-      (define-key helm-swoop-map (kbd "M-m") 'helm-multi-swoop-current-mode-from-helm-swoop)
-      (define-key helm-multi-swoop-map (kbd "C-r") 'helm-previous-line)
-      (define-key helm-multi-swoop-map (kbd "C-s") 'helm-next-line)
-      (setq helm-multi-swoop-edit-save t)
-      (setq helm-swoop-split-with-multiple-windows nil)
-      (setq helm-swoop-split-direction 'split-window-vertically))
   #+end_src
 
 * Setup =impatient-mode=
