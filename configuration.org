@@ -828,6 +828,16 @@
 
   #+RESULTS:
 
+* Setup =cmake-mode=
+
+  I have a few projects using =cmake= as the build system,
+  =cmake-mode= at least gives me a sensible mode for editting those
+  files.
+
+  #+begin_src emacs-lisp
+    (use-package cmake-mode)
+  #+end_src
+
 * All The Icons
 
   #+begin_src emacs-lisp
