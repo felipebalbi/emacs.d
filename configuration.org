@@ -381,42 +381,58 @@
 			      (push '("function" . ?ƒ) prettify-symbols-alist)))
   #+end_src
 
-* Setup =ivy=, =counsel=, and =swiper=
+* Setup =vertico=, =consult=, =orderless=, and =marginalia=
 
-  Okay, I'm a bit tired of =helm=. Let's switch over to =ivy= and
+  Okay, I'm a bit tired of =helm=. Let's switch over to =vertico= and
   figure out what I've been missing.
 
   #+begin_src emacs-lisp
-    (use-package ivy
-      :demand t
-      :config
-      (setq ivy-use-virtual-buffers t)
-      (setq ivy-count-format "(%d/%d) ")
-      (ivy-mode t))
+    (defun fb/minibuffer-backward-kill (arg)
+      "When minibuffer is completing a file name delete up to parent
+    folder, otherwise delete a character backward"
+      (interactive "p")
+      (if minibuffer-completing-file-name
+	  ;; Borrowed from https://systemcrafters.cc/live-streams/may-21-2021/#going-up-a-directory-in-kbdfind-filekbd
+	  (if (string-match-p "/." (minibuffer-contents))
+	      (zap-up-to-char (- arg) ?/)
+	    (delete-minibuffer-contents))
+	  (delete-backward-char arg)))
 
-    (use-package swiper
+    (use-package vertico
       :demand t
-      :after ivy
-      :bind (("C-s" . swiper)
-	     ("C-r" . swiper)))
-
-    (use-package counsel
-      :demand t
-      :after ivy
+      :bind (:map minibuffer-local-map
+		  ("<backspace>" . fb/minibuffer-backward-kill))
+      :custom
+      (vertico-cycle t)
       :init
-      (counsel-mode t)
-      :bind (("C-c O" . counsel-org-file)
-	     ("C-c d" . counsel-linux-app)
-	     ("C-c g" . counsel-git-grep)
-	     ("C-c o" . counsel-outline)
-	     ("C-h S" . counsel-lookup-symbol)
-	     ("C-h f" . counsel-describe-function)
-	     ("C-h v" . counsel-describe-variable)
-	     ("C-x C-d" . counsel-git)
-	     ("C-x C-f" . counsel-find-file)
-	     ("C-x b" . counsel-switch-buffer)
-	     ("M-x" . counsel-M-x)
-	     ("M-y" . counsel-yank-pop)))
+      (vertico-mode t))
+
+    (use-package orderless
+      :demand t
+      :after vertico
+      :custom
+      (completion-styles '(orderless)))
+
+    (use-package consult
+      :demand t
+      :after vertico
+      :custom (consult-line-start-from-top t)
+      :bind (("C-s" . consult-line)
+	     ("C-r" . consult-line)
+	     ("C-c g" . consult-git-grep)
+	     ("C-c o" . consult-imenu)
+	     ("C-x b" . consult-buffer)
+	     ("M-y" . consult-yank-pop)
+	     ("M-g M-g" . consult-goto-line)
+	     ("C-h a" . consult-apropos)
+	     :map minibuffer-local-map
+	     ("C-r" . consult-history)))
+
+    (use-package marginalia
+      :demand t
+      :after vertico
+      :init
+      (marginalia-mode t))
   #+end_src
 
 * Setup =doom-modeline=
