@@ -387,23 +387,46 @@
   figure out what I've been missing.
 
   #+begin_src emacs-lisp
+    ;;; The following is mostly taken from `counsel' because I got used to
+    ;;; relying on `counsel-git' to finding files in a git repo.
+    (defvar fb/git-ls-files-cmd "git ls-files -z --full-name --")
+
+    (defun fb/git-candidates (dir)
+      (let ((default-directory dir))
+	(split-string
+	 (shell-command-to-string counsel-git-cmd)
+	 "\0"
+	 t)))
+
+    (defun fb/locate-dominating-file (file &optional dir)
+      (and
+       (setq dir (locate-dominating-file
+		  (or dir default-directory)
+		  file))
+       (expand-file-name dir)))
+
+    (defun fb/git-root ()
+      (fb/locate-dominating-file ".git"))
+
+    (defun fb/locate-git-root ()
+      (or (fb/git-root)
+	  (error "Not in a Git repository")))
+
+    ;; Borrowed from https://systemcrafters.cc/live-streams/may-21-2021/#going-up-a-directory-in-kbdfind-filekbd
     (defun fb/minibuffer-backward-kill (arg)
-      "When minibuffer is completing a file name delete up to parent
-    folder, otherwise delete a character backward"
       (interactive "p")
       (if minibuffer-completing-file-name
-	  ;; Borrowed from https://systemcrafters.cc/live-streams/may-21-2021/#going-up-a-directory-in-kbdfind-filekbd
 	  (if (string-match-p "/." (minibuffer-contents))
 	      (zap-up-to-char (- arg) ?/)
 	    (delete-minibuffer-contents))
 	(delete-backward-char arg)))
 
     (defun fb/git-find-file ()
-      "Find file within a git repository.
-
-    Should behave similarly to `counsel-git'."
       (interactive)
-      (magit-read-file-from-rev "HEAD" "Find file"))
+      (let ((default-directory (counsel-locate-git-root)))
+	(find-file
+	 (completing-read "Find file: "
+			  (fb/git-candidates default-directory)))))
 
     (use-package vertico
       :demand t
