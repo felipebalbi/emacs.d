@@ -396,7 +396,14 @@
 	  (if (string-match-p "/." (minibuffer-contents))
 	      (zap-up-to-char (- arg) ?/)
 	    (delete-minibuffer-contents))
-	  (delete-backward-char arg)))
+	(delete-backward-char arg)))
+
+    (defun fb/git-find-file ()
+      "Find file within a git repository.
+
+    Should behave similarly to `counsel-git'."
+      (interactive)
+      (magit-read-file-from-rev "HEAD" "Find file"))
 
     (use-package vertico
       :demand t
@@ -422,6 +429,7 @@
 	     ("C-c g" . consult-git-grep)
 	     ("C-c o" . consult-imenu)
 	     ("C-x b" . consult-buffer)
+	     ("C-x C-d" . fb/git-find-file)
 	     ("M-y" . consult-yank-pop)
 	     ("M-g M-g" . consult-goto-line)
 	     ("C-h a" . consult-apropos)
