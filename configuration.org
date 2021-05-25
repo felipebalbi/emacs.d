@@ -387,31 +387,6 @@
   figure out what I've been missing.
 
   #+begin_src emacs-lisp
-    ;;; The following is mostly taken from `counsel' because I got used to
-    ;;; relying on `counsel-git' to finding files in a git repo.
-    (defvar fb/git-ls-files-cmd "git ls-files -z --full-name --")
-
-    (defun fb/git-candidates (dir)
-      (let ((default-directory dir))
-	(split-string
-	 (shell-command-to-string counsel-git-cmd)
-	 "\0"
-	 t)))
-
-    (defun fb/locate-dominating-file (file &optional dir)
-      (and
-       (setq dir (locate-dominating-file
-		  (or dir default-directory)
-		  file))
-       (expand-file-name dir)))
-
-    (defun fb/git-root ()
-      (fb/locate-dominating-file ".git"))
-
-    (defun fb/locate-git-root ()
-      (or (fb/git-root)
-	  (error "Not in a Git repository")))
-
     ;; Borrowed from https://systemcrafters.cc/live-streams/may-21-2021/#going-up-a-directory-in-kbdfind-filekbd
     (defun fb/minibuffer-backward-kill (arg)
       (interactive "p")
@@ -420,13 +395,6 @@
 	      (zap-up-to-char (- arg) ?/)
 	    (delete-minibuffer-contents))
 	(delete-backward-char arg)))
-
-    (defun fb/git-find-file ()
-      (interactive)
-      (let ((default-directory (counsel-locate-git-root)))
-	(find-file
-	 (completing-read "Find file: "
-			  (fb/git-candidates default-directory)))))
 
     (use-package vertico
       :demand t
@@ -452,7 +420,7 @@
 	     ("C-c g" . consult-git-grep)
 	     ("C-c o" . consult-imenu)
 	     ("C-x b" . consult-buffer)
-	     ("C-x C-d" . fb/git-find-file)
+	     ("C-x C-d" . project-find-file)
 	     ("M-y" . consult-yank-pop)
 	     ("M-g M-g" . consult-goto-line)
 	     ("C-h a" . consult-apropos)
