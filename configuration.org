@@ -782,8 +782,8 @@
 
   #+begin_src emacs-lisp
     (use-package sly
-      :config
-      (setq inferior-lisp-program "sbcl"))
+      :custom
+      (inferior-lisp-program "sbcl"))
   #+end_src
 
 * Setup =js2-mode= and =web-mode=
