@@ -853,6 +853,37 @@
     (use-package cmake-mode)
   #+end_src
 
+  
+* Setup =erc=
+
+  #+begin_src emacs-lisp
+    (use-package erc-hl-nicks
+      :after erc)
+
+    (use-package erc-image
+      :after erc)
+
+    (use-package erc
+      :commands erc
+      :custom
+      (erc-nick "balbi")
+      (erc-user-full-name "Felipe Balbi")
+      (erc-interpret-mirc-color t)
+      (erc-lurker-hide-list '("JOIN" "PART" "QUIT"))
+      (erc-track-exclude-types '("JOIN" "NICK" "QUIT" "MODE"))
+      (erc-track-enable-keybindings nil)
+      (erc-track-visibility nil) ; Only use the selected frame for visibility
+      (erc-fill-column 80)
+      (erc-fill-function 'erc-fill-static)
+      (erc-fill-static-center 20)
+      (erc-autojoin-channels-alist '(("libera.chat" "#emacs" "#guix" "#systemcrafters")))
+      (erc-quit-reason (lambda (s) (or s "Fading out...")))
+      (erc-modules
+       '(autoaway autojoin button completion fill irccontrols keep-place
+		  list match menu move-to-prompt netsplit networks noncommands
+		  readonly ring stamp track hl-nicks)))
+  #+end_src
+
 * All The Icons
 
   #+begin_src emacs-lisp
