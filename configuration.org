@@ -316,7 +316,7 @@
       :config
       (setq geiser-active-implementations '(chez)
 	    geiser-scheme-implementation 'chez
-	    geiser-chez-binary "scheme"))
+	    geiser-chez-binary "chez"))
   #+end_src
 
 * Setup =paredit=
