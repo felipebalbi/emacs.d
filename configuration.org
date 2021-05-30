@@ -313,10 +313,18 @@
 
   #+begin_src emacs-lisp
     (use-package geiser
-      :config
-      (setq geiser-active-implementations '(chez)
-	    geiser-scheme-implementation 'chez
-	    geiser-chez-binary "chez"))
+      :custom
+      (geiser-active-implementations '(chez))
+      (geiser-scheme-implementation 'chez)
+    )
+
+    (use-package geiser-chez
+      :after geiser
+      :custom
+      (geiser-chez-binary "chez"))
+
+    (use-package geiser-guile
+      :after geiser)
   #+end_src
 
 * Setup =paredit=
