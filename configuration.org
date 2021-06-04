@@ -871,6 +871,9 @@
     (use-package erc-image
       :after erc)
 
+    (use-package erc-hl-nicks
+      :after erc)
+
     (use-package erc
       :commands erc
       :custom
@@ -887,7 +890,7 @@
       (erc-autojoin-channels-alist '(("libera.chat" "#emacs" "#guix" "#systemcrafters")))
       (erc-quit-reason (lambda (s) (or s "Fading out...")))
       (erc-modules
-       '(autoaway autojoin button completion fill irccontrols keep-place
+       '(autoaway autojoin button completion image fill irccontrols keep-place
 		  list match menu move-to-prompt netsplit networks noncommands
 		  readonly ring stamp track hl-nicks)))
   #+end_src
