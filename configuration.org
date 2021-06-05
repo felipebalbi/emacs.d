@@ -877,7 +877,7 @@
     (use-package erc
       :commands erc
       :custom
-      (erc-nick "balbi")
+      (erc-nick '("balbi" "balbi_" "felipebalbi"))
       (erc-user-full-name "Felipe Balbi")
       (erc-interpret-mirc-color t)
       (erc-lurker-hide-list '("JOIN" "PART" "QUIT"))
@@ -887,8 +887,9 @@
       (erc-fill-column 80)
       (erc-fill-function 'erc-fill-static)
       (erc-fill-static-center 20)
+      (erc-default-server "irc.libera.chat")
       (erc-autojoin-channels-alist '(("libera.chat" "#emacs" "#guix" "#systemcrafters")))
-      (erc-quit-reason (lambda (s) (or s "Fading out...")))
+      (erc-quit-reason (lambda (s) (or s "Later...")))
       (erc-modules
        '(autoaway autojoin button completion image fill irccontrols keep-place
 		  list match menu move-to-prompt netsplit networks noncommands
