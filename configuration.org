@@ -314,9 +314,7 @@
   #+begin_src emacs-lisp
     (use-package geiser
       :custom
-      (geiser-active-implementations '(chez))
-      (geiser-scheme-implementation 'chez)
-    )
+      (geiser-active-implementations '(guile chez)))
 
     (use-package geiser-chez
       :after geiser
