@@ -394,18 +394,8 @@
 
   #+begin_src emacs-lisp
     ;; Borrowed from https://systemcrafters.cc/live-streams/may-21-2021/#going-up-a-directory-in-kbdfind-filekbd
-    (defun fb/minibuffer-backward-kill (arg)
-      (interactive "p")
-      (if minibuffer-completing-file-name
-	  (if (string-match-p "/." (minibuffer-contents))
-	      (zap-up-to-char (- arg) ?/)
-	    (delete-minibuffer-contents))
-	(delete-backward-char arg)))
-
     (use-package vertico
       :demand t
-      :bind (:map minibuffer-local-map
-		  ("<backspace>" . fb/minibuffer-backward-kill))
       :custom
       (vertico-cycle t)
       :init
