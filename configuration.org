@@ -885,6 +885,14 @@
 		  readonly ring stamp track hl-nicks)))
   #+end_src
 
+* Setup =scad-mode=
+
+  Should we play with some =openscad=?
+
+  #+begin_src emacs-lisp
+    (use-package scad-mode)
+  #+end_src
+
 * All The Icons
 
   #+begin_src emacs-lisp
