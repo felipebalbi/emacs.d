@@ -410,7 +410,6 @@
     (use-package consult
       :demand t
       :after vertico
-      :custom (consult-line-start-from-top t)
       :bind (("C-s" . consult-line)
 	     ("C-r" . consult-line)
 	     ("C-c g" . consult-git-grep)
