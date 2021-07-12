@@ -1,0 +1,25 @@
+# -*- mode: snippet -*-
+# name: beamer
+# key: <beamer
+# --
+#+STARTUP: beamer
+#+TITLE: ${1:Title}
+#+SUBTITLE: ${2:Subtitle}
+#+AUTHOR: Felipe Balbi
+#+EMAIL: felipe.balbi@microsoft.com
+#+OPTIONS: H:1 num:t toc:nil
+#+LATEX_CLASS: beamer
+#+LATEX_CLASS_OPTIONS: [10pt,aspectratio=169]
+#+LATEX_HEADER: \usepackage{minted}
+#+LATEX_HEADER: \usepackage{pgfplots}
+#+LATEX_HEADER: \usepackage{subcaption}
+#+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usetikzlibrary{arrows.meta}
+#+LATEX_HEADER: \usetikzlibrary{arrows}
+#+LATEX_HEADER: \usetikzlibrary{positioning}
+#+LATEX_HEADER: \tikzset{node distance=2cm}
+#+LATEX_HEADER: \tikzset{>=Stealth}
+#+LATEX_HEADER: \tikzstyle{box} = [rectangle, draw, fill=blue!20, text width=3em, text centered, node distance=3cm, rounded corners, minimum height=3em]
+#+LATEX_HEADER: \usepackage{xfrac}
+#+BEAMER_THEME: Darmstadt
+#+EXPORT_FILE_NAME: ${3:Export name}
