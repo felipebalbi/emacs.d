@@ -897,6 +897,13 @@
 
   #+begin_src emacs-lisp
     (use-package arduino-mode)
+
+    (use-package arduino-cli-mode
+      :ensure t
+      :hook arduino-mode
+      :custom
+      (arduino-cli-warnings 'all)
+      (arduino-cli-verify t))
   #+end_src
 
 * All The Icons
