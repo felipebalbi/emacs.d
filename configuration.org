@@ -849,7 +849,6 @@
     (use-package cmake-mode)
   #+end_src
 
-  
 * Setup =erc=
 
   #+begin_src emacs-lisp
@@ -890,6 +889,14 @@
 
   #+begin_src emacs-lisp
     (use-package scad-mode)
+  #+end_src
+
+* Setup =arduino-mode=
+
+  For some fun hacking :-)
+
+  #+begin_src emacs-lisp
+    (use-package arduino-mode)
   #+end_src
 
 * All The Icons
