@@ -719,6 +719,19 @@
       ;;; Always sign messages
       (add-hook 'message-setup-hook 'mml-secure-message-sign-pgpmime)
 
+      ;;; Bookmarks
+      (add-to-list 'mu4e-bookmarks
+		   (make-mu4e-bookmark
+		    :name "Linux-USB"
+		    :query "list:linux-usb.vger.kernel.org AND flag:unread AND NOT flag:trashed"
+		    :key ?U))
+
+      (add-to-list 'mu4e-bookmarks
+		   (make-mu4e-bookmark
+		    :name "Linux ARM MSM"
+		    :query "list:linux-arm-msm.vger.kernel.org AND flag:unread AND NOT flag:trashed"
+		    :key ?m))
+
       ;;; Start `mu4e' in the background after emacs starts. This will
       ;;; guarantee start of periodic synchronization of emails
       (mu4e t))
