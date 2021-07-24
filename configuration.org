@@ -465,7 +465,6 @@
        (require 'org-tempo nil t)
        (require 'ox-odt nil t)
        (require 'ox-md nil t)
-       (require 'org-notmuch nil t)
        (setq org-latex-pdf-process
 	     '("latexmk -xelatex -shell-escape -f -pdf %f"))
        (setq org-latex-listings 'minted)
@@ -663,32 +662,6 @@
 	:keybinding "t")
 
       (engine-mode t))
-  #+end_src
-
-* Setup =notmuch=
-
-  I've been using =notmuch= for mailing for quite a while.
-
-  #+begin_src emacs-lisp
-    (use-package notmuch
-      :config
-      (require 'smtpmail)
-      (add-hook 'message-setup-hook 'mml-secure-message-sign-pgpmime)
-      (setq-default message-kill-buffer-on-exit t
-		    mail-specify-envelope-from t
-		    message-send-mail-function 'message-smtpmail-send-it
-		    mml-secure-smime-sign-with-sender t
-		    mml-secure-openpgp-sign-with-sender t
-		    smtpmail-smtp-server "mail.kernel.org"
-		    smtpmail-smtp-service 587
-		    smtpmail-smtp-user "balbi"
-		    notmuch-crypto-process-mime t
-		    notmuch-show-stash-mlarchive-link-alist '(("Lore" . "https://lore.kernel.org/r/")
-							      ("Gmane" . "https://mid.gmane.org/")
-							      ("MARC" . "https://marc.info/?i=")
-							      ("Mail Archive, The" . "https://mid.mail-archive.com/"))
-
-		    notmuch-show-indent-content nil)) ; my saved searches are missing. Should they be in site-local.el ?
   #+end_src
 
 * Setup =mu4e=
