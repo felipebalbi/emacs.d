@@ -435,7 +435,9 @@
     (use-package doom-modeline
       :demand t
       :hook (after-init . doom-modeline-mode)
-      :config (setq find-file-visit-truename t))
+      :config
+      (setq find-file-visit-truename t)
+      (setq doom-modeline-mu4e t))
   #+end_src
 
 * Setup =org-mode=
@@ -687,6 +689,66 @@
 							      ("Mail Archive, The" . "https://mid.mail-archive.com/"))
 
 		    notmuch-show-indent-content nil)) ; my saved searches are missing. Should they be in site-local.el ?
+  #+end_src
+
+* Setup =mu4e=
+
+  After installing =isync= and =mu= packages, we can use =mu4e=
+
+  #+begin_src emacs-lisp
+    (use-package mu4e
+      ;; :ensure nil
+      :load-path "/usr/share/emacs/site-lisp/mu4e/"
+
+      ;;; Wait 5 seconds after startup
+      :defer 5
+      :config
+      (setq mu4e-change-filenames-when-moving t)
+
+      (setq mu4e-update-interval (* 5 60))
+      (setq mu4e-get-mail-command "mbsync -a")
+      (setq mu4e-maildir "~/maildir")
+
+      (setq mu4e-drafts-folder "/[Gmail]/Drafts")
+      (setq mu4e-sent-folder "/[Gmail]/Sent Mail")
+      (setq mu4e-refile-folder "/[Gmail]/All Mail")
+      (setq mu4e-trash-folder "/[Gmail]/Trash")
+
+      (setq mu4e-maildir-shortcuts
+	    '(("/Inbox"             . ?i)
+	      ("/[Gmail]/Sent Mail" . ?s)
+	      ("/[Gmail]/Trash"     . ?t)
+	      ("/[Gmail]/Drafts"    . ?d)
+	      ("/[Gmail]/All Mail"  . ?A)
+	      ("/linux-usb"         . ?u)
+	      ("/linux-arm-msm"     . ?a)))
+
+      ;;; SMTP
+      (setq mail-user-agent 'mu4e-user-agent) 
+      (setq message-send-mail-function 'smtpmail-send-it) 
+      (setq smtpmail-smtp-server "mail.kernel.org")
+      (setq smtpmail-smtp-service 587)
+      (setq smtpmail-smtp-user "balbi")
+
+      ;;; Show images and addresses
+      (setq mu4e-view-show-images t)
+      (setq mu4e-view-show-addresses t)
+
+      ;;; Don't reply to myself
+      (setq mu4e-compose-dont-reply-to-self t)
+
+      ;;; Don't keep message buffers
+      (setq message-kill-buffer-on-exit t)
+
+      ;;; Sign messages with mml-sercure-sign-pgpmime
+      (setq mml-secure-openpgp-signers '("F43BA643AD16119D3D2C812BCE57CD33DC03CD48"))
+
+      ;;; Always sign messages
+      (add-hook 'message-setup-hook 'mml-secure-message-sign-pgpmime)
+
+      ;;; Start `mu4e' in the background after emacs starts. This will
+      ;;; guarantee start of periodic synchronization of emails
+      (mu4e t))
   #+end_src
 
 * Setup =ledger-mode=
