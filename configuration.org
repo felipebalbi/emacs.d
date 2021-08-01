@@ -314,7 +314,7 @@
   #+begin_src emacs-lisp
     (use-package geiser
       :custom
-      (geiser-active-implementations '(guile chez)))
+      (geiser-active-implementations '(mit guile chez)))
 
     (use-package geiser-chez
       :after geiser
@@ -322,6 +322,9 @@
       (geiser-chez-binary "chez"))
 
     (use-package geiser-guile
+      :after geiser)
+
+    (use-package geiser-mit
       :after geiser)
   #+end_src
 
