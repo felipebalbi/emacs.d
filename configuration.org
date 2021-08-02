@@ -479,6 +479,8 @@
        (setq org-latex-listings 'minted)
        (setq org-latex-minted-options
 	     '(("linenos=true")))
+       (if (file-exists-p "~/documents/ding.wav")
+	   (setq org-clock-sound "~/documents/ding.wav"))
        (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
        (add-to-list 'org-structure-template-alist '("cc" . "src c"))
        (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
