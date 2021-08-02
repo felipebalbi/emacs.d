@@ -438,9 +438,15 @@
     (use-package doom-modeline
       :demand t
       :hook (after-init . doom-modeline-mode)
-      :config
-      (setq find-file-visit-truename t)
-      (setq doom-modeline-mu4e t))
+      :custom
+      (find-file-visit-truename t)
+      (doom-modeline-hud t)
+      (doom-modeline-icon t)
+      (doom-modeline-mu4e t)
+      (doom-modeline-major-mode-icon t)
+      (doom-modeline-major-mode-color-icon t)
+      (doom-mu4e-alert t)
+      (doom-modeline-unicode-fallback t))
   #+end_src
 
 * Setup =org-mode=
@@ -733,6 +739,9 @@
       ;;; Start `mu4e' in the background after emacs starts. This will
       ;;; guarantee start of periodic synchronization of emails
       (mu4e t))
+
+    (use-package mu4e-alert
+      :after mu4e)
   #+end_src
 
 * Setup =ledger-mode=
