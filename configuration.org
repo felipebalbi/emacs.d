@@ -151,6 +151,10 @@
 	       (lambda ()
 		 (setq indent-tabs-mode nil)))
 
+     (add-hook 'scheme-mode-hook
+	       (lambda ()
+		 (setq indent-tabs-mode nil)))
+
      (add-hook 'awk-mode-hook
 	       (lambda ()
 		 (c-set-style "awk")))
