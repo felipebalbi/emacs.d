@@ -8,7 +8,7 @@
 
    #+begin_src emacs-lisp
      (setq gc-cons-threshold (* 100 1024 1024)
-	   inhibit-compacting-font-caches t)
+           inhibit-compacting-font-caches t)
    #+end_src
 
 ** Track Initialization Time
@@ -19,10 +19,10 @@
    #+begin_src emacs-lisp
      (defun fb/display-startup-time ()
        (message "Emacs loaded in %s with %d garbage collections."
-		(format "%.2f seconds"
-			(float-time
-			 (time-subtract after-init-time before-init-time)))
-		gcs-done))
+                (format "%.2f seconds"
+                        (float-time
+                         (time-subtract after-init-time before-init-time)))
+                gcs-done))
 
      (add-hook 'emacs-startup-hook #'fb/display-startup-time)
    #+end_src
@@ -38,11 +38,11 @@
      (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
      (add-to-list 'package-archives
-		  '("melpa" . "http://melpa.org/packages/"))
+                  '("melpa" . "http://melpa.org/packages/"))
      (add-to-list 'package-archives
-		  '("org" . "https://orgmode.org/elpa/"))
+                  '("org" . "https://orgmode.org/elpa/"))
      (add-to-list 'package-archives
-		  '("elpa" . "https://elpa.gnu.org/packages/"))
+                  '("elpa" . "https://elpa.gnu.org/packages/"))
 
      (package-initialize)
    #+end_src
@@ -57,12 +57,12 @@
 
    #+begin_src emacs-lisp
      (setq user-full-name "Felipe Balbi"
-	   user-mail-address "balbi@kernel.org"
-	   calendar-latitude 60.17
-	   calendar-longitude 24.94
-	   calendar-location-name "Helsinki, FI"
-	   inhibit-startup-screen t
-	   make-backup-files nil)
+           user-mail-address "balbi@kernel.org"
+           calendar-latitude 60.17
+           calendar-longitude 24.94
+           calendar-location-name "Helsinki, FI"
+           inhibit-startup-screen t
+           make-backup-files nil)
      (global-prettify-symbols-mode t)
    #+end_src
 
@@ -72,8 +72,8 @@
 
    #+begin_src emacs-lisp
      (if (eq system-type 'windows-nt)
-	 (setq-default visible-bell t
-		       buffer-file-coding-system 'utf-8-unix))
+         (setq-default visible-bell t
+                       buffer-file-coding-system 'utf-8-unix))
    #+end_src
 
 ** Host Specific Settings
@@ -87,7 +87,7 @@
    #+begin_src emacs-lisp
      (let ((filename (concat "~/.emacs.d/" (system-name) ".org.gpg")))
        (if (file-exists-p filename)
-	   (org-babel-load-file filename)))
+           (org-babel-load-file filename)))
    #+end_src
 
 ** Prevent Accidentally closing =emacs=
@@ -114,50 +114,50 @@
 
    #+begin_src emacs-lisp
      (add-hook 'sh-mode-hook
-	       (lambda ()
-		 (setq sh-basic-offset 2)))
+               (lambda ()
+                 (setq sh-basic-offset 2)))
 
      (add-hook 'ruby-mode-hook
-	       (lambda ()
-		 (setq ruby-indent-level 2)))
+               (lambda ()
+                 (setq ruby-indent-level 2)))
 
      (add-hook 'js-mode-hook
-	       (lambda ()
-		 (setq js-indent-level 2)
-		 (setq indent-tabs-mode nil)))
+               (lambda ()
+                 (setq js-indent-level 2)
+                 (setq indent-tabs-mode nil)))
 
      (add-hook 'sgml-mode-hook
-	       (lambda ()
-		 (setq indent-tabs-mode nil)))
+               (lambda ()
+                 (setq indent-tabs-mode nil)))
 
      (add-hook 'c-mode-hook
-	       (lambda ()
-		 (c-set-style "linux")
-		 (setq c-basic-offset 8
-		       c-block-comment-prefix "* ")
-		 (c-set-offset 'arglist-intro '++)
-		 (c-set-offset 'arglist-cont '++)
-		 (c-set-offset 'arglist-cont-nonempty '++)
-		 (setq indent-tabs-mode t)))
+               (lambda ()
+                 (c-set-style "linux")
+                 (setq c-basic-offset 8
+                       c-block-comment-prefix "* ")
+                 (c-set-offset 'arglist-intro '++)
+                 (c-set-offset 'arglist-cont '++)
+                 (c-set-offset 'arglist-cont-nonempty '++)
+                 (setq indent-tabs-mode t)))
 
      (add-hook 'c++-mode-hook
-	       (lambda ()
-		 (c-set-style "gnu")
-		 (setq c-basic-offset 4)
-		 (setq c-block-comment-prefix "* ")
-		 (setq indent-tabs-mode nil)))
+               (lambda ()
+                 (c-set-style "gnu")
+                 (setq c-basic-offset 4)
+                 (setq c-block-comment-prefix "* ")
+                 (setq indent-tabs-mode nil)))
 
      (add-hook 'lisp-mode-hook
-	       (lambda ()
-		 (setq indent-tabs-mode nil)))
+               (lambda ()
+                 (setq indent-tabs-mode nil)))
 
      (add-hook 'scheme-mode-hook
-	       (lambda ()
-		 (setq indent-tabs-mode nil)))
+               (lambda ()
+                 (setq indent-tabs-mode nil)))
 
      (add-hook 'awk-mode-hook
-	       (lambda ()
-		 (c-set-style "awk")))
+               (lambda ()
+                 (c-set-style "awk")))
    #+end_src
 
 ** Highlight Current Line
@@ -198,15 +198,15 @@
 
    #+begin_src emacs-lisp
      (if (or (string-equal system-type "windows-nt")
-	     (string-equal system-type "darwin"))
-	 (setq os-agnostic-font-family "Fira Code")
+             (string-equal system-type "darwin"))
+         (setq os-agnostic-font-family "Fira Code")
        (setq os-agnostic-font-family "Fira Mono"))
 
      (set-face-attribute 'default nil
-			 :family os-agnostic-font-family
-			 :height 140
-			 :weight 'regular
-			 :width 'normal)
+                         :family os-agnostic-font-family
+                         :height 140
+                         :weight 'regular
+                         :width 'normal)
    #+end_src
 
 ** Disable lockfiles
@@ -271,7 +271,7 @@
 
   #+begin_src emacs-lisp
     (setq use-package-always-ensure t
-	  use-package-always-defer  t)
+          use-package-always-defer  t)
   #+end_src
 
 * Setup =PATH= variable
@@ -340,10 +340,10 @@
   #+begin_src emacs-lisp
     (use-package paredit
       :hook ((emacs-lisp-mode
-	      ielm-mode
-	      lisp-mode
-	      lisp-interaction-mode
-	      scheme-mode) . enable-paredit-mode)
+              ielm-mode
+              lisp-mode
+              lisp-interaction-mode
+              scheme-mode) . enable-paredit-mode)
       :init
       (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode))
   #+end_src
@@ -391,7 +391,7 @@
     (add-hook 'scheme-mode-hook           #'push-pretty-characters)
 
     (add-hook 'js-mode-hook (lambda ()
-			      (push '("function" . ?ƒ) prettify-symbols-alist)))
+                              (push '("function" . ?ƒ) prettify-symbols-alist)))
   #+end_src
 
 * Setup =vertico=, =consult=, =orderless=, and =marginalia=
@@ -418,16 +418,16 @@
       :demand t
       :after vertico
       :bind (("C-s" . consult-line)
-	     ("C-r" . consult-line)
-	     ("C-c g" . consult-git-grep)
-	     ("C-c o" . consult-imenu)
-	     ("C-x b" . consult-buffer)
-	     ("C-x C-d" . project-find-file)
-	     ("M-y" . consult-yank-pop)
-	     ("M-g M-g" . consult-goto-line)
-	     ("C-h a" . consult-apropos)
-	     :map minibuffer-local-map
-	     ("C-r" . consult-history)))
+             ("C-r" . consult-line)
+             ("C-c g" . consult-git-grep)
+             ("C-c o" . consult-imenu)
+             ("C-x b" . consult-buffer)
+             ("C-x C-d" . project-find-file)
+             ("M-y" . consult-yank-pop)
+             ("M-g M-g" . consult-goto-line)
+             ("C-h a" . consult-apropos)
+             :map minibuffer-local-map
+             ("C-r" . consult-history)))
 
     (use-package marginalia
       :demand t
@@ -471,20 +471,20 @@
        :pin org
        :bind
        (("C-c l" . org-store-link)
-	("C-c a" . org-agenda)
-	("C-c c" . org-capture)
-	("C-c b" . org-switchb))
+        ("C-c a" . org-agenda)
+        ("C-c c" . org-capture)
+        ("C-c b" . org-switchb))
        :config
        (require 'org-tempo nil t)
        (require 'ox-odt nil t)
        (require 'ox-md nil t)
        (setq org-latex-pdf-process
-	     '("latexmk -xelatex -shell-escape -f -pdf %f"))
+             '("latexmk -xelatex -shell-escape -f -pdf %f"))
        (setq org-latex-listings 'minted)
        (setq org-latex-minted-options
-	     '(("linenos=true")))
+             '(("linenos=true")))
        (if (file-exists-p "~/documents/ding.wav")
-	   (setq org-clock-sound "~/documents/ding.wav"))
+           (setq org-clock-sound "~/documents/ding.wav"))
        (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
        (add-to-list 'org-structure-template-alist '("cc" . "src c"))
        (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
@@ -492,40 +492,40 @@
        (add-to-list 'org-structure-template-alist '("jss" . "src js"))
        (add-to-list 'org-modules 'org-habit)
        (org-babel-do-load-languages 'org-babel-load-languages '((emacs-lisp . t)
-								(C . t)
-								(sql . t)
-								(dot . t)))
+                                                                (C . t)
+                                                                (sql . t)
+                                                                (dot . t)))
        (add-to-list 'org-latex-classes
-		    '("scrreprt" "\\documentclass[11pt]{scrreprt}"
-		      ("\\chapter{%s}" . "\\chapter*{%s}")
-		      ("\\section{%s}" . "\\section*{%s}")
-		      ("\\subsection{%s}" . "\\subsection*{%s}")
-		      ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-		      ("\\paragraph{%s}" . "\\paragraph*{%s}")
-		      ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+                    '("scrreprt" "\\documentclass[11pt]{scrreprt}"
+                      ("\\chapter{%s}" . "\\chapter*{%s}")
+                      ("\\section{%s}" . "\\section*{%s}")
+                      ("\\subsection{%s}" . "\\subsection*{%s}")
+                      ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                      ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                      ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
        (add-to-list 'org-latex-classes
-		    '("scrbook" "\\documentclass[11pt]{scrbook}"
-		      ("\\chapter{%s}" . "\\chapter*{%s}")
-		      ("\\section{%s}" . "\\section*{%s}")
-		      ("\\subsection{%s}" . "\\subsection*{%s}")
-		      ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-		      ("\\paragraph{%s}" . "\\paragraph*{%s}")
-		      ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+                    '("scrbook" "\\documentclass[11pt]{scrbook}"
+                      ("\\chapter{%s}" . "\\chapter*{%s}")
+                      ("\\section{%s}" . "\\section*{%s}")
+                      ("\\subsection{%s}" . "\\subsection*{%s}")
+                      ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                      ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                      ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
        (add-to-list 'org-latex-classes
-		    '("notes" "\\documentclass[11pt]{scrbook}"
-		      ("\\addchap{%s}" . "\\addchap{%s}")
-		      ("\\addsec{%s}" . "\\addsec{%s}")
-		      ("\\subsection*{%s}" . "\\subsection*{%s}")
-		      ("\\subsubsection*{%s}" . "\\subsubsection*{%s}")
-		      ("\\paragraph*{%s}" . "\\paragraph*{%s}")
-		      ("\\subparagraph*{%s}" . "\\subparagraph*{%s}")))
+                    '("notes" "\\documentclass[11pt]{scrbook}"
+                      ("\\addchap{%s}" . "\\addchap{%s}")
+                      ("\\addsec{%s}" . "\\addsec{%s}")
+                      ("\\subsection*{%s}" . "\\subsection*{%s}")
+                      ("\\subsubsection*{%s}" . "\\subsubsection*{%s}")
+                      ("\\paragraph*{%s}" . "\\paragraph*{%s}")
+                      ("\\subparagraph*{%s}" . "\\subparagraph*{%s}")))
        (add-to-list 'org-latex-classes
-		    '("scrartcl" "\\documentclass[11pt]{scrartcl}"
-		      ("\\section{%s}" . "\\section*{%s}")
-		      ("\\subsection{%s}" . "\\subsection*{%s}")
-		      ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-		      ("\\paragraph{%s}" . "\\paragraph*{%s}")
-		      ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+                    '("scrartcl" "\\documentclass[11pt]{scrartcl}"
+                      ("\\section{%s}" . "\\section*{%s}")
+                      ("\\subsection{%s}" . "\\subsection*{%s}")
+                      ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                      ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                      ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
 
      (use-package org-bullets
        :hook (org-mode . org-bullets-mode)
@@ -538,28 +538,28 @@
 
    #+begin_src emacs-lisp
      (setq-default org-directory "~/workspace/org"
-		   org-default-notes-file (concat org-directory "/notes.org")
-		   org-agenda-files (directory-files-recursively
-				     org-directory ".org")
-		   org-archive-location (concat org-directory "/archive/"
-						(format-time-string "%Y")
-						".org::")
-		   org-return-follows-link t
-		   org-ellipsis "⤵"
-		   org-src-fontify-natively t
-		   org-src-tab-acts-natively t
-		   org-enforce-todo-dependencies t
-		   org-enforce-todo-checkbox-dependencies t
-		   org-agenda-dim-blocked-tasks t)
+                   org-default-notes-file (concat org-directory "/notes.org")
+                   org-agenda-files (directory-files-recursively
+                                     org-directory ".org")
+                   org-archive-location (concat org-directory "/archive/"
+                                                (format-time-string "%Y")
+                                                ".org::")
+                   org-return-follows-link t
+                   org-ellipsis "⤵"
+                   org-src-fontify-natively t
+                   org-src-tab-acts-natively t
+                   org-enforce-todo-dependencies t
+                   org-enforce-todo-checkbox-dependencies t
+                   org-agenda-dim-blocked-tasks t)
    #+end_src
 
    Configuring some useful TODO keywords
 
    #+begin_src emacs-lisp
      (setq org-todo-keywords
-	   '((sequence "TODO(t@)" "IN PROGRESS(p@)" "|"
-		       "DONE(d@)" "CANCELED(c@)"
-		       "BLOCKED(b@)" "AWAITING(a@)")))
+           '((sequence "TODO(t@)" "IN PROGRESS(p@)" "|"
+                       "DONE(d@)" "CANCELED(c@)"
+                       "BLOCKED(b@)" "AWAITING(a@)")))
    #+end_src
 
    Track completion of a task
@@ -578,20 +578,20 @@
 
    #+begin_src emacs-lisp
      (setq org-highest-priority ?A
-	   org-lowest-priority ?E
-	   org-default-priotiy ?E)
+           org-lowest-priority ?E
+           org-default-priotiy ?E)
    #+end_src
 
    Some =org-templates=
 
    #+begin_src emacs-lisp
      (setq org-capture-templates
-	   '(
-	     ("t" "Todo" entry (file "todo.org")
-	      "* TODO %^{Task}\n:PROPERTIES:\n:Captured: %T\n:END:\n%?\n\n%i")
-	     ("n" "Note" entry (file+datetree "notes.org")
-	      "* %?\nEntered on %U\n  %i\n  %a")
-	     ))
+           '(
+             ("t" "Todo" entry (file "todo.org")
+              "* TODO %^{Task}\n:PROPERTIES:\n:Captured: %T\n:END:\n%?\n\n%i")
+             ("n" "Note" entry (file+datetree "notes.org")
+              "* %?\nEntered on %U\n  %i\n  %a")
+             ))
    #+end_src
 
 ** Setup =ox-ioslide=
@@ -619,7 +619,7 @@
   #+begin_src emacs-lisp
     (use-package magit
       :config (setq magit-diff-use-overlays nil
-		    magit-commit-arguments '("--signoff"))
+                    magit-commit-arguments '("--signoff"))
       :bind ("C-x g" . magit-status))
   #+end_src
 
@@ -654,27 +654,27 @@
       (engine/set-keymap-prefix (kbd "C-c s"))
 
       (defengine duckduckgo
-	"https://duckduckgo.com/?q=%s"
-	:keybinding "d")
+        "https://duckduckgo.com/?q=%s"
+        :keybinding "d")
 
       (defengine google
-	"https://www.google.com/search?ie=utf-8&oe=utf-8&q=%s"
-	:keybinding "g")
+        "https://www.google.com/search?ie=utf-8&oe=utf-8&q=%s"
+        :keybinding "g")
 
       (defengine wikipedia
-	"https://en.wikipedia.org/w/index.php?title=Special:Search&go=Go&search=%s"
-	:keybinding "w")
+        "https://en.wikipedia.org/w/index.php?title=Special:Search&go=Go&search=%s"
+        :keybinding "w")
 
       (defengine wolfram-alpha
-	"https://www.wolfram-alpha.com/input/?i=%s")
+        "https://www.wolfram-alpha.com/input/?i=%s")
 
       (defengine youtube
-	"https://www.youtube.com/results?aq=f&oq=&search_query=%s"
-	:keybinding "y")
+        "https://www.youtube.com/results?aq=f&oq=&search_query=%s"
+        :keybinding "y")
 
       (defengine 17track
-	"http://www.17track.net/en/track?nums=%s"
-	:keybinding "t")
+        "http://www.17track.net/en/track?nums=%s"
+        :keybinding "t")
 
       (engine-mode t))
   #+end_src
@@ -703,13 +703,13 @@
       (setq mu4e-trash-folder "/[Gmail]/Trash")
 
       (setq mu4e-maildir-shortcuts
-	    '(("/Inbox"             . ?i)
-	      ("/[Gmail]/Sent Mail" . ?s)
-	      ("/[Gmail]/Trash"     . ?t)
-	      ("/[Gmail]/Drafts"    . ?d)
-	      ("/[Gmail]/All Mail"  . ?A)
-	      ("/linux-usb"         . ?u)
-	      ("/linux-arm-msm"     . ?a)))
+            '(("/Inbox"             . ?i)
+              ("/[Gmail]/Sent Mail" . ?s)
+              ("/[Gmail]/Trash"     . ?t)
+              ("/[Gmail]/Drafts"    . ?d)
+              ("/[Gmail]/All Mail"  . ?A)
+              ("/linux-usb"         . ?u)
+              ("/linux-arm-msm"     . ?a)))
 
       ;;; SMTP
       (setq mail-user-agent 'mu4e-user-agent) 
@@ -736,11 +736,11 @@
 
       ;;; Bookmarks
       (setq mu4e-bookmarks
-	    '((:name "Linux ARM MSM" :query "list:linux-arm-msm.vger.kernel.org AND flag:unread AND NOT flag:trashed" :key ?m)
-	      (:name "Linux-USB" :query "list:linux-usb.vger.kernel.org AND flag:unread AND NOT flag:trashed" :key ?u)
-	      (:name "Unread messages" :query "flag:unread AND NOT flag:trashed" :key ?U)
-	      (:name "Today's messages" :query "date:today..now" :key ?t)
-	      (:name "Last 7 days" :query "date:7d..now" :hide-unread t :key ?w)))
+            '((:name "Linux ARM MSM" :query "list:linux-arm-msm.vger.kernel.org AND flag:unread AND NOT flag:trashed" :key ?m)
+              (:name "Linux-USB" :query "list:linux-usb.vger.kernel.org AND flag:unread AND NOT flag:trashed" :key ?u)
+              (:name "Unread messages" :query "flag:unread AND NOT flag:trashed" :key ?U)
+              (:name "Today's messages" :query "date:today..now" :key ?t)
+              (:name "Last 7 days" :query "date:7d..now" :hide-unread t :key ?w)))
 
       ;;; Start `mu4e' in the background after emacs starts. This will
       ;;; guarantee start of periodic synchronization of emails
@@ -759,13 +759,13 @@
       :config
       (add-to-list 'auto-mode-alist '("\\.ledger\\'" . ledger-mode))
       (setq ledger-clear-whole-transactions t
-	    ledger-reconcile-default-commodity "€"
-	    ledger-reconcile-force-window-bottom t
-	    ledger-master-file "~/workspace/accounting/general.ledger"
-	    ledger-reports '(("bal" "%(binary) -f %(ledger-file) bal -B")
-			     ("reg" "%(binary) -f %(ledger-file) reg")
-			     ("payee" "%(binary) -f %(ledger-file) reg @%(payee)")
-			     ("account" "%(binary) -f %(ledger-file) reg %(account)"))))
+            ledger-reconcile-default-commodity "€"
+            ledger-reconcile-force-window-bottom t
+            ledger-master-file "~/workspace/accounting/general.ledger"
+            ledger-reports '(("bal" "%(binary) -f %(ledger-file) bal -B")
+                             ("reg" "%(binary) -f %(ledger-file) reg")
+                             ("payee" "%(binary) -f %(ledger-file) reg @%(payee)")
+                             ("account" "%(binary) -f %(ledger-file) reg %(account)"))))
   #+end_src
 
 * Setup =restclient=
@@ -790,8 +790,8 @@
   #+begin_src emacs-lisp
     (use-package markdown-mode
       :mode (("README\\.md\\'" . gfm-mode)
-	     ("\\.md\\'" . markdown-mode)
-	     ("\\.markdown\\'" . markdown-mode))
+             ("\\.md\\'" . markdown-mode)
+             ("\\.markdown\\'" . markdown-mode))
       :init (setq markdown-command "pandoc"))
   #+end_src
 
@@ -811,10 +811,10 @@
       :demand t
       :config
       (setq yas-verbosity 1
-	    yas-wrap-around-region t)
+            yas-wrap-around-region t)
 
       (with-eval-after-load 'yasnippet
-	(setq yas-snippet-dirs (list "~/.emacs.d/personal-snippets")))
+        (setq yas-snippet-dirs (list "~/.emacs.d/personal-snippets")))
 
       (yas-reload-all)
       (yas-global-mode))
@@ -863,10 +863,10 @@
     (use-package js-comint
       :config
       (add-hook 'js-mode-hook
-		(lambda ()
-		  (local-set-key (kbd "C-c C-c") 'js-send-last-sexp)
-		  (local-set-key (kbd "C-c b") 'js-send-buffer)
-		  (local-set-key (kbd "C-c C-b") 'js-send-buffer-and-go))))
+                (lambda ()
+                  (local-set-key (kbd "C-c C-c") 'js-send-last-sexp)
+                  (local-set-key (kbd "C-c b") 'js-send-buffer)
+                  (local-set-key (kbd "C-c C-b") 'js-send-buffer-and-go))))
   #+end_src
 
 * Setup =haskell-mode=
@@ -886,9 +886,9 @@
     (use-package multiple-cursors
       :demand t
       :bind (("C->" . mc/mark-next-like-this)
-	     ("C-<" . mc/mark-previous-like-this)
-	     ("C-c C-<" . mc/mark-all-like-this)
-	     ("C-S-c C-S-c" . mc/edit-lines)))
+             ("C-<" . mc/mark-previous-like-this)
+             ("C-c C-<" . mc/mark-all-like-this)
+             ("C-S-c C-S-c" . mc/edit-lines)))
   #+end_src
 
 * Setup =dts-mode=
@@ -940,8 +940,8 @@
       (erc-quit-reason (lambda (s) (or s "Later...")))
       (erc-modules
        '(autoaway autojoin button completion image fill irccontrols keep-place
-		  list match menu move-to-prompt netsplit networks noncommands
-		  readonly ring stamp track hl-nicks)))
+                  list match menu move-to-prompt netsplit networks noncommands
+                  readonly ring stamp track hl-nicks)))
   #+end_src
 
 * Setup =scad-mode=
@@ -979,30 +979,30 @@
 * Outro
 ** Some extra keybindings for myself
 
-  These are super helpful for day to day use
+   These are super helpful for day to day use
 
-  #+begin_src emacs-lisp
-    (define-key global-map (kbd "C-1") 'text-scale-increase)
-    (define-key global-map (kbd "C-0") 'text-scale-decrease)
-  #+end_src
+   #+begin_src emacs-lisp
+     (define-key global-map (kbd "C-1") 'text-scale-increase)
+     (define-key global-map (kbd "C-0") 'text-scale-decrease)
+   #+end_src
 
 ** Enable some disabled commands
 
-  Few commands I want to use but are disabled by default
+   Few commands I want to use but are disabled by default
   
-  #+begin_src emacs-lisp
-    (put 'narrow-to-region 'disabled nil)
-    (put 'upcase-region 'disabled nil)
-    (put 'downcase-region 'disabled nil)
-    (put 'dired-find-alternate-file 'disabled nil)
-  #+end_src
+   #+begin_src emacs-lisp
+     (put 'narrow-to-region 'disabled nil)
+     (put 'upcase-region 'disabled nil)
+     (put 'downcase-region 'disabled nil)
+     (put 'dired-find-alternate-file 'disabled nil)
+   #+end_src
 ** GnuPG 2
 
-  We're gonna tell =emacs= to use =gpg2=
+   We're gonna tell =emacs= to use =gpg2=
 
-  #+begin_src emacs-lisp
-    (setq epg-gpg-program "/usr/bin/gpg2")
-  #+end_src
+   #+begin_src emacs-lisp
+     (setq epg-gpg-program "/usr/bin/gpg2")
+   #+end_src
 ** Reduce Garbage Collection Threshold
 
    #+begin_src emacs-lisp
