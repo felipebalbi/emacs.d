@@ -462,11 +462,6 @@
    First we will be using our local copy of org git tree:
 
    #+begin_src emacs-lisp
-     (add-to-list 'load-path "~/workspace/org-mode/lisp")
-     (add-to-list 'load-path "~/workspace/org-mode/contrib/lisp")
-   #+end_src
-
-   #+begin_src emacs-lisp
      (use-package org
        :pin org
        :bind
@@ -483,13 +478,11 @@
        (setq org-latex-listings 'minted)
        (setq org-latex-minted-options
              '(("linenos=true")))
-       (if (file-exists-p "~/documents/ding.wav")
-           (setq org-clock-sound "~/documents/ding.wav"))
        (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
        (add-to-list 'org-structure-template-alist '("cc" . "src c"))
        (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
        (add-to-list 'org-structure-template-alist '("hs" . "src haskell"))
-       (add-to-list 'org-structure-template-alist '("jss" . "src js"))
+       (add-to-list 'org-structure-template-alist '("js" . "src js"))
        (add-to-list 'org-modules 'org-habit)
        (org-babel-do-load-languages 'org-babel-load-languages '((emacs-lisp . t)
                                                                 (C . t)
@@ -533,26 +526,6 @@
        (setq org-hide-leading-stars t))
    #+end_src
 
-   with that out of the way, let's configure our preferred =org-directory=
-   location and point =org= to our org files.
-
-   #+begin_src emacs-lisp
-     (setq-default org-directory "~/workspace/org"
-                   org-default-notes-file (concat org-directory "/notes.org")
-                   org-agenda-files (directory-files-recursively
-                                     org-directory ".org")
-                   org-archive-location (concat org-directory "/archive/"
-                                                (format-time-string "%Y")
-                                                ".org::")
-                   org-return-follows-link t
-                   org-ellipsis "⤵"
-                   org-src-fontify-natively t
-                   org-src-tab-acts-natively t
-                   org-enforce-todo-dependencies t
-                   org-enforce-todo-checkbox-dependencies t
-                   org-agenda-dim-blocked-tasks t)
-   #+end_src
-
    Configuring some useful TODO keywords
 
    #+begin_src emacs-lisp
@@ -580,18 +553,6 @@
      (setq org-highest-priority ?A
            org-lowest-priority ?E
            org-default-priotiy ?E)
-   #+end_src
-
-   Some =org-templates=
-
-   #+begin_src emacs-lisp
-     (setq org-capture-templates
-           '(
-             ("t" "Todo" entry (file "todo.org")
-              "* TODO %^{Task}\n:PROPERTIES:\n:Captured: %T\n:END:\n%?\n\n%i")
-             ("n" "Note" entry (file+datetree "notes.org")
-              "* %?\nEntered on %U\n  %i\n  %a")
-             ))
    #+end_src
 
 ** Setup =ox-ioslide=
