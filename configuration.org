@@ -658,17 +658,6 @@
       :bind ("C-c t" . eshell))
   #+end_src
 
-* Setup =vterm=
-
-  Dang!! =vterm= is cool.
-
-  #+begin_src emacs-lisp
-    (use-package vterm
-      :demand t
-      :unless (memq window-system '(w32))
-      :bind ("C-c T" . vterm))
-  #+end_src
-
 * Setup =engine-mode=
 
   =engine-mode= helps me starting out searches from within =emacs=. It's
