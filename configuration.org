@@ -615,9 +615,9 @@
 ** Setup =org-roam=
 
    #+begin_src emacs-lisp
-     (setq org-roam-v2-ack t)
-
      (use-package org-roam
+       :init
+       (setq org-roam-v2-ack t)
        :hook
        (after-init . org-roam-mode)
        :custom
