@@ -612,6 +612,32 @@
      (use-package ox-rst)
    #+end_src
 
+** Setup =org-roam=
+
+   #+begin_src emacs-lisp
+     (setq org-roam-v2-ack t)
+
+     (use-package org-roam
+       :hook
+       (after-init . org-roam-mode)
+       :custom
+       (org-roam-directory "~/workspace/org/")
+       (org-roam-completion-everywhere t)
+       (org-roam-completion-system 'default)
+       (org-roam-dailies-direcdtory "daily/")
+       :bind (:map org-roam-mode-map
+		   (("C-c n l" . org-roam)
+		    ("C-c n f" . org-roam-find-file)
+		    ("C-c n d" . org-roam-dailies-find-date)
+		    ("C-c n c" . org-roam-dailies-capture-today)
+		    ("C-c n t" . org-roam-dailies-find-today)
+		    ("C-c n y" . org-roam-dailies-find-yesterday)
+		    ("C-c n g" . org-roam-graph))
+		   :map org-mode-map
+		   (("C-c n i" . org-roam-insert))
+		   (("C-c n I" . org-roam-insert-immediate))))
+   #+end_src
+
 * Setup =magit=
 
   This is simple to configure.
