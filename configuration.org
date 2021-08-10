@@ -636,7 +636,7 @@
 	      ("C-c n t" . org-roam-dailies-find-today)
 	      ("C-c n y" . org-roam-dailies-find-yesterday))
        :config
-       (org-roam-db-autosync-mode))
+       (org-roam-setup))
    #+end_src
 
 * Setup =magit=
