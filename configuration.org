@@ -569,8 +569,6 @@
      (use-package org-roam
        :init
        (setq org-roam-v2-ack t)
-       :hook
-       (after-init . org-roam-mode)
        :custom
        (org-roam-directory "~/workspace/org/")
        (org-roam-completion-everywhere t)
