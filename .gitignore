@@ -42,3 +42,4 @@ transient/
 var/
 /url/
 /eln-cache/
+*.db

@@ -590,7 +590,7 @@
 	      ("C-c n j" . org-roam-dailies-goto-today)
 	      ("C-c n y" . org-roam-dailies-goto-yesterday))
        :config
-       (org-roam-setup))
+       (org-roam-db-autosync-enable))
    #+end_src
 
 * Setup =magit=
