@@ -241,16 +241,6 @@
      (tooltip-mode -1)
    #+end_src
 
-** Compilation mode
-
-   As it turns out, =helm-git-grep= misses =(require 'compile)=.  As a
-   temporary workaround, let's force =compile= to load early.
-
-   #+begin_src emacs-lisp
-     (use-package compile
-       :demand t)
-   #+end_src
-
 * Install =use-package= if necessary
 
   =use-package= let's me quickly and easily rebuild my configuration
