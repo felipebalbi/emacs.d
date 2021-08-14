@@ -308,12 +308,7 @@
   #+begin_src emacs-lisp
     (use-package geiser
       :custom
-      (geiser-active-implementations '(mit guile racket chez)))
-
-    (use-package geiser-chez
-      :after geiser
-      :custom
-      (geiser-chez-binary "chez"))
+      (geiser-active-implementations '(mit guile racket)))
 
     (use-package geiser-guile
       :after geiser)
