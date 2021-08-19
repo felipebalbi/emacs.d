@@ -967,6 +967,17 @@
       (arduino-cli-verify t))
   #+end_src
 
+* Setup =proof-general=
+
+  Proof general is used to communicate with proof assistants. As I
+  want to work through the [[https://softwarefoundations.cis.upenn.edu/][Software Foundations Books]], I'll rely on
+  =proof-general= to communicate with Coq.
+
+  #+begin_src emacs-lisp
+    (use-package proof-general
+      :ensure t)
+  #+end_src
+
 * All The Icons
 
   #+begin_src emacs-lisp
