@@ -350,13 +350,12 @@
 
   #+begin_src emacs-lisp
     (use-package rainbow-delimiters
-      :config
-      (add-hook 'emacs-lisp-mode-hook       #'rainbow-delimiters-mode)
-      (add-hook 'eval-expression-minibuffer-setup-hook #'rainbow-delimiters-mode)
-      (add-hook 'ielm-mode-hook             #'rainbow-delimiters-mode)
-      (add-hook 'lisp-mode-hook             #'rainbow-delimiters-mode)
-      (add-hook 'lisp-interaction-mode-hook #'rainbow-delimiters-mode)
-      (add-hook 'scheme-mode-hook           #'rainbow-delimiters-mode))
+      :hook
+      ((emacs-lisp-mode
+	ielm-mode
+	lisp-mode
+	lisp-interaction-mode
+	scheme-mode) . rainbow-delimiters-mode))
   #+end_src
 
 * Setup =prettify-symbols-mode=
