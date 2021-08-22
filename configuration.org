@@ -467,6 +467,9 @@
        (org-enforce-todo-dependencies t)
        (org-enforce-todo-checkbox-dependencies t)
        (org-agenda-dim-blocked-tasks t)
+       (org-confirm-babel-evaluate
+	(lambda (lang body)
+	  (not (memq (intern lang) '(c shell dot ditaa)))))
 
        :config
        (require 'org-tempo nil t)
@@ -483,8 +486,10 @@
        (add-to-list 'org-structure-template-alist '("hs" . "src haskell"))
        (add-to-list 'org-structure-template-alist '("js" . "src js"))
        (add-to-list 'org-modules 'org-habit)
+
        (org-babel-do-load-languages 'org-babel-load-languages '((emacs-lisp . t)
                                                                 (C . t)
+                                                                (shell . t)
                                                                 (sql . t)
                                                                 (dot . t)))
        (add-to-list 'org-latex-classes
