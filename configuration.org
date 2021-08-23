@@ -468,8 +468,8 @@
        (org-enforce-todo-checkbox-dependencies t)
        (org-agenda-dim-blocked-tasks t)
        (org-confirm-babel-evaluate
-	(lambda (lang body)
-	  (not (memq (intern lang) '(c shell dot ditaa)))))
+        (lambda (lang body)
+          (not (memq (intern lang) '(c shell python dot ditaa)))))
 
        :config
        (require 'org-tempo nil t)
@@ -489,6 +489,7 @@
 
        (org-babel-do-load-languages 'org-babel-load-languages '((emacs-lisp . t)
                                                                 (C . t)
+                                                                (python . t)
                                                                 (shell . t)
                                                                 (sql . t)
                                                                 (dot . t)))
