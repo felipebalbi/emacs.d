@@ -984,6 +984,14 @@
       :ensure t)
   #+end_src
 
+* Setup =ein=
+
+  =ein= is a package to integrate =emacs= with Jupyter Notebooks.
+
+  #+begin_src emacs-lisp
+    (use-package ein)
+  #+end_src
+
 * All The Icons
 
   #+begin_src emacs-lisp
