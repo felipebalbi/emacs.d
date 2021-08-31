@@ -989,7 +989,8 @@
   =ein= is a package to integrate =emacs= with Jupyter Notebooks.
 
   #+begin_src emacs-lisp
-    (use-package ein)
+    (use-package ein
+      :ensure t)
   #+end_src
 
 * All The Icons
