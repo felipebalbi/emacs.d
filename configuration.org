@@ -241,9 +241,10 @@
      (tooltip-mode -1)
    #+end_src
 
-** Disable =native-comp-async-report-warnings-errors=
+** Setup =native-comp=
 
     #+begin_src emacs-lisp
+      (setq native-comp-deferred-compilation t)
       (setq native-comp-async-report-warnings-errors nil)
     #+end_src
 
