@@ -241,6 +241,12 @@
      (tooltip-mode -1)
    #+end_src
 
+** Disable =native-comp-async-report-warnings-errors=
+
+    #+begin_src emacs-lisp
+      (setq native-comp-async-report-warnings-errors nil)
+    #+end_src
+
 * Install =use-package= if necessary
 
   =use-package= let's me quickly and easily rebuild my configuration
