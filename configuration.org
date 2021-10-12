@@ -459,6 +459,8 @@
      (use-package org
        :pin org
 
+       :hook (org_mode . (lambda () (org-indent-mode t)))
+
        :bind
        (("C-c l" . org-store-link)
         ("C-c a" . org-agenda)
