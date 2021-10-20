@@ -616,7 +616,7 @@
 	   :unnarrowed t)
 
 	  ("m" "Meeting " plain
-	   "\n\n- Date: %<%Y-%m-%d>\n- Attendees: %?\n\n"
+	   "\n\n- Date: %<%Y-%m-%d>\n- Attendees: %?\n\n* Agenda\n\n-"
 	   :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
 	   :unnarrowed t)))
 
