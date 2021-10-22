@@ -1002,6 +1002,24 @@
       :ensure t)
   #+end_src
 
+* Setup =rust-mode=
+
+  Let's play with =rust=
+
+  #+begin_src emacs-lisp
+    (use-package rust-mode
+      :config
+      (setq indent-tabs-mode nil)
+      :custom
+      (rust-format-on-save t))
+    
+    (use-package cargo
+      :after rust-mode
+      :hook (rust-mode . cargo-minor-mode)
+      :bind
+      ("C-c C-c n" . cargo-process-new))
+  #+end_src
+
 * Setup =ein=
 
   =ein= is a package to integrate =emacs= with Jupyter Notebooks.
