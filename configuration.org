@@ -1020,6 +1020,13 @@
       ("C-c C-c n" . cargo-process-new))
   #+end_src
 
+* Setup =elec-pair=
+
+  #+begin_src emacs-lisp
+    (use-package elec-pair
+      :hook ((c-mode cc-mode rust-mode) . electric-pair-local-mode))
+  #+end_src
+
 * Setup =ein=
 
   =ein= is a package to integrate =emacs= with Jupyter Notebooks.
