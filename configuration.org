@@ -600,23 +600,23 @@
        (org-roam-dailies-directory "daily/")
 
        (org-roam-capture-templates
-	'(("d" "default" plain "%?"
+	'(("d" "default" plain "\n\n- tags :: \n\n%?"
 	  :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
 			     "#+title: ${title}\n")
 	  :unnarrowed t)
 
 	  ("b" "Book " plain
-	   "\n- Author: %^{Author}\n- Year: %^{Year}\n\n%?"
+	   "\n- Author: %^{Author}\n- Year: %^{Year}\n- tags :: [[id:94725604-4291-4114-93db-0d998d4c2e8a][Book]] [[id:ddc78b59-68ec-458e-a6bf-f1bbfdfac6d9][Reading]]\n\n%?"
 	   :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
 	   :unnarrowed t)
 
 	  ("p" "Person " plain
-	   "\n\n- Email: %^{Email}\n\n%?"
+	   "\n\n- tags :: [[id:0388192d-6858-4dad-b4fc-954130971423][People]]\n- Email: %^{Email}\n\n%?"
 	   :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
 	   :unnarrowed t)
 
 	  ("m" "Meeting " plain
-	   "\n\n- Date :: %<%Y-%m-%d>\n- Attendees :: %?\n- tags :: \n* Agenda\n\n-"
+	   "\n\n- Date :: %<%Y-%m-%d>\n- Attendees :: %?\n- tags :: [[id:842F6D81-10D6-4CE3-9646-81024DD3A0BC][Meeting]]\n* Agenda\n\n-"
 	   :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
 	   :unnarrowed t)))
 
