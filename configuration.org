@@ -414,6 +414,15 @@
     (use-package consult
       :demand t
       :after vertico
+      :config
+      ;; Use `consult-completion-in-region' if Vertico is enabled.
+      ;; Otherwise use the default `completion--in-region' function.
+      (setq completion-in-region-function
+            (lambda (&rest args)
+              (apply (if vertico-mode
+                         #'consult-completion-in-region
+                       #'completion--in-region)
+                     args)))
       :bind (("C-s" . consult-line)
              ("C-r" . consult-line)
              ("C-c g" . consult-git-grep)
@@ -1029,6 +1038,8 @@
   (use-package eglot
     :after rust-mode
     :hook (rust-mode . eglot-ensure)
+    :bind
+    (("TAB" . completion-at-point))
     :config
     (add-to-list 'eglot-server-programs '(rust-mode . ("rust-analyzer"))))
 #+end_src
