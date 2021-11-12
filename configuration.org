@@ -457,7 +457,7 @@
 
    #+begin_src emacs-lisp
      (use-package org
-       :pin org
+       ;; :pin org
 
        :hook (org_mode . (lambda () (org-indent-mode t)))
 
