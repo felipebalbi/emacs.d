@@ -388,13 +388,12 @@
                               (push '("function" . ?ƒ) prettify-symbols-alist)))
   #+end_src
 
-* Setup =vertico=, =consult=, =orderless=, and =marginalia=
+* Setup =vertico=, =consult=, =orderless=, =corfu=, and =marginalia=
 
   Okay, I'm a bit tired of =helm=. Let's switch over to =vertico= and
   figure out what I've been missing.
 
   #+begin_src emacs-lisp
-    ;; Borrowed from https://systemcrafters.cc/live-streams/may-21-2021/#going-up-a-directory-in-kbdfind-filekbd
     (use-package vertico
       :demand t
       :custom
@@ -440,6 +439,24 @@
       :after vertico
       :init
       (marginalia-mode t))
+
+    (use-package corfu
+      :after vertico
+      :custom
+      (corfu-cycle t)
+      :init
+      (corfu-global-mode))
+
+    (use-package emacs
+      :init
+      (setq completion-cycle-threshold 5)
+
+      (setq read-extended-command-predicate
+            #'command-completion-default-include-p)
+
+      ;; Enable indentation+completion using the TAB key.
+      ;; `completion-at-point' is often bound to M-TAB.
+      (setq tab-always-indent 'complete))
   #+end_src
 
 * Setup =doom-modeline=
@@ -1038,8 +1055,6 @@
   (use-package eglot
     :after rust-mode
     :hook (rust-mode . eglot-ensure)
-    :bind
-    (("TAB" . completion-at-point))
     :config
     (add-to-list 'eglot-server-programs '(rust-mode . ("rust-analyzer"))))
 #+end_src
