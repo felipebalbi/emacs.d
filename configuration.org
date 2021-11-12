@@ -1020,6 +1020,16 @@
       ("C-c C-c n" . cargo-process-new))
   #+end_src
 
+* Setup =eglot=
+
+#+begin_src emacs-lisp
+  (use-package eglot
+    :after rust-mode
+    :hook (rust-mode . eglot-ensure)
+    :config
+    (add-to-list 'eglot-server-programs '(rust-mode . ("rust-analyzer"))))
+#+end_src
+
 * Setup =elec-pair=
 
   #+begin_src emacs-lisp
