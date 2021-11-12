@@ -406,7 +406,10 @@
       :demand t
       :after vertico
       :custom
-      (completion-styles '(orderless)))
+      (completion-styles '(orderless))
+      (completion-category-overrides '((file (styles partial-completion))))
+      :init
+      (setq completion-category-defaults nil))
 
     (use-package consult
       :demand t
