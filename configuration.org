@@ -873,18 +873,6 @@
       (yas-global-mode))
   #+end_src
 
-* Setup =flycheck=
-
-  Install it
-
-  #+begin_src emacs-lisp
-    (use-package flycheck
-      :hook ((vue-mode python-mode) . flycheck-mode)
-      :config
-      (flycheck-add-mode 'javascript-eslint 'vue-mode)
-      (flycheck-add-mode 'python-pylint 'python-mode))
-  #+end_src
-
 * Setup =sly=
 
   I've started reading Land Of Lisp and will, therefore, play around
