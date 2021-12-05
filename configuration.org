@@ -1057,7 +1057,7 @@
 #+begin_src emacs-lisp
   (use-package eglot
     :after rust-mode
-    :hook ((rust-mode python-mode) . eglot-ensure)
+    :hook ((rust-mode python-mode latex-mode bibtex-mode) . eglot-ensure)
     :config
     (add-to-list 'eglot-server-programs '(rust-mode . ("rust-analyzer"))))
 #+end_src
