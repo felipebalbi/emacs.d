@@ -496,6 +496,9 @@
 
        :custom
        (org-directory "~/workspace/org")
+       (org-agenda-files '("~/workspace/org/"))
+       (org-agenda-skip-deadline-if-done t)
+       (org-agenda-skip-scheduled-if-done t)
        (org-return-follows-link t)
        (org-ellipsis "⤵")
        (org-src-fontify-natively t)
