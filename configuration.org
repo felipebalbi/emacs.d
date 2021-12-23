@@ -758,6 +758,8 @@
 
       ;;; Wait 5 seconds after startup
       :defer 5
+      :custom
+      (mu4e-use-fancy-chars t)
       :config
       (setq mu4e-change-filenames-when-moving t)
 
