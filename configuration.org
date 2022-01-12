@@ -484,9 +484,7 @@
 
    #+begin_src emacs-lisp
      (use-package org
-       :pin elpa
-
-       :hook (org_mode . (lambda () (org-indent-mode t)))
+       :hook (org-mode . (lambda () (org-indent-mode t)))
 
        :bind
        (("C-c l" . org-store-link)
