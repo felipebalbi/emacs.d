@@ -195,11 +195,12 @@
    I like to use =Fira Code Font= for pretty much everything.
 
    #+begin_src emacs-lisp
-     (if (or (string-equal system-type "windows-nt")
-             (string-equal system-type "darwin"))
-         (setq os-agnostic-font-family "Fira Code")
-       (setq os-agnostic-font-family "Fira Mono"))
+     ;; (if (or (string-equal system-type "windows-nt")
+     ;;         (string-equal system-type "darwin"))
+     ;;     (setq os-agnostic-font-family "Fira Code")
+     ;;   (setq os-agnostic-font-family "Fira Code"))
 
+     (setq os-agnostic-font-family "Fira Code")
      (set-face-attribute 'default nil
                          :family os-agnostic-font-family
                          :height 140
