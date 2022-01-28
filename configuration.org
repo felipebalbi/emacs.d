@@ -1054,12 +1054,18 @@
       ("C-c C-c n" . cargo-process-new))
   #+end_src
 
+* Setup =qml-mode=
+
+#+begin_src emacs-lisp
+  (use-package qml-mode)
+#+end_src
+
 * Setup =eglot=
 
 #+begin_src emacs-lisp
   (use-package eglot
     :after rust-mode
-    :hook ((rust-mode python-mode latex-mode bibtex-mode) . eglot-ensure)
+    :hook ((c-mode cc-mode rust-mode python-mode latex-mode bibtex-mode) . eglot-ensure)
     :config
     (add-to-list 'eglot-server-programs '(rust-mode . ("rust-analyzer"))))
 #+end_src
