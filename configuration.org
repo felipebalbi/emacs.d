@@ -55,7 +55,7 @@
 
    #+begin_src emacs-lisp
      (setq user-full-name "Felipe Balbi"
-           user-mail-address "balbi@kernel.org"
+           user-mail-address "felipe@balbi.sh"
            calendar-latitude 60.17
            calendar-longitude 24.94
            calendar-location-name "Helsinki, FI"
