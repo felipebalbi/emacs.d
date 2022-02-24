@@ -1064,7 +1064,6 @@
 
 #+begin_src emacs-lisp
   (use-package eglot
-    :after rust-mode
     :hook ((c-mode cc-mode rust-mode python-mode latex-mode bibtex-mode) . eglot-ensure)
     :config
     (add-to-list 'eglot-server-programs '(rust-mode . ("rust-analyzer"))))
