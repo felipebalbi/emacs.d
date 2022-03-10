@@ -1046,12 +1046,17 @@
       (setq indent-tabs-mode nil)
       :custom
       (rust-format-on-save t))
-    
+
     (use-package cargo
       :after rust-mode
       :hook (rust-mode . cargo-minor-mode)
       :bind
       ("C-c C-c n" . cargo-process-new))
+
+    (use-package rustic
+      :after rust-mode
+      :config
+      (setq rustic-format-on-save t))
   #+end_src
 
 * Setup =qml-mode=
