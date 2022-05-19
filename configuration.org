@@ -444,7 +444,7 @@
       :custom
       (corfu-cycle t)
       :init
-      (corfu-global-mode))
+      (global-corfu-mode))
 
     (use-package emacs
       :init
