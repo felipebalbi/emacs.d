@@ -808,6 +808,7 @@
             '((:name "Linux ARM MSM" :query "(to:linux-arm-msm@vger.kernel.org OR cc:linux-arm-msm@vger.kernel.org) AND flag:unread AND NOT flag:trashed" :key ?m)
               (:name "Linux-USB" :query "(to:linux-usb@vger.kernel.org OR cc:linux-usb@vger.kernel.org) AND flag:unread AND NOT flag:trashed" :key ?u)
               (:name "Linux-Input" :query "(to:linux-input@vger.kernel.org OR cc:linux-input@vger.kernel.org) AND flag:unread AND NOT flag:trashed" :key ?i)
+              (:name "EDK II Devel" :query "(to:devel@edk2.groups.io OR cc:devel@edk2.groups.io) AND flag:unread AND NOT flag:trashed" :key ?e)
               (:name "Unread messages" :query "flag:unread AND NOT flag:trashed" :key ?U)
               (:name "Today's messages" :query "date:today..now" :key ?t)
               (:name "Last 7 days" :query "date:7d..now" :hide-unread t :key ?w)))
