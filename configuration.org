@@ -294,15 +294,42 @@
     (add-hook 'text-mode-hook 'turn-on-auto-fill)
   #+end_src
 
-* Setup =dracula-theme=
+* Setup =modus-themes=
 
-  The [[https://draculatheme.com/][Dracula Theme]] is very pleasing to the eyes.
+The =modus-themes= is new to emacs 28.1.
   
   #+begin_src emacs-lisp
-    (use-package dracula-theme
-      :demand t
-      :config
-      (load-theme 'dracula t))
+    (use-package modus-themes
+      :custom
+      (modus-themes-bold-constructs t)
+      (modus-themes-fringes 'subtle)
+      (modus-themes-hl-line '(accented intense))
+      (modus-themes-italic-constructs t)
+      (modus-themes-mixed-fonts t)
+      (modus-themes-mode-line '(borderless))
+      (modus-themes-org-blocks 'tinted-background)
+      (modus-themes-paren-match '(intense bold))
+      (modus-themes-prompts '(bold intense))
+      (modus-themes-region '(bg-only accented))
+      (modus-themes-scale-headings t)
+      (modus-themes-subtle-line-numbers t)
+      (modus-themes-tabs-accented t)
+
+      (modus-themes-completions
+       '((matches . (extrabold background intense))
+         (selection . (semibold accented intense))
+         (popup . (accented))))
+
+      (modus-themes-headings
+       '((1 . (rainbow overline background 1.4))
+         (2 . (rainbow background 1.3))
+         (3 . (rainbow bold 1.2))
+         (t . (semilight 1.1))))
+
+       :config
+       (load-theme 'modus-operandi t)
+
+       :bind ("<f5>" . modus-themes-toggle))
   #+end_src
 
 * Setup =geiser=
