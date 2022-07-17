@@ -527,6 +527,7 @@ The =modus-themes= is new to emacs 28.1.
        (org-agenda-skip-scheduled-if-done t)
        (org-return-follows-link t)
        (org-ellipsis "⤵")
+       (org-startup-folded t)
        (org-src-fontify-natively t)
        (org-src-tab-acts-natively t)
        (org-enforce-todo-dependencies t)
