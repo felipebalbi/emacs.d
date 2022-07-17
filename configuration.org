@@ -592,8 +592,8 @@ The =modus-themes= is new to emacs 28.1.
 
      (use-package org-bullets
        :hook (org-mode . org-bullets-mode)
-       :config
-       (setq org-hide-leading-stars t))
+       :custom
+       (org-hide-leading-stars t))
    #+end_src
 
    Configuring some useful TODO keywords
