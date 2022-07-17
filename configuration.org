@@ -516,9 +516,9 @@ The =modus-themes= is new to emacs 28.1.
 
        :bind
        (("C-c l" . org-store-link)
-	("C-c a" . org-agenda)
-	("C-c c" . org-capture)
-	("C-c b" . org-switchb))
+        ("C-c a" . org-agenda)
+        ("C-c c" . org-capture)
+        ("C-c b" . org-switchb))
 
        :custom
        (org-directory "~/workspace/org")
@@ -533,18 +533,18 @@ The =modus-themes= is new to emacs 28.1.
        (org-enforce-todo-checkbox-dependencies t)
        (org-agenda-dim-blocked-tasks t)
        (org-confirm-babel-evaluate
-	(lambda (lang body)
-	  (not (memq (intern lang) '(c shell python dot ditaa)))))
+        (lambda (lang body)
+          (not (memq (intern lang) '(c shell python dot ditaa)))))
 
        :config
        (require 'org-tempo nil t)
        (require 'ox-odt nil t)
        (require 'ox-md nil t)
        (setq org-latex-pdf-process
-	     '("latexmk -xelatex -bibtex -shell-escape -f -pdf %f"))
+             '("latexmk -xelatex -bibtex -shell-escape -f -pdf %f"))
        (setq org-latex-listings 'minted)
        (setq org-latex-minted-options
-	     '(("linenos=true")))
+             '(("linenos=true")))
        (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
        (add-to-list 'org-structure-template-alist '("cc" . "src c"))
        (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
@@ -553,42 +553,42 @@ The =modus-themes= is new to emacs 28.1.
        (add-to-list 'org-modules 'org-habit)
 
        (org-babel-do-load-languages 'org-babel-load-languages '((emacs-lisp . t)
-								(C . t)
-								(python . t)
-								(shell . t)
-								(sql . t)
-								(dot . t)))
+                                                                (C . t)
+                                                                (python . t)
+                                                                (shell . t)
+                                                                (sql . t)
+                                                                (dot . t)))
        (add-to-list 'org-latex-classes
-		    '("scrreprt" "\\documentclass[11pt]{scrreprt}"
-		      ("\\chapter{%s}" . "\\chapter*{%s}")
-		      ("\\section{%s}" . "\\section*{%s}")
-		      ("\\subsection{%s}" . "\\subsection*{%s}")
-		      ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-		      ("\\paragraph{%s}" . "\\paragraph*{%s}")
-		      ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+                    '("scrreprt" "\\documentclass[11pt]{scrreprt}"
+                      ("\\chapter{%s}" . "\\chapter*{%s}")
+                      ("\\section{%s}" . "\\section*{%s}")
+                      ("\\subsection{%s}" . "\\subsection*{%s}")
+                      ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                      ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                      ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
        (add-to-list 'org-latex-classes
-		    '("scrbook" "\\documentclass[11pt]{scrbook}"
-		      ("\\chapter{%s}" . "\\chapter*{%s}")
-		      ("\\section{%s}" . "\\section*{%s}")
-		      ("\\subsection{%s}" . "\\subsection*{%s}")
-		      ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-		      ("\\paragraph{%s}" . "\\paragraph*{%s}")
-		      ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+                    '("scrbook" "\\documentclass[11pt]{scrbook}"
+                      ("\\chapter{%s}" . "\\chapter*{%s}")
+                      ("\\section{%s}" . "\\section*{%s}")
+                      ("\\subsection{%s}" . "\\subsection*{%s}")
+                      ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                      ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                      ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
        (add-to-list 'org-latex-classes
-		    '("notes" "\\documentclass[11pt]{scrbook}"
-		      ("\\addchap{%s}" . "\\addchap{%s}")
-		      ("\\addsec{%s}" . "\\addsec{%s}")
-		      ("\\subsection*{%s}" . "\\subsection*{%s}")
-		      ("\\subsubsection*{%s}" . "\\subsubsection*{%s}")
-		      ("\\paragraph*{%s}" . "\\paragraph*{%s}")
-		      ("\\subparagraph*{%s}" . "\\subparagraph*{%s}")))
+                    '("notes" "\\documentclass[11pt]{scrbook}"
+                      ("\\addchap{%s}" . "\\addchap{%s}")
+                      ("\\addsec{%s}" . "\\addsec{%s}")
+                      ("\\subsection*{%s}" . "\\subsection*{%s}")
+                      ("\\subsubsection*{%s}" . "\\subsubsection*{%s}")
+                      ("\\paragraph*{%s}" . "\\paragraph*{%s}")
+                      ("\\subparagraph*{%s}" . "\\subparagraph*{%s}")))
        (add-to-list 'org-latex-classes
-		    '("scrartcl" "\\documentclass[11pt]{scrartcl}"
-		      ("\\section{%s}" . "\\section*{%s}")
-		      ("\\subsection{%s}" . "\\subsection*{%s}")
-		      ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-		      ("\\paragraph{%s}" . "\\paragraph*{%s}")
-		      ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+                    '("scrartcl" "\\documentclass[11pt]{scrartcl}"
+                      ("\\section{%s}" . "\\section*{%s}")
+                      ("\\subsection{%s}" . "\\subsection*{%s}")
+                      ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                      ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                      ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
 
      (use-package org-bullets
        :hook (org-mode . org-bullets-mode)
