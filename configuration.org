@@ -312,6 +312,7 @@ The =modus-themes= is new to emacs 28.1.
       (modus-themes-prompts '(bold intense))
       (modus-themes-region '(bg-only accented))
       (modus-themes-scale-headings t)
+      (modus-themes-syntax '(alt-syntax))
       (modus-themes-subtle-line-numbers t)
       (modus-themes-tabs-accented t)
 
