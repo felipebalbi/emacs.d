@@ -163,7 +163,7 @@
    And I like to highlight current line
 
    #+begin_src emacs-lisp
-     (when window-system (global-hl-line-mode))
+     (global-hl-line-mode)
    #+end_src
 
 ** Current Time
