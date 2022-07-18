@@ -294,6 +294,7 @@ The =modus-themes= is new to emacs 28.1.
   
   #+begin_src emacs-lisp
     (use-package modus-themes
+      :defer nil
       :custom
       (modus-themes-bold-constructs t)
       (modus-themes-fringes 'subtle)
