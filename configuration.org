@@ -1035,12 +1035,6 @@ The =modus-themes= is new to emacs 28.1.
       (setq rustic-lsp-server 'rust-analyzer))
   #+end_src
 
-* Setup =qml-mode=
-
-#+begin_src emacs-lisp
-  (use-package qml-mode)
-#+end_src
-
 * Setup =eglot=
 
 #+begin_src emacs-lisp
