@@ -529,6 +529,7 @@ The =modus-themes= is new to emacs 28.1.
        (org-enforce-todo-dependencies t)
        (org-enforce-todo-checkbox-dependencies t)
        (org-agenda-dim-blocked-tasks t)
+       (org-highlight-latex-and-related '(native latex script))
        (org-confirm-babel-evaluate
         (lambda (lang body)
           (not (memq (intern lang) '(c shell python dot ditaa)))))
