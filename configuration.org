@@ -1033,7 +1033,7 @@ The =ef-themes= package is a new set of themes by Prot for emacs.
 
 #+begin_src emacs-lisp
   (use-package eglot
-    :hook ((c-mode cc-mode rust-mode python-mode latex-mode bibtex-mode) . eglot-ensure)
+    :hook ((rust-mode python-mode latex-mode bibtex-mode) . eglot-ensure)
     :config
     (add-to-list 'eglot-server-programs '(rust-mode . ("rust-analyzer"))))
 #+end_src
