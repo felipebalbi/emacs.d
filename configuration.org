@@ -643,6 +643,20 @@ The =ef-themes= package is a new set of themes by Prot for emacs.
         (denote--title-prompt)
         '("journal")))
 
+     (defun fb/denote-title-and-file (file)
+       "Given a denote FILE, produce a cons cell containing the file's
+     title and the FILE path."
+       (interactive)
+       (cons (denote--retrieve-title-value file 'org) file))
+
+     (defun fb/denote-find-file ()
+       "A utility to find a note using `completing-read'."
+       (interactive)
+       (let* ((files (denote--directory-files))
+              (title-file-alist (mapcar #'fb/denote-title-and-file files))
+              (titles (mapcar #'car title-file-alist)))
+         (find-file (cdr (assoc (completing-read "Find Note: " titles) title-file-alist)))))
+
      (use-package denote
        :custom
        (denote-directory (expand-file-name "~/workspace/org"))
@@ -654,7 +668,8 @@ The =ef-themes= package is a new set of themes by Prot for emacs.
        (denote-link-fontify-backlinks t)
 
        :bind
-       (("C-c n n" . #'denote)
+       (("C-c n f" . #'fb/denote-find-file)
+        ("C-c n n" . #'denote)
         ("C-c n N" . #'denote-type)
         ("C-c n d" . #'denote-date)
         ("C-c n t" . #'denote-template)
