@@ -636,26 +636,43 @@ The =ef-themes= package is a new set of themes by Prot for emacs.
 * Setup =denote=
 
    #+begin_src emacs-lisp
+     (defun fb/daily-exists-p ()
+       "Returns t when we already have a daily for today."
+       (let ((files (denote--directory-files))
+             (daily-regex (concat
+                           (format-time-string "%Y%m%d" (current-time))
+                           "T[0-9]\\{6\\}--[a-z0-9-]+__journal.org")))
+         (seq-filter (lambda (f) (string-match-p daily-regex f)) files)))
+
      (defun fb/denote-daily ()
        "Create a new daily."
        (interactive)
-       (denote
-        (denote--title-prompt)
-        '("journal")))
+       (let ((daily (fb/daily-exists-p)))
+         (if daily
+             (find-file (car daily))
+           (denote
+            (denote--title-prompt)
+            '("journal")))))
 
-     (defun fb/denote-title-and-file (file)
-       "Given a denote FILE, produce a cons cell containing the file's
-     title and the FILE path."
-       (interactive)
-       (cons (denote--retrieve-title-value file 'org) file))
+     ;; (defun fb/denote-title-and-file (file)
+     ;;   "Given a denote FILE, produce a cons cell containing the file's
+     ;; title and the FILE path."
+     ;;   (interactive)
+     ;;   (cons (denote--retrieve-title-value file 'org) file))
+
+     ;; (defun fb/denote-find-file ()
+     ;;   "A utility to find a note using `completing-read'."
+     ;;   (interactive)
+     ;;   (let* ((files (denote--directory-files))
+     ;;          (title-file-alist (mapcar #'fb/denote-title-and-file files))
+     ;;          (titles (mapcar #'car title-file-alist)))
+     ;;     (find-file (cdr (assoc (completing-read "Find Note: " titles) title-file-alist)))))
 
      (defun fb/denote-find-file ()
        "A utility to find a note using `completing-read'."
        (interactive)
-       (let* ((files (denote--directory-files))
-              (title-file-alist (mapcar #'fb/denote-title-and-file files))
-              (titles (mapcar #'car title-file-alist)))
-         (find-file (cdr (assoc (completing-read "Find Note: " titles) title-file-alist)))))
+       (let ((default-directory denote-directory))
+         (project-find-file)))
 
      (use-package denote
        :custom
