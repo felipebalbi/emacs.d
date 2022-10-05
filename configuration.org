@@ -1019,11 +1019,11 @@ The =ef-themes= package is a new set of themes by Prot for emacs.
 
     (use-package rustic
       :after rust-mode
-      :custom
-      (rustic-format-on-save t)
-      (rustic-lsp-client 'eglot)
-      (rustic-lsp-server 'rust-analyzer)
-      (rustic-rustfmt-config-alist '((edition . "2021"))))
+      :config
+      (setq rustic-format-on-save t)
+      (setq rustic-lsp-client 'eglot)
+      (setq rustic-lsp-server 'rust-analyzer)
+      (setq rustic-rustfmt-config-alist '((edition . "2021"))))
   #+end_src
 
 * Setup =eglot=
