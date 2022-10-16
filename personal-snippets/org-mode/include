@@ -2,4 +2,4 @@
 # name: include
 # key: <inc
 # --
-#+INCLUDE: notes/week${1:number}.org$0
+#+include: notes/week${1:number}.org$0
