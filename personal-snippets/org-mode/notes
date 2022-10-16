@@ -4,8 +4,6 @@
 # --
 #+LATEX_CLASS: scrbook
 #+LATEX_CLASS_OPTIONS: [a4paper, twoside=false]
-#+LATEX_HEADER: \usepackage{chngcntr}
-#+LATEX_HEADER: \counterwithout{figure}{chapter}
 #+LATEX_HEADER: \usepackage{amsmath}
 #+LATEX_HEADER: \usepackage{amssymb}
 #+LATEX_HEADER: \usepackage{pgfplots}
