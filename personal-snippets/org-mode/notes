@@ -14,6 +14,7 @@
 #+LATEX_HEADER: \tikzset{>=Stealth}
 #+TITLE: ${1:course} (${2:code})
 #+SUBTITLE: Course Notes
+#+EXPORT_FILE_NAME: ${3:filename}-course-notes
 #+LANGUAGE: en
 #+AUTHOR: Felipe Balbi
 #+OPTIONS: ':t ^:{} toc:t
