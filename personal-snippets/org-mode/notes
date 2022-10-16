@@ -2,7 +2,7 @@
 # name: notes
 # key: <notes
 # --
-#+LATEX_CLASS: notes
+#+LATEX_CLASS: scrbook
 #+LATEX_CLASS_OPTIONS: [a4paper, twoside=false]
 #+LATEX_HEADER: \usepackage{chngcntr}
 #+LATEX_HEADER: \counterwithout{figure}{chapter}

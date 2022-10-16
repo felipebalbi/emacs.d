@@ -565,14 +565,6 @@ The =ef-themes= package is a new set of themes by Prot for emacs.
                       ("\\paragraph{%s}" . "\\paragraph*{%s}")
                       ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
        (add-to-list 'org-latex-classes
-                    '("notes" "\\documentclass[11pt]{scrbook}"
-                      ("\\addchap{%s}" . "\\addchap{%s}")
-                      ("\\addsec{%s}" . "\\addsec{%s}")
-                      ("\\subsection*{%s}" . "\\subsection*{%s}")
-                      ("\\subsubsection*{%s}" . "\\subsubsection*{%s}")
-                      ("\\paragraph*{%s}" . "\\paragraph*{%s}")
-                      ("\\subparagraph*{%s}" . "\\subparagraph*{%s}")))
-       (add-to-list 'org-latex-classes
                     '("scrartcl" "\\documentclass[11pt]{scrartcl}"
                       ("\\section{%s}" . "\\section*{%s}")
                       ("\\subsection{%s}" . "\\subsection*{%s}")
