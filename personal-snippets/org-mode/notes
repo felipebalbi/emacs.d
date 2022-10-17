@@ -2,20 +2,20 @@
 # name: notes
 # key: <notes
 # --
-#+latex_class: scrbook
-#+latex_class_options: [a4paper, twoside=false]
-#+latex_header: \usepackage{amsmath}
-#+latex_header: \usepackage{amssymb}
-#+latex_header: \usepackage{pgfplots}
-#+latex_header: \usepackage{tikz}
-#+latex_header: \usetikzlibrary{arrows}
-#+latex_header: \usetikzlibrary {arrows.meta}
-#+latex_header: \tikzset{node distance=3cm}
-#+latex_header: \tikzset{>=Stealth}
-#+title: ${1:course} (${2:code})
-#+subtitle: Course Notes
-#+export_file_name: ${1:$(string-join (split-string (downcase yas-text) " ") "-")}-course-notes
-#+language: en
-#+author: Felipe Balbi
-#+options: ':t ^:{} toc:t
-#+include: $0notes/week1.org
+#+title:		${1:course}
+#+subtitle:		${2:code} Course Notes
+#+author:		Felipe Balbi
+#+latex_class:		scrbook
+#+latex_class_options:	[a4paper, twoside=false]
+#+latex_header:		\usepackage{amsmath}
+#+latex_header:		\usepackage{amssymb}
+#+latex_header:		\usepackage{pgfplots}
+#+latex_header:		\usepackage{tikz}
+#+latex_header:		\usetikzlibrary{arrows}
+#+latex_header:		\usetikzlibrary{arrows.meta}
+#+latex_header:		\tikzset{node distance=3cm}
+#+latex_header:		\tikzset{>=Stealth}
+#+export_file_name:	${1:$(string-join (s-split-words (downcase yas-text)) "-")}-course-notes
+#+language:		en
+#+options:		':t ^:{} toc:t
+#+include:		$0notes/week1.org
