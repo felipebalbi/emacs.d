@@ -11,8 +11,19 @@
 #+latex_header:		\usepackage{amssymb}
 #+latex_header:		\usepackage{pgfplots}
 #+latex_header:		\usepackage{tikz}
-#+latex_header:		\usetikzlibrary{arrows}
 #+latex_header:		\usetikzlibrary{arrows.meta}
+#+latex_header:		\usetikzlibrary{arrows}
+#+latex_header:		\usetikzlibrary{calc}
+#+latex_header:		\usetikzlibrary{graphs.standard}
+#+latex_header:		\usetikzlibrary{graphs}
+#+latex_header:		\usetikzlibrary{patterns.meta}
+#+latex_header:		\usetikzlibrary{patterns}
+#+latex_header:		\usetikzlibrary{positioning}
+#+latex_header:		\usetikzlibrary{shapes.geometric}
+#+latex_header:		\tikzstyle{box} = [rectangle, draw, thick, text width=5em, text centered, rounded corners, minimum height=1cm, minimum width=2cm]
+#+latex_header:		\tikzstyle{rbox} = [box, fill=red!20]
+#+latex_header:		\tikzstyle{gbox} = [box, fill=green!20]
+#+latex_header:		\tikzstyle{bbox} = [box, fill=blue!20]
 #+latex_header:		\tikzset{node distance=3cm}
 #+latex_header:		\tikzset{>=Stealth}
 #+export_file_name:	${1:$(string-join (s-split-words (downcase yas-text)) "-")}-course-notes
