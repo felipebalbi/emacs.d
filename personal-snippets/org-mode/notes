@@ -6,7 +6,7 @@
 #+subtitle:		${2:code} Course Notes
 #+author:		Felipe Balbi
 #+latex_class:		scrbook
-#+latex_class_options:	[a4paper, twoside=false]
+#+latex_class_options:	[twoside=false, openright, parskip=half, fontsize=11pt]
 #+latex_header:		\usepackage{amsmath}
 #+latex_header:		\usepackage{amssymb}
 #+latex_header:		\usepackage{pgfplots}
@@ -20,7 +20,7 @@
 #+latex_header:		\usetikzlibrary{patterns}
 #+latex_header:		\usetikzlibrary{positioning}
 #+latex_header:		\usetikzlibrary{shapes.geometric}
-#+latex_header:		\tikzstyle{box} = [rectangle, draw, thick, text width=5em, text centered, rounded corners, minimum height=1cm, minimum width=2cm]
+#+latex_header:		\tikzstyle{box} = [rectangle, draw, text centered, rounded corners, minimum height=1cm, minimum width=2cm]
 #+latex_header:		\tikzstyle{rbox} = [box, fill=red!20]
 #+latex_header:		\tikzstyle{gbox} = [box, fill=green!20]
 #+latex_header:		\tikzstyle{bbox} = [box, fill=blue!20]
