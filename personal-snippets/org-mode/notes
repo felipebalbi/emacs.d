@@ -3,7 +3,7 @@
 # key: <notes
 # --
 #+title:		${1:course}
-#+subtitle:		${2:code} Course Notes
+#+subtitle:		Course Notes (${2:code})
 #+author:		Felipe Balbi
 #+latex_class:		scrbook
 #+latex_class_options:	[twoside=false, openright, parskip=half, fontsize=11pt]
