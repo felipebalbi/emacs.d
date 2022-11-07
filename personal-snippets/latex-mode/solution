@@ -1,8 +1,8 @@
 # -*- mode: snippet -*-
 # expand-env: ((yas-indent-line 'fixed))
-# name: note
-# key: <note
+# name: solution
+# key: <sol
 # --
-\begin{note}{${1:title}}
+\begin{solution}{${1:title}}
   $0
-\end{note}
+\end{solution}

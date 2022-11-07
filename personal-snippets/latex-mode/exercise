@@ -1,7 +1,7 @@
 # -*- mode: snippet -*-
 # expand-env: ((yas-indent-line 'fixed))
 # name: exercise
-# key: <ex
+# key: <exe
 # --
 \begin{exercise}{${1:title}}{${2:label}}
   $0
