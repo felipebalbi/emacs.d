@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# expand-env: ((yas-indent-line 'fixed))
+# name: proposition
+# key: <prop
+# --
+\begin{proposition}{${1:title}}{${2:label}}
+  $0
+\end{proposition}

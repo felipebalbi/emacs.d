@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# expand-env: ((yas-indent-line 'fixed))
+# name: figure
+# key: <ifig
+# --
+\begin{figure}
+  \centering
+  \includegraphics[width=0.75\textwidth]{${1:path}}
+  \caption{${2:caption}}
+  \label{fig:${3:label}}
+\end{figure}
+$0

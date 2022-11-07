@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# expand-env: ((yas-indent-line 'fixed))
+# name: binom
+# key: binom
+# --
+\binom{${1:n}}{${2:k}}$0

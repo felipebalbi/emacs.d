@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: week
+# key: <wk
+# --
+\chapter{Week ${1:number}}
+
+  Key Concepts
+
+  \begin{itemize}
+    \item ${2:concept}
+  \end{itemize}
+
+$0

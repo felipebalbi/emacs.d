@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# expand-env: ((yas-indent-line 'fixed))
+# name: figure
+# key: <fig
+# --
+\begin{figure}
+  \centering
+  \begin{tikzpicture}
+    $0
+  \end{tikzpicture}
+  \caption{${1:caption}}
+  \label{fig:${2:label}}
+\end{figure}

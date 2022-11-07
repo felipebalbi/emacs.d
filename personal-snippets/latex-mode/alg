@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# expand-env: ((yas-indent-line 'fixed))
+# name: alg
+# key: <alg
+# --
+\begin{function}
+  \caption{${1:caption}}
+  \label{alg:${2:label}}
+\end{function}$0

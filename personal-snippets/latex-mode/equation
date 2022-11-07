@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# expand-env: ((yas-indent-line 'fixed))
+# name: equation
+# key: <eqn
+# --
+\begin{align*}
+  $0
+\end{align*}

@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# expand-env: ((yas-indent-line 'fixed))
+# name: sum
+# key: sum
+# --
+\sum_{$1}^{$2}$0

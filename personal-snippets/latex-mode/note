@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# expand-env: ((yas-indent-line 'fixed))
+# name: note
+# key: <note
+# --
+\begin{note}{${1:title}}{${2:label}}
+  $0
+\end{note}

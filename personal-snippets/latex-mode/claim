@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# expand-env: ((yas-indent-line 'fixed))
+# name: claim
+# key: <claim
+# --
+\begin{claim}{${1:title}}{${2:label}}
+  $0
+\end{claim}
