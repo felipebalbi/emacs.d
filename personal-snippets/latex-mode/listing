@@ -2,6 +2,9 @@
 # name: listing
 # key: <lst
 # --
-\begin{lstlisting}[float,label=lst:${1:label},caption=${2:caption}]
+\begin{lstlisting}[float,
+                   label=lst:${1:label},
+		   caption=${2:caption},
+		   frame=trBL]
   $0
 \end{lstlisting}
