@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
 # expand-env: ((yas-indent-line 'fixed))
 # name: frac
-# key: frac
+# key: <frac
 # --
 \frac{$1}{$2}$0
