@@ -5,5 +5,5 @@
 # --
 \begin{exercise}{${1:title}}{${2:label}}
   $0
-  \tcbsubtitle{Solution}
+  \tcbsubtitle[colback=solutionfr, colframe=solutionfr]{Solution}
 \end{exercise}
