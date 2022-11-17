@@ -1,3 +1,4 @@
+
 #+TITLE: Emacs Configuration
 
 * Early Configuration
@@ -509,6 +510,7 @@ The =ef-themes= package is a new set of themes by Prot for emacs.
        :custom
        (org-directory "~/workspace/org")
        (org-agenda-files '("~/workspace/org/"))
+       (org-id-track-globally t)
        (org-agenda-skip-deadline-if-done t)
        (org-agenda-skip-scheduled-if-done t)
        (org-return-follows-link t)
@@ -623,7 +625,82 @@ The =ef-themes= package is a new set of themes by Prot for emacs.
      (use-package ox-rst)
    #+end_src
 
-* Setup =denote=
+* Setup =org-roam=
+
+#+begin_src emacs-lisp
+  (use-package org-roam
+    :init
+    (setq org-roam-v2-ack t)
+
+    :custom
+    (org-roam-directory "~/workspace/org/")
+    (org-roam-completion-everywhere t)
+    (org-roam-completion-system 'default)
+    (org-roam-dailies-directory "daily/")
+
+    (org-roam-capture-templates
+     '(("d" "default" plain "\n\n- tags :: \n\n%?"
+        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                           "#+title: ${title}\n")
+        :unnarrowed t)
+
+       ("b" "Book " plain
+        "\n- Author: %^{Author}\n- Year: %^{Year}\n- tags :: [[id:94725604-4291-4114-93db-0d998d4c2e8a][Book]] [[id:ddc78b59-68ec-458e-a6bf-f1bbfdfac6d9][Reading]]\n\n%?"
+        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+        :unnarrowed t)
+
+       ("p" "Person " plain
+        "\n\n- tags :: [[id:0388192d-6858-4dad-b4fc-954130971423][People]]\n- Email: %^{Email}\n\n%?"
+        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+        :unnarrowed t)
+
+       ("m" "Meeting " plain
+        "\n\n- Date :: %<%Y-%m-%d>\n- Attendees :: %?\n- tags :: [[id:842F6D81-10D6-4CE3-9646-81024DD3A0BC][Meeting]]\n* Agenda\n\n-"
+        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+        :unnarrowed t)))
+
+    :bind (("C-c n l" . org-roam-buffer-toggle)
+           ("C-c n e" . org-roam-extract-subtree)
+           ("C-c n f" . org-roam-node-find)
+           ("C-c n g" . org-roam-graph)
+           ("C-c n i" . org-roam-node-insert)
+           ("C-c n c" . org-roam-capture)
+           ("C-c n r" . org-roam-ref-add)
+           ("C-c n R" . org-roam-ref-remove)
+           ("C-c n t" . org-roam-tag-add)
+           ("C-c n T" . org-roam-tag-remove)
+           ("C-c n a" . org-roam-alias-add)
+           ("C-c n A" . org-roam-alias-remove)
+           ;; Dailies
+           ("C-c n d" . org-roam-dailies-goto-date)
+           ("C-c n j" . org-roam-dailies-goto-today)
+           ("C-c n y" . org-roam-dailies-goto-yesterday))
+    :config
+    (add-to-list 'display-buffer-alist
+                 '("\\*org-roam\\*"
+                   (display-buffer-in-direction)
+                   (direction . right)
+                   (window-width . 0.5)
+                   (window-height . fit-window-to-buffer)))
+    (org-roam-db-autosync-enable))
+
+  (use-package org-roam-ui
+    :after org-roam
+    :config
+    (setq org-roam-ui-sync-theme t
+          org-roam-ui-follow t
+          org-roam-ui-update-on-save t
+          org-roam-ui-open-on-start t)
+
+    ;; normally we'd recommend hooking orui after org-roam, but since
+    ;; org-roam does not have a hookable mode anymore, you're advised to
+    ;; pick something yourself if you don't care about startup time, use:
+    ;;
+    ;; :hook (after-init . org-roam-ui-mode)
+  )
+#+end_src
+
+* COMMENT Setup =denote=
 
    #+begin_src emacs-lisp
      (defun fb/daily-exists-p ()
