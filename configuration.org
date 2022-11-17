@@ -645,17 +645,17 @@ The =ef-themes= package is a new set of themes by Prot for emacs.
         :unnarrowed t)
 
        ("b" "Book " plain
-        "\n- Author: %^{Author}\n- Year: %^{Year}\n- tags :: [[id:94725604-4291-4114-93db-0d998d4c2e8a][Book]] [[id:ddc78b59-68ec-458e-a6bf-f1bbfdfac6d9][Reading]]\n\n%?"
+        "\n- Author: %^{Author}\n- Year: %^{Year}\n- tags :: [[id:c18f7b2a-0b63-4d74-b420-c2fd997d4b93][Book]] [[id:00b5343e-e227-4cf1-b64e-c516e4151fe1][Reading]]\n\n%?"
         :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
         :unnarrowed t)
 
        ("p" "Person " plain
-        "\n\n- tags :: [[id:0388192d-6858-4dad-b4fc-954130971423][People]]\n- Email: %^{Email}\n\n%?"
+        "\n\n- tags :: [[id:55532c03-7cbd-4193-bed3-6752c37a22db][People]]\n- Email: %^{Email}\n\n%?"
         :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
         :unnarrowed t)
 
        ("m" "Meeting " plain
-        "\n\n- Date :: %<%Y-%m-%d>\n- Attendees :: %?\n- tags :: [[id:842F6D81-10D6-4CE3-9646-81024DD3A0BC][Meeting]]\n* Agenda\n\n-"
+        "\n\n- Date :: %<%Y-%m-%d>\n- Attendees :: %?\n- tags :: [[id:e6d9bbff-585a-47fd-9559-8728458faf8a][Meeting]]\n* Agenda\n\n-"
         :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
         :unnarrowed t)))
 
@@ -699,76 +699,6 @@ The =ef-themes= package is a new set of themes by Prot for emacs.
     ;; :hook (after-init . org-roam-ui-mode)
   )
 #+end_src
-
-* COMMENT Setup =denote=
-
-   #+begin_src emacs-lisp
-     (defun fb/daily-exists-p ()
-       "Returns t when we already have a daily for today."
-       (let ((files (denote--directory-files))
-             (daily-regex (concat
-                           (format-time-string "%Y%m%d" (current-time))
-                           "T[0-9]\\{6\\}--[a-z0-9-]+__journal.org")))
-         (seq-filter (lambda (f) (string-match-p daily-regex f)) files)))
-
-     (defun fb/denote-daily ()
-       "Create a new daily."
-       (interactive)
-       (let ((daily (fb/daily-exists-p)))
-         (if daily
-             (find-file (car daily))
-           (denote
-            (denote--title-prompt)
-            '("journal")))))
-
-     ;; (defun fb/denote-title-and-file (file)
-     ;;   "Given a denote FILE, produce a cons cell containing the file's
-     ;; title and the FILE path."
-     ;;   (interactive)
-     ;;   (cons (denote--retrieve-title-value file 'org) file))
-
-     ;; (defun fb/denote-find-file ()
-     ;;   "A utility to find a note using `completing-read'."
-     ;;   (interactive)
-     ;;   (let* ((files (denote--directory-files))
-     ;;          (title-file-alist (mapcar #'fb/denote-title-and-file files))
-     ;;          (titles (mapcar #'car title-file-alist)))
-     ;;     (find-file (cdr (assoc (completing-read "Find Note: " titles) title-file-alist)))))
-
-     (defun fb/denote-find-file ()
-       "A utility to find a note using `completing-read'."
-       (interactive)
-       (let ((default-directory denote-directory))
-         (project-find-file)))
-
-     (use-package denote
-       :custom
-       (denote-directory (expand-file-name "~/workspace/org"))
-       (denote-known-keywords '("emacs" "programming" "computer science" "programming language" "work"))
-       (denote-infer-keywords t)
-       (denote-sort-keywords t)
-       (denote-prompts '(title keywords))
-       (denote-date-prompt-use-org-read-date t)
-       (denote-link-fontify-backlinks t)
-
-       :bind
-       (("C-c n f" . #'fb/denote-find-file)
-        ("C-c n n" . #'denote)
-        ("C-c n N" . #'denote-type)
-        ("C-c n d" . #'denote-date)
-        ("C-c n t" . #'denote-template)
-        ("C-c n i" . #'denote-link)
-        ("C-c n I" . #'denote-add-links)
-        ("C-c n l" . #'denote-link-find-file)
-        ("C-c n b" . #'denote-link-backlinks)
-        ("C-c n r" . #'denote-rename-file)
-        ("C-c n R" . #'denote-rename-file-using-front-matter)
-        ("C-c n j" . #'fb/denote-daily)
-        :map dired-mode-map
-        ("C-c C-d C-i" . #'denote-link-dired-marked-notes)
-        ("C-c C-d C-r" . #'denote-dired-rename-marked-files)
-        ("C-c C-d C-R" . #'denote-dired-rename-marked-files-using-front-matter)))
-   #+end_src
 
 * Setup =magit=
 
