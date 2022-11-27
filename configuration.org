@@ -104,6 +104,7 @@
      (column-number-mode)
 
      (add-hook 'prog-mode-hook #'display-line-numbers-mode)
+     (add-hook 'tex-mode-hook #'display-line-numbers-mode)
    #+end_src
 
 ** Indentation
