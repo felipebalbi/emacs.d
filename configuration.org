@@ -517,7 +517,6 @@ The =modus-themes= is new to emacs 28.1.
 
        :custom
        (org-directory "~/workspace/org")
-       (org-agenda-files '("~/workspace/org/"))
        (org-id-track-globally t)
        (org-agenda-skip-deadline-if-done t)
        (org-agenda-skip-scheduled-if-done t)
