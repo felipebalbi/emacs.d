@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# expand-env: ((yas-indent-line 'fixed))
+# name: description
+# key: <desc
+# --
+\begin{description}
+  \item [$0] 
+\end{description}

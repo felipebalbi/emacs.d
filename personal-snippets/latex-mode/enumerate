@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# expand-env: ((yas-indent-line 'fixed))
+# name: enumerate
+# key: <enum
+# --
+\begin{enumerate}
+  \item $0
+\end{enumerate}

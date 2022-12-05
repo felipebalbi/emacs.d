@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# expand-env: ((yas-indent-line 'fixed))
+# name: frame
+# key: <frame
+# --
+\begin{frame}{$1}
+  $0
+\end{frame}
