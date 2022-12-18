@@ -725,6 +725,26 @@ The =modus-themes= is new to emacs 28.1.
   #+begin_src emacs-lisp
     (use-package eshell
       :bind ("C-c t" . eshell))
+
+    (defun eshell-fn-on-files (f1 f2 files)
+      (unless (null files)
+        (let ((filenames (flatten-list files)))
+          (funcall f1 (car filenames))
+          (when (cdr filenames)
+            (mapcar f2 (cdr filenames)))
+          "")))
+
+    (defun eshell/less (&rest files)
+      "Improved less functionality using `view-file'."
+      (eshell-fn-on-files 'view-file
+                          'view-file-other-window files))
+
+    (defun eshell/e (&rest files)
+      "Call `find-file' on the arguments."
+      (eshell-fn-on-files 'find-file
+                          'find-file-other-window files))
+
+    (defalias 'eshell/emacs 'eshell/e)
   #+end_src
 
 * Setup =engine-mode=
