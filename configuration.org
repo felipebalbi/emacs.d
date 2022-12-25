@@ -522,7 +522,7 @@ The =modus-themes= is new to emacs 28.1.
        (org-agenda-skip-scheduled-if-done t)
        (org-return-follows-link t)
        (org-ellipsis "⤵")
-       (org-startup-folded t)
+       (org-startup-folded 'content)
        (org-src-fontify-natively t)
        (org-src-tab-acts-natively t)
        (org-enforce-todo-dependencies t)
@@ -544,6 +544,7 @@ The =modus-themes= is new to emacs 28.1.
              '(("linenos=true")))
        (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
        (add-to-list 'org-structure-template-alist '("cc" . "src c"))
+       (add-to-list 'org-structure-template-alist '("rs" . "src rust"))
        (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
        (add-to-list 'org-structure-template-alist '("hs" . "src haskell"))
        (add-to-list 'org-structure-template-alist '("js" . "src js"))
@@ -555,6 +556,7 @@ The =modus-themes= is new to emacs 28.1.
                                                                 (shell . t)
                                                                 (sql . t)
                                                                 (dot . t)))
+
        (add-to-list 'org-latex-classes
                     '("scrreprt" "\\documentclass[11pt]{scrreprt}"
                       ("\\chapter{%s}" . "\\chapter*{%s}")
@@ -563,6 +565,7 @@ The =modus-themes= is new to emacs 28.1.
                       ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                       ("\\paragraph{%s}" . "\\paragraph*{%s}")
                       ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
        (add-to-list 'org-latex-classes
                     '("scrbook" "\\documentclass[11pt]{scrbook}"
                       ("\\chapter{%s}" . "\\chapter*{%s}")
@@ -571,6 +574,7 @@ The =modus-themes= is new to emacs 28.1.
                       ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                       ("\\paragraph{%s}" . "\\paragraph*{%s}")
                       ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
        (add-to-list 'org-latex-classes
                     '("scrartcl" "\\documentclass[11pt]{scrartcl}"
                       ("\\section{%s}" . "\\section*{%s}")
