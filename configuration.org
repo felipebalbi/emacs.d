@@ -640,7 +640,7 @@ The =modus-themes= is new to emacs 28.1.
     (setq org-roam-v2-ack t)
 
     :custom
-    (org-roam-directory "~/workspace/org/")
+    (org-roam-directory "~/workspace/org/roam/")
     (org-roam-completion-everywhere t)
     (org-roam-completion-system 'default)
     (org-roam-dailies-directory "daily/")
