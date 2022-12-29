@@ -303,7 +303,7 @@ The =modus-themes= is new to emacs 28.1.
        (modus-themes-italic-constructs t)
        (modus-themes-mixed-fonts t)
        (modus-themes-mode-line '(borderless))
-       (modus-themes-org-blocks 'tinted-background)
+       (modus-themes-org-blocks 'gray-background)
        (modus-themes-paren-match '(intense bold))
        (modus-themes-prompts '(bold intense))
        (modus-themes-region '(bg-only accented))
@@ -311,6 +311,8 @@ The =modus-themes= is new to emacs 28.1.
        (modus-themes-syntax '(alt-syntax))
        (modus-themes-subtle-line-numbers t)
        (modus-themes-tabs-accented t)
+
+       (modus-themes-to-toggle '(modus-operandi-tinted modus-vivendi-tinted))
 
        (modus-themes-completions
         '((matches . (extrabold background intense))
@@ -324,7 +326,7 @@ The =modus-themes= is new to emacs 28.1.
           (t . (semilight 1.1))))
 
        :config
-       (load-theme 'modus-operandi t)
+       (load-theme 'modus-operandi-tinted t)
 
        :bind ("<f5>" . modus-themes-toggle))
    #+end_src
