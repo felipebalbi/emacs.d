@@ -3,6 +3,6 @@
 # name: solution
 # key: <sol
 # --
-\begin{solution}{${1:title}}
+\begin{solution}{${1:title}}{${2:label}}
   $0
 \end{solution}
