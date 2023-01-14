@@ -3,7 +3,10 @@
 # name: alg
 # key: <alg
 # --
-\begin{function}
+\begin{algorithm}
+  \begin{codebox}
+    $0
+  \end{codebox}
   \caption{${1:caption}}
   \label{alg:${2:label}}
-\end{function}$0
+\end{algorithm}
