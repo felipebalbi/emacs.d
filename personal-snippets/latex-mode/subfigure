@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# expand-env: ((yas-indent-line 'fixed))
+# name: subfigure
+# key: <sfig
+# --
+\begin{figure}
+  \centering
+  \begin{subfigure}
+    \begin{tikzpicture}
+      $0
+    \end{tikzpicture}
+    \caption{${3:caption}}
+    \label{fig:${4:label}}
+  \end{subfigure}
+  \caption{${1:caption}}
+  \label{fig:${2:label}}
+\end{figure}
