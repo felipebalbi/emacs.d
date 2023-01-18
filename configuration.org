@@ -508,6 +508,13 @@ The =modus-themes= is new to emacs 28.1.
    First we will be using our local copy of org git tree:
 
    #+begin_src emacs-lisp
+     (defun fb/org-habit-find-file ()
+       "Open my personal habits file. It's always placed under
+     `org-directory' named `habit.org"
+       (interactive)
+       (let ((habit-file-name (concat (file-name-as-directory org-directory) "habit.org")))
+         (find-file habit-file-name)))
+
      (use-package org
        :hook (org-mode . (lambda () (org-indent-mode t)))
 
@@ -515,7 +522,8 @@ The =modus-themes= is new to emacs 28.1.
        (("C-c l" . org-store-link)
         ("C-c a" . org-agenda)
         ("C-c c" . org-capture)
-        ("C-c b" . org-switchb))
+        ("C-c b" . org-switchb)
+        ("C-c h" . fb/org-habit-find-file))
 
        :custom
        (org-directory "~/workspace/org")
