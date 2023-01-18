@@ -5,7 +5,7 @@
 # --
 \begin{figure}
   \centering
-  \begin{subfigure}
+  \begin{subfigure}{${5:size}\textwidth}
     \begin{tikzpicture}
       $0
     \end{tikzpicture}
