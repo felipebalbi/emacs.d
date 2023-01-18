@@ -535,6 +535,20 @@ The =modus-themes= is new to emacs 28.1.
         (lambda (lang body)
           (not (memq (intern lang) '(c shell python dot ditaa)))))
 
+       ;; Log timestamp upon completion
+       (org-log-done 'time)
+
+       ;; Priorities
+       (org-highest-priority ?A)
+       (org-lowest-priority ?E)
+       (org-default-priotiy ?E)
+
+       ;; Keywords
+       (org-todo-keywords
+        '((sequence "TODO(t)" "IN PROGRESS(p)" "|"
+                    "DONE(d)" "CANCELED(c)"
+                    "BLOCKED(b)" "AWAITING(a)")))
+
        :config
        (require 'org-tempo nil t)
        (require 'ox-odt nil t)
@@ -589,35 +603,6 @@ The =modus-themes= is new to emacs 28.1.
        :hook (org-mode . org-bullets-mode)
        :custom
        (org-hide-leading-stars t))
-   #+end_src
-
-   Configuring some useful TODO keywords
-
-   #+begin_src emacs-lisp
-     (setq org-todo-keywords
-           '((sequence "TODO(t@)" "IN PROGRESS(p@)" "|"
-                       "DONE(d@)" "CANCELED(c@)"
-                       "BLOCKED(b@)" "AWAITING(a@)")))
-   #+end_src
-
-   Track completion of a task
-
-   #+begin_src emacs-lisp
-     (setq org-log-done 'time)
-   #+end_src
-
-   Track notes into a drawer
-
-   #+begin_src emacs-lisp
-     (setq org-log-into-drawer t)
-   #+end_src
-
-   Define priorities
-
-   #+begin_src emacs-lisp
-     (setq org-highest-priority ?A
-           org-lowest-priority ?E
-           org-default-priotiy ?E)
    #+end_src
 
 ** Setup =ox-ioslide=
