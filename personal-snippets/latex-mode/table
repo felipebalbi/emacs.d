@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# expand-env: ((yas-indent-line 'fixed))
+# name: table
+# key: <tbl
+# --
+\begin{table}
+  \centering
+  \begin{tabular}{lll$0}
+    \toprule
+    \textbf{} & \textbf{} & \textbf{} \\\\
+    \midrule
+
+    \bottomrule
+  \end{tabular}
+  \caption{${2:caption}}
+  \label{tbl:${1:label}}
+\end{table}
