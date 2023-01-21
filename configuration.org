@@ -1017,6 +1017,13 @@ The =modus-themes= is new to emacs 28.1.
       :hook ((c-mode cc-mode rust-mode) . electric-pair-local-mode))
   #+end_src
 
+* Setup =nov=
+
+#+begin_src emacs-lisp
+  (use-package nov
+    :ensure t)
+#+end_src
+
 * All The Icons
 
   #+begin_src emacs-lisp
