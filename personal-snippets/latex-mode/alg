@@ -5,8 +5,8 @@
 # --
 \begin{algorithm}
   \begin{codebox}
-    $0
+    \Procname{$\proc{${2:procedure}}($0)$}
   \end{codebox}
   \caption{${1:caption}}
-  \label{alg:${2:label}}
+  \label{alg:${2:$(downcase yas-text)}}
 \end{algorithm}
