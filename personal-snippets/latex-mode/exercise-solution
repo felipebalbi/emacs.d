@@ -1,9 +1,9 @@
 # -*- mode: snippet -*-
 # expand-env: ((yas-indent-line 'fixed))
 # name: exercise-solution
-# key: <exesol
+# key: <exso
 # --
 \begin{exercise}{${1:title}}{${2:label}}
   $0
-  \tcbsubtitle[colback=solutionfr, colframe=solutionfr]{Solution}
+  \tcbsubtitle{Solution}
 \end{exercise}
