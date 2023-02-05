@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# expand-env: ((yas-indent-line 'fixed))
+# name: code
+# key: <code
+# --
+\begin{codebox}
+\Procname{$\proc{${1:procedure}}($0)$}
+\end{codebox}
