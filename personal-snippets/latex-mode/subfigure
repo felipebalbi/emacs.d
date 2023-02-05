@@ -6,11 +6,12 @@
 \begin{figure}
   \centering
   \begin{subfigure}{${5:size}\textwidth}
+    \centering
     \begin{tikzpicture}
       $0
     \end{tikzpicture}
     \caption{${3:caption}}
-    \label{fig:${4:label}}
+    \label{fig:$2-a}
   \end{subfigure}
   \caption{${1:caption}}
   \label{fig:${2:label}}
