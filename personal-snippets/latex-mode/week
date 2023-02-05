@@ -4,10 +4,15 @@
 # --
 \chapter{Week ${1:number}}
 
-  Key Concepts
+\section*{Learning Outcomes}
 
-  \begin{itemize}
-    \item ${2:concept}
-  \end{itemize}
+\begin{itemize}
+  \item ${2:concept}
+  $0
+\end{itemize}
 
-$0
+\section*{Required Reading}
+
+\begin{description}
+  \item [] 
+\end{description}
