@@ -1,0 +1,28 @@
+# -*- mode: snippet -*-
+# expand-env: ((yas-indent-line 'fixed))
+# name: recipe
+# key: <recipe
+# --
+\addchap{${1:Title}}
+\label{chap:${1:$(string-join (s-split-words (downcase yas-text)) "-")}}
+
+\section*{Ingredients}
+
+\begin{tabular}{lr}
+  \toprule
+  & Amount \\\\
+  \midrule
+  $0
+  \bottomrule
+\end{tabular}
+
+\section*{Preparation}
+
+\begin{enumerate}
+  \item 
+\end{enumerate}
+
+\section*{Cooking}
+
+\section*{Serving Suggestion}
+
