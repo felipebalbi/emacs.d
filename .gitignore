@@ -43,3 +43,5 @@ var/
 /url/
 /eln-cache/
 *.db
+.org-id-locations
+projects
