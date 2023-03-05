@@ -4,7 +4,7 @@
 # key: <recipe
 # --
 \addchap{${1:Title}}
-\label{chap:${1:$(string-join (s-split-words (downcase yas-text)) "-")}}
+\label{chap:${1:$(string-join (split-string (downcase yas-text)) "-")}}
 
 \section*{Ingredients}
 
