@@ -193,11 +193,11 @@
 
 ** Default Font Faces
 
-   I like to use =Fira Code Font= for pretty much everything.
+   I like to use =Iosevka Comfy= for pretty much everything.
 
    #+begin_src emacs-lisp
      (set-face-attribute 'default nil
-                         :font "Fira Code"
+                         :font "Iosevka Comfy"
                          :height 140
                          :weight 'regular
                          :width 'normal)
