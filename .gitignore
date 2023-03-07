@@ -45,3 +45,6 @@ var/
 *.db
 .org-id-locations
 projects
+/*.eld
+/nov-places
+/.mc-lists.el

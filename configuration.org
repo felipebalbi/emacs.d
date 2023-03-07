@@ -191,19 +191,7 @@
      (setq vc-follow-symlinks t)
    #+end_src
 
-** Default Font Faces
-
-   I like to use =Iosevka Comfy= for pretty much everything.
-
-   #+begin_src emacs-lisp
-     (set-face-attribute 'default nil
-                         :font "Iosevka Comfy"
-                         :height 140
-                         :weight 'regular
-                         :width 'normal)
-   #+end_src
-
-** Disable lockfiles
+* Disable lockfiles
 
    #+begin_src emacs-lisp
      (setq create-lockfiles nil)
@@ -265,6 +253,65 @@
           use-package-always-defer  t)
   #+end_src
 
+* Setup =fontaine=
+
+   I like to use =Iosevka Comfy= for pretty much everything.
+
+   #+begin_src emacs-lisp
+     (use-package fontaine
+       :ensure t
+       :init
+       (setq fontaine-latest-state-file
+             (locate-user-emacs-file "fontaine-latest-state.eld"))
+       (fontaine-set-preset (or (fontaine-restore-latest-preset) 'regular))
+       (add-hook 'kill-emacs-hook #'fontaine-store-latest-preset)
+       (add-hook 'modus-themes-after-load-theme-hook #'fontaine-apply-current-preset)
+       :bind
+       (("C-c f" . fontaine-set-preset)
+        ("C-c F" . fontaine-set-face-font))
+       :custom
+       (fontaine-presets
+        '((tiny
+           :default-family "Iosevka Comfy Wide Fixed"
+           :default-height 100)
+          (small
+           :default-family "Iosevka Comfy Fixed"
+           :default-height 120)
+          (regular
+           :default-height 140)
+          (medium
+           :default-height 160)
+          (large
+           :default-weight semilight
+           :default-height 180
+           :bold-weight extrabold)
+          (presentation
+           :default-weight semilight
+           :default-height 180
+           :bold-weight extrabold)
+          (jumbo
+           :default-weight semilight
+           :default-height 200
+           :bold-weight extrabold)
+          (t
+           :default-family "Iosevka Comfy"
+           :default-weight regular
+           :default-height 140
+           :fixed-pitch-family nil	       ; falls back to :default-family
+           :fixed-pitch-weight nil	       ; falls back to :default-weight
+           :fixed-pitch-height 1.0
+           :fixed-pitch-serif-family nil    ; falls back to :default-family
+           :fixed-pitch-serif-weight nil    ; falls back to :default-weight
+           :fixed-pitch-serif-height 1.0
+           :variable-pitch-family "Iosevka Comfy Duo"
+           :variable-pitch-weight nil
+           :variable-pitch-height 1.0
+           :bold-family nil		; use whatever the underlying face has
+           :bold-weight bold
+           :italic-family nil
+           :italic-slant italic
+           :line-spacing nil))))
+   #+end_src
 * Setup =PATH= variable
 
   Always set =PATH= and =MANPATH= from shell, even when initialized
