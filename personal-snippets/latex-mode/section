@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# expand-env: ((yas-indent-line 'fixed))
+# name: section
+# key: <sn
+# --
+\section{${1:Section Title}}
+
+$0

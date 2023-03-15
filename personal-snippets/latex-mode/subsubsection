@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# expand-env: ((yas-indent-line 'fixed))
+# name: subsubsection
+# key: <sssn
+# --
+\subsubsection*{${1:Subsubsection Title}}
+
+$0
