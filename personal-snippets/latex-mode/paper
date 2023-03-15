@@ -1,0 +1,43 @@
+# -*- mode: snippet -*-
+# expand-env: ((yas-indent-line 'fixed))
+# name: paper
+# key: <ppr
+# --
+\documentclass[
+  abstract,
+  twocolumn,
+  DIV=15,
+  parskip=half,
+]{scrartcl}
+
+\usepackage[
+  backend=biber,
+  style=ieee,
+  maxbibnames=99,
+]{biblatex}
+\addbibresource{references.bib}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[UKenglish]{babel}
+\usepackage{hyperref}
+\usepackage{cleveref}
+
+\author{${1:Author Name}}
+\date{${2:\\today}}
+\title{${3:Paper Title}}
+\subtitle{${4:Paper Subtitel}}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+
+$0
+
+\subsection{Results}
+
+\section{Conclusion}
+
+\printbibliography
+\end{document}

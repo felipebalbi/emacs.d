@@ -7,6 +7,6 @@
   \centering
   \includegraphics[width=0.75\textwidth]{${1:path}}
   \caption{${2:caption}}
-  \label{fig:${3:label}}
+  \label{${3:"waiting for reftex-label call..."$(unless yas-modified-p (reftex-label nil 'dont-insert))}}
 \end{figure}
 $0

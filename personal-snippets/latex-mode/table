@@ -1,17 +1,17 @@
 # -*- mode: snippet -*-
 # expand-env: ((yas-indent-line 'fixed))
 # name: table
-# key: <tbl
+# key: <tab
 # --
 \begin{table}
   \centering
   \begin{tabular}{lll$0}
     \toprule
-    \textbf{} & \textbf{} & \textbf{} \\\\
+    Column 1 & Column 2 & Column 3 \\\\
     \midrule
 
     \bottomrule
   \end{tabular}
-  \caption{${2:caption}}
-  \label{tbl:${1:label}}
+  \caption{${1:caption}}
+  \label{${2:"waiting for reftex-label call..."$(unless yas-modified-p (reftex-label nil 'dont-insert))}}
 \end{table}

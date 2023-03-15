@@ -4,7 +4,7 @@
 # key: <recipe
 # --
 \addchap{${1:Title}}
-\label{chap:${1:$(string-join (split-string (downcase yas-text)) "-")}}
+\label{${2:"waiting for reftex-label call..."$(unless yas-modified-p (reftex-label nil 'dont-insert))}}
 
 \section*{Ingredients}
 

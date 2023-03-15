@@ -14,5 +14,5 @@
     \label{fig:$2-a}
   \end{subfigure}
   \caption{${1:caption}}
-  \label{fig:${2:label}}
+  \label{${2:"waiting for reftex-label call..."$(unless yas-modified-p (reftex-label nil 'dont-insert))}}
 \end{figure}

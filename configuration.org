@@ -1052,7 +1052,7 @@ The =modus-themes= is new to emacs 28.1.
 
 #+begin_src emacs-lisp
   (use-package eglot
-    :hook ((rust-mode python-mode latex-mode bibtex-mode) . eglot-ensure)
+    :hook ((rust-mode python-mode) . eglot-ensure)
     :config
     (add-to-list 'eglot-server-programs '(rust-mode . ("rust-analyzer"))))
 #+end_src

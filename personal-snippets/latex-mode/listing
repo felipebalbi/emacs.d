@@ -6,6 +6,6 @@
   \begin{minted}[bgcolor=bg-blue-nuanced]{${1:language}}
     $0
   \end{minted}
-\caption{${2:caption}}
-\label{lst:${3:label}}
+  \caption{${2:caption}}
+  \label{lst:${3:label}}
 \end{listing}
