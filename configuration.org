@@ -344,6 +344,7 @@ pleasing to look at.
    #+begin_src emacs-lisp
      (use-package ef-themes
        :defer nil
+       :ensure t
        :custom
        (ef-themes-to-toggle '(ef-light ef-dark))
 
