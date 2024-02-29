@@ -522,21 +522,6 @@ pleasing to look at.
       (setq tab-always-indent 'complete))
   #+end_src
 
-* Setup =doom-modeline=
-
-  #+begin_src emacs-lisp
-    (use-package doom-modeline
-      :demand t
-      :hook (after-init . doom-modeline-mode)
-      :custom
-      (find-file-visit-truename t)
-      (doom-modeline-hud t)
-      (doom-modeline-icon t)
-      (doom-modeline-major-mode-icon t)
-      (doom-modeline-major-mode-color-icon t)
-      (doom-modeline-unicode-fallback t))
-  #+end_src
-
 * Setup =org-mode=
 ** Setup =org= and =org-bullets=
 
