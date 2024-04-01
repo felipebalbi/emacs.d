@@ -468,10 +468,8 @@ pleasing to look at.
       :demand t
       :after vertico
       :custom
-      (completion-styles '(orderless))
-      (completion-category-overrides '((file (styles partial-completion))))
-      :init
-      (setq completion-category-defaults nil))
+      (completion-styles '(orderless basic))
+      (completion-category-overrides '((file (styles basic partial-completion)))))
 
     (use-package consult
       :demand t
@@ -507,6 +505,10 @@ pleasing to look at.
       :after vertico
       :custom
       (corfu-cycle t)
+      (corfu-auto t)
+      (corfu-separator ?\s)
+      (corfu-quit-no-match 'separator)
+
       :init
       (global-corfu-mode))
 
