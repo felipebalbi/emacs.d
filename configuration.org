@@ -346,7 +346,7 @@ pleasing to look at.
        :defer nil
        :ensure t
        :custom
-       (ef-themes-to-toggle '(ef-elea-light ef-elea-dark))
+       (ef-themes-to-toggle '(ef-melissa-light ef-melissa-dark))
 
        (ef-themes-headings
         '((0 . (variable-pitch light 1.9))
@@ -364,7 +364,7 @@ pleasing to look at.
        (ef-themes-region '(intense no-extend neutral))
 
        :config
-       (ef-themes-select 'ef-elea-light)
+       (ef-themes-select 'ef-melissa-light)
 
        :bind ("<f5>" . ef-themes-toggle))
    #+end_src
