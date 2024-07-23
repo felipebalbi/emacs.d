@@ -538,7 +538,9 @@ pleasing to look at.
        :right-divider-width 30
        :scroll-bar-width 8
        :fringe-width 8))
-    (spacious-padding-subtle-mode-line t)
+    (spacious-padding-subtle-mode-line
+     '(:mode-line-active default
+       :mode-line-inactive window-divider))
     :init
     (spacious-padding-mode 1))
 #+end_src
