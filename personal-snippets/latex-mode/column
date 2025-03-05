@@ -5,10 +5,12 @@
 # --
 \begin{columns}
   \begin{column}{.475\textwidth}
+    \centering
     $0
   \end{column}
 
   \begin{column}{.475\textwidth}
+    \centering
     
   \end{column}
 \end{columns}
