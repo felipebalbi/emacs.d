@@ -3,6 +3,6 @@
 # name: minted
 # key: <mint
 # --
-\begin{minted}{${1:language}}
+\begin{minted}[autogobble, xleftmargin=1em]{${1:language}}
   $0
 \end{minted}
