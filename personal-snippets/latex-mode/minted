@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# expand-env: ((yas-indent-line 'fixed))
+# name: minted
+# key: <mint
+# --
+\begin{minted}{${1:language}}
+  $0
+\end{minted}
