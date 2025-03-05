@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# expand-env: ((yas-indent-line 'fixed))
+# name: block
+# key: <block
+# --
+\begin{block}{${1:title}}
+  $0
+\end{block}

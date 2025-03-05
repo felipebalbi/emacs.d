@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# expand-env: ((yas-indent-line 'fixed))
+# name: example-block
+# key: <exb
+# --
+\begin{exampleblock}{${1:title}}
+  $0
+\end{exampleblock}

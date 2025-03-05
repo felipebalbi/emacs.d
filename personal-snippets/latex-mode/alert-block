@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# expand-env: ((yas-indent-line 'fixed))
+# name: alert-block
+# key: <alb
+# --
+\begin{alertblock}{${1:title}}
+  $0
+\end{alertblock}
