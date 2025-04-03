@@ -125,6 +125,10 @@
                  (setq js-indent-level 2)
                  (setq indent-tabs-mode nil)))
 
+     (add-hook 'rust-mode-hook
+               (lambda ()
+                 (setq indent-tabs-mode nil)))
+
      (add-hook 'sgml-mode-hook
                (lambda ()
                  (setq indent-tabs-mode nil)))
