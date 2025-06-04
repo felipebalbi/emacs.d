@@ -48,3 +48,4 @@ projects
 /*.eld
 /nov-places
 /.mc-lists.el
+/tree-sitter/
