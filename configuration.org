@@ -1080,16 +1080,29 @@ pleasing to look at.
       (setq rustic-format-on-save t)
       (setq rustic-lsp-client 'eglot)
       (setq rustic-lsp-server 'rust-analyzer)
-      (setq rustic-rustfmt-config-alist '((edition . "2021"))))
+      (setq rustic-rustfmt-config-alist '((edition . "2024"))))
   #+end_src
+
+* Setup =typst-ts-mode=
+
+#+begin_src emacs-lisp
+  (use-package typst-ts-mode
+    :ensure t
+    :custom
+    (typst-ts-mode-grammar-location (expand-file-name "tree-sitter/libtree-sitter-typst.so" user-emacs-directory))
+    (typst-ts-mode-enable-raw-blocks-highlight t)
+    :config
+    (keymap-set typst-ts-mode-map "C-c C-c" #'typst-ts-tmenu))
+#+end_src
 
 * Setup =eglot=
 
 #+begin_src emacs-lisp
   (use-package eglot
-    :hook ((rust-mode python-mode) . eglot-ensure)
+    :hook ((rust-mode python-mode typst-ts-mode) . eglot-ensure)
     :config
-    (add-to-list 'eglot-server-programs '(rust-mode . ("rust-analyzer"))))
+    (add-to-list 'eglot-server-programs '(rust-mode . ("rust-analyzer")))
+    (add-to-list 'eglot-server-programs '(typst-ts-mode . ("tinymist"))))
 #+end_src
 
 * Setup =elec-pair=
