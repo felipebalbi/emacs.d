@@ -400,7 +400,7 @@ pleasing to look at.
        (ef-themes-region '(intense no-extend neutral))
 
        :config
-       (ef-themes-select 'ef-melissa-light)
+       (ef-themes-load-theme 'ef-melissa-light)
 
        :bind ("<f5>" . ef-themes-toggle))
    #+end_src
