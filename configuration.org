@@ -220,7 +220,8 @@
    only.
 
    #+begin_src emacs-lisp
-     (add-to-list 'default-frame-alist '(undecorated . t))
+     (unless (string-equal system-type "windows-nt")
+       (add-to-list 'default-frame-alist '(undecorated . t)))
      (scroll-bar-mode -1)
      (horizontal-scroll-bar-mode -1)
      (menu-bar-mode -1)
