@@ -539,17 +539,20 @@ pleasing to look at.
        :header-line-width 4
        :mode-line-width 6
        :tab-width 4
-       :right-divider-width 30
+       :right-divider-width 15
        :scroll-bar-width 8
-       :fringe-width 8))
-    (spacious-padding-subtle-mode-line
-     '(:mode-line-active default
-       :mode-line-inactive window-divider))
+       :left-fringe-width 8
+       :right-fringe-width 20))
+    (spacious-padding-subtle-frame-lines
+     '( :mode-line-active spacious-padding-line-active
+        :mode-line-inactive spacious-padding-line-inactive
+        :header-line-active spacious-padding-line-active
+        :header-line-inactive spacious-padding-line-inactive))
     :init
     (spacious-padding-mode 1))
 #+end_src
 
-Setup =org-mode=
+* Setup =org-mode=
 ** Setup =org= and =org-bullets=
 
    =org= is =emacs='s organizer package. I use it a lot and really enjoy
