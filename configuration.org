@@ -1072,7 +1072,23 @@ pleasing to look at.
     :hook ((rust-mode python-mode typst-ts-mode) . eglot-ensure)
     :config
     (add-to-list 'eglot-server-programs '(rust-mode . ("rust-analyzer")))
-    (add-to-list 'eglot-server-programs '(typst-ts-mode . ("tinymist"))))
+    (add-to-list 'eglot-server-programs '(typst-ts-mode . ("tinymist")))
+    (setq-default eglot-workspace-configuration
+                  '(:rust-analyzer
+                    (:inlayHints
+                     (:bindingModeHints          (:enable t)
+                      :closingBraceHints         (:enable t :minLines 10)
+                      :closureReturnTypeHints    (:enable "with_block")
+                      :discriminantHints         (:enable "fieldless")
+                      :expressionAdjustmentHints (:enable "reborrow")
+                      :genericParameterHints     (:lifetime (:enable t)
+                                                  :type     (:enable t)
+                                                  :const    (:enable t))
+                      :lifetimeElisionHints      (:enable "skip_trivial"
+                                                  :useParameterNames t)
+                      :parameterHints            (:enable t)
+                      :rangeExclusiveHints       (:enable t)
+                      :typeHints                 (:enable t))))))
 #+end_src
 
 * Setup =elec-pair=
