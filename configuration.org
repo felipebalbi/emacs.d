@@ -406,9 +406,7 @@ pleasing to look at.
               ielm-mode
               lisp-mode
               lisp-interaction-mode
-              scheme-mode) . enable-paredit-mode)
-      :init
-      (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode))
+              scheme-mode) . enable-paredit-mode))
   #+end_src
 
 * Setup =show-parens=
