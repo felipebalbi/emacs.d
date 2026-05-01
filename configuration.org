@@ -1070,6 +1070,8 @@ pleasing to look at.
 #+begin_src emacs-lisp
   (use-package eglot
     :hook ((rust-mode python-mode typst-ts-mode) . eglot-ensure)
+    :bind (:map eglot-mode-map
+                ("C-M-i" . eglot-momentary-inlay-hints))
     :config
     (add-to-list 'eglot-server-programs '(rust-mode . ("rust-analyzer")))
     (add-to-list 'eglot-server-programs '(typst-ts-mode . ("tinymist")))
