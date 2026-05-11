@@ -49,3 +49,5 @@ projects
 /nov-places
 /.mc-lists.el
 /tree-sitter/
+/.cache/
+/forge-database.sqlite
