@@ -866,17 +866,66 @@ pleasing to look at.
   I use =ledger-mode= for managing my finances.
 
   #+begin_src emacs-lisp
+    (defun fb/ledger-clean-buffer-on-save ()
+      "Sort and tighten the ledger buffer right before saving.
+
+    Hooked into `before-save-hook' locally by `fb/ledger-enable-autoclean'
+    when `ledger-mode' turns on, so every save leaves the buffer in
+    canonical date-sorted, whitespace-tight form."
+      (when (derived-mode-p 'ledger-mode)
+        (save-excursion
+          (ledger-mode-clean-buffer))))
+
+    (defun fb/ledger-enable-autoclean ()
+      "Enable auto-clean-on-save locally in this ledger-mode buffer."
+      (add-hook 'before-save-hook #'fb/ledger-clean-buffer-on-save nil t))
+
     (use-package ledger-mode
-      :config
-      (add-to-list 'auto-mode-alist '("\\.ledger\\'" . ledger-mode))
-      (setq ledger-clear-whole-transactions t
-            ledger-reconcile-default-commodity "€"
-            ledger-reconcile-force-window-bottom t
-            ledger-master-file "~/workspace/accounting/general.ledger"
-            ledger-reports '(("bal" "%(binary) -f %(ledger-file) bal -B")
-                             ("reg" "%(binary) -f %(ledger-file) reg")
-                             ("payee" "%(binary) -f %(ledger-file) reg @%(payee)")
-                             ("account" "%(binary) -f %(ledger-file) reg %(account)"))))
+      :mode "\\.ledger\\'"
+      :hook ((ledger-mode . ledger-flymake-enable)
+             ;; C-x C-s auto-sorts and tightens whitespace. C-c C-s
+             ;; below is still available for an on-demand clean
+             ;; without saving.
+             (ledger-mode . fb/ledger-enable-autoclean))
+      ;; C-c C-s = sort/clean on demand without saving (useful for
+      ;; previewing the sort result).
+      :bind (:map ledger-mode-map
+                  ("C-c C-s" . ledger-mode-clean-buffer))
+      :custom
+      ;; C-c C-c toggles the WHOLE transaction's cleared state instead
+      ;; of just the posting at point. Useful for the !/* pending ->
+      ;; cleared reconcile workflow.
+      (ledger-clear-whole-transactions t)
+      (ledger-reconcile-default-commodity "$")
+      (ledger-reconcile-force-window-bottom t)
+      ;; ISO 8601 dates everywhere instead of the default YYYY/MM/DD.
+      (ledger-default-date-format "%Y-%m-%d")
+      ;; Resolve the master ledger via the standard $LEDGER_FILE env
+      ;; var so the actual location lives in the shell environment,
+      ;; not in this config file.
+      (ledger-master-file (getenv "LEDGER_FILE"))
+      (ledger-reports
+       '(;; Daily validation — must exit cleanly.
+         ("validate" "%(binary) -f %(ledger-file) --strict --pedantic bal")
+         ;; Snapshots. -V re-prices commodities using pricedb.
+         ("net-worth"     "%(binary) -f %(ledger-file) bal Assets Liabilities")
+         ("net-worth -V"  "%(binary) -f %(ledger-file) -V bal Assets Liabilities")
+         ("expenses"      "%(binary) -f %(ledger-file) bal Expenses")
+         ("income"        "%(binary) -f %(ledger-file) bal Income")
+         ;; Registers.
+         ("reg"           "%(binary) -f %(ledger-file) reg")
+         ("payee"         "%(binary) -f %(ledger-file) reg @%(payee)")
+         ("account"       "%(binary) -f %(ledger-file) reg %(account)")
+         ("account -V"    "%(binary) -f %(ledger-file) -V reg %(account)")
+         ;; Period slicing.
+         ("this-month"    "%(binary) -f %(ledger-file) -p \"this month\" bal Expenses Income")
+         ("last-month"    "%(binary) -f %(ledger-file) -p \"last month\" bal Expenses Income")
+         ("ytd"           "%(binary) -f %(ledger-file) -p \"this year\" bal Expenses Income")
+         ;; Realized capital gains — FIFO lot picks, classified short vs long term.
+         ("gains"         "%(binary) -f %(ledger-file) --gain reg Income:CapitalGains")
+         ;; Generic tag query — prompts for the tag name; lists
+         ;; expenses where that tag is still pending.
+         ("tag-pending"   "%(binary) -f %(ledger-file) --limit \"tag('%(tag)')=='pending'\" bal Expenses"))))
   #+end_src
 
 * Setup =restclient=
