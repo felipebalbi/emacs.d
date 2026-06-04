@@ -1,16 +1,6 @@
 #+TITLE: Emacs Configuration
 
 * Early Configuration
-** Increase Garbage Collection Threshold
-
-   Let's increase =emacs=' garbage collector threshold and inhibit font
-   cache compression:
-
-   #+begin_src emacs-lisp
-     (setq gc-cons-threshold (* 100 1024 1024)
-           inhibit-compacting-font-caches t)
-   #+end_src
-
 ** Track Initialization Time
 
    This little snippet from [[https://www.youtube.com/channel/UCAiiOTio8Yu69c3XnR7nQBQ][System Crafters]] helps us track
@@ -215,25 +205,14 @@
 
 ** Bars, Menus, Tooltips
 
-   We really don't need bars for everything when you're using keyboard
-   only.
+   The frame chrome (menu/tool/scroll bars and undecorated frames on
+   Linux) is suppressed in =early-init.el= so the initial frame never
+   paints them. Disable =tooltip-mode= here too -- it's not a frame
+   parameter, so it lives outside =default-frame-alist=.
 
    #+begin_src emacs-lisp
-     (when (eq system-type 'gnu/linux)
-       (add-to-list 'default-frame-alist '(undecorated . t)))
-     (scroll-bar-mode -1)
-     (horizontal-scroll-bar-mode -1)
-     (menu-bar-mode -1)
-     (tool-bar-mode -1)
      (tooltip-mode -1)
    #+end_src
-
-** Setup =native-comp=
-
-    #+begin_src emacs-lisp
-      (setq native-comp-jit-compilation t)
-      (setq native-comp-async-report-warnings-errors 'silent)
-    #+end_src
 
 * Require =use-package=
 
