@@ -49,7 +49,7 @@
            calendar-location-name "Helsinki, FI"
            inhibit-startup-screen t
            make-backup-files nil)
-     (global-prettify-symbols-mode t)
+     (global-prettify-symbols-mode 1)
    #+end_src
 
 ** Windows Specific Settings
@@ -66,14 +66,15 @@
 
    Depending on the machine I am, I might need some extra
    configuration. For example, at the office I need a proxy to get
-   through to the outside world. To cope with that, I'll add an
-   optional =site-local.el= file on such machines and conditionally
-   load it.
+   through to the outside world. To cope with that, I'll load an
+   optional =<hostname>.org.gpg= file under =user-emacs-directory= if
+   one exists.
 
    #+begin_src emacs-lisp
-     (let ((filename (concat "~/.emacs.d/" (system-name) ".org.gpg")))
-       (if (file-exists-p filename)
-           (org-babel-load-file filename)))
+     (let ((file (expand-file-name (concat (system-name) ".org.gpg")
+                                   user-emacs-directory)))
+       (when (file-exists-p file)
+         (org-babel-load-file file)))
    #+end_src
 
 ** Prevent Accidentally closing =emacs=
@@ -93,6 +94,8 @@
 
      (add-hook 'prog-mode-hook #'display-line-numbers-mode)
      (add-hook 'tex-mode-hook #'display-line-numbers-mode)
+     ;; AUCTeX's LaTeX-mode is a separate major mode from the built-in tex-mode.
+     (add-hook 'LaTeX-mode-hook #'display-line-numbers-mode)
      (setq-default display-line-numbers-width-start t)
    #+end_src
 
@@ -184,7 +187,7 @@
      (setq vc-follow-symlinks t)
    #+end_src
 
-* Disable lockfiles
+** Disable lockfiles
 
    #+begin_src emacs-lisp
      (setq create-lockfiles nil)
@@ -196,11 +199,11 @@
    it a dumping ground.
 
    #+begin_src emacs-lisp
-     (unless (file-exists-p "~/.emacs.d/custom.el")
-       (with-temp-buffer (write-file "~/.emacs.d/custom.el")))
-
-     (setq custom-file "~/.emacs.d/custom.el")
-     (load custom-file)
+     (let ((file (locate-user-emacs-file "custom.el")))
+       (unless (file-exists-p file)
+         (with-temp-file file))
+       (setq custom-file file)
+       (load custom-file 'noerror))
    #+end_src
 
 ** Bars, Menus, Tooltips
@@ -344,7 +347,7 @@
            :italic-slant italic))))
    #+end_src
 
-Setup =PATH= variable
+* Setup =PATH= variable
 
   Always set =PATH= and =MANPATH= from shell, even when initialized
   from GUI helpers like =dmenu= or =Spotlight=
@@ -369,37 +372,37 @@ Setup =PATH= variable
   #+end_src
 
 * Setup =ef-themes=
- 
-The =ef-themes= package is created and maintained by Prot. Very
-pleasing to look at.
-   
-   #+begin_src emacs-lisp
-     (use-package ef-themes
-       :defer nil
-       :ensure t
-       :custom
-       (ef-themes-to-toggle '(ef-melissa-light ef-melissa-dark))
 
-       (ef-themes-headings
-        '((0 . (variable-pitch light 1.9))
-          (1 . (variable-pitch light 1.8))
-          (2 . (variable-pitch regular 1.7))
-          (3 . (variable-pitch regular 1.6))
-          (4 . (variable-pitch regular 1.5))
-          (5 . (variable-pitch 1.4))
-          (6 . (variable-pitch 1.3))
-          (7 . (variable-pitch 1.2))
-          (t . (variable-pitch 1.1))))
+  The =ef-themes= package is created and maintained by Prot. Very
+  pleasing to look at.
 
-       (ef-themes-mixed-fonts t)
-       (ef-themes-variable-pitch-ui t)
-       (ef-themes-region '(intense no-extend neutral))
+  #+begin_src emacs-lisp
+    (use-package ef-themes
+      :defer nil
+      :ensure t
+      :custom
+      (ef-themes-to-toggle '(ef-melissa-light ef-melissa-dark))
 
-       :config
-       (ef-themes-load-theme 'ef-melissa-light)
+      (ef-themes-headings
+       '((0 . (variable-pitch light 1.9))
+         (1 . (variable-pitch light 1.8))
+         (2 . (variable-pitch regular 1.7))
+         (3 . (variable-pitch regular 1.6))
+         (4 . (variable-pitch regular 1.5))
+         (5 . (variable-pitch 1.4))
+         (6 . (variable-pitch 1.3))
+         (7 . (variable-pitch 1.2))
+         (t . (variable-pitch 1.1))))
 
-       :bind ("<f5>" . ef-themes-toggle))
-   #+end_src
+      (ef-themes-mixed-fonts t)
+      (ef-themes-variable-pitch-ui t)
+      (ef-themes-region '(intense no-extend neutral))
+
+      :config
+      (ef-themes-load-theme 'ef-melissa-light)
+
+      :bind ("<f5>" . ef-themes-toggle))
+  #+end_src
 
 * Setup =geiser=
 
@@ -633,8 +636,7 @@ pleasing to look at.
        "Open my personal habits file. It's always placed under
      `org-directory' named `habit.org"
        (interactive)
-       (let ((habit-file-name (concat (file-name-as-directory org-directory) "habit.org")))
-         (find-file habit-file-name)))
+       (find-file (expand-file-name "habit.org" org-directory)))
 
      (use-package org
        :hook (org-mode . (lambda () (org-indent-mode t)))
@@ -857,31 +859,35 @@ pleasing to look at.
 
 * Setup =eshell=
 
-  Really not much here, I just need a key chord to start =eshell= at will
+  Really not much here, I just need a key chord to start =eshell= at
+  will. The =eshell/e=, =eshell/less=, =eshell/emacs= helpers live
+  inside =:config= so they're only defined once =eshell= has been
+  loaded -- otherwise they pollute the global namespace at startup.
 
   #+begin_src emacs-lisp
     (use-package eshell
-      :bind ("C-c t" . eshell))
+      :ensure nil           ; built-in
+      :bind ("C-c t" . eshell)
+      :config
+      (defun eshell-fn-on-files (f1 f2 files)
+        (unless (null files)
+          (let ((filenames (flatten-list files)))
+            (funcall f1 (car filenames))
+            (when (cdr filenames)
+              (mapcar f2 (cdr filenames)))
+            "")))
 
-    (defun eshell-fn-on-files (f1 f2 files)
-      (unless (null files)
-        (let ((filenames (flatten-list files)))
-          (funcall f1 (car filenames))
-          (when (cdr filenames)
-            (mapcar f2 (cdr filenames)))
-          "")))
+      (defun eshell/less (&rest files)
+        "Improved less functionality using `view-file'."
+        (eshell-fn-on-files 'view-file
+                            'view-file-other-window files))
 
-    (defun eshell/less (&rest files)
-      "Improved less functionality using `view-file'."
-      (eshell-fn-on-files 'view-file
-                          'view-file-other-window files))
+      (defun eshell/e (&rest files)
+        "Call `find-file' on the arguments."
+        (eshell-fn-on-files 'find-file
+                            'find-file-other-window files))
 
-    (defun eshell/e (&rest files)
-      "Call `find-file' on the arguments."
-      (eshell-fn-on-files 'find-file
-                          'find-file-other-window files))
-
-    (defalias 'eshell/emacs 'eshell/e)
+      (defalias 'eshell/emacs 'eshell/e))
   #+end_src
 
 * Setup =engine-mode=
@@ -1104,8 +1110,6 @@ pleasing to look at.
     (use-package dts-mode
       :pin elpa)
   #+end_src
-
-  #+RESULTS:
 
 * Setup =cmake-mode=
 
