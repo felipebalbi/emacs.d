@@ -35,10 +35,8 @@
    #+begin_src emacs-lisp
      (require 'package)
 
-     (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
-
      (add-to-list 'package-archives
-		  '("melpa" . "http://melpa.org/packages/"))
+		  '("melpa" . "https://melpa.org/packages/"))
      (add-to-list 'package-archives
 		  '("elpa" . "https://elpa.gnu.org/packages/"))
 
@@ -233,21 +231,17 @@
 ** Setup =native-comp=
 
     #+begin_src emacs-lisp
-      (setq native-comp-deferred-compilation t)
-      (setq native-comp-async-report-warnings-errors nil)
+      (setq native-comp-jit-compilation t)
+      (setq native-comp-async-report-warnings-errors 'silent)
     #+end_src
 
-* Install =use-package= if necessary
+* Require =use-package=
 
-  =use-package= let's me quickly and easily rebuild my configuration
-  by simply cloning this repository and opening =emacs=. The first
-  time, it will install all required packages.
+  =use-package= is built in since Emacs 29, so we only need to load it
+  at compile time. Configuration below relies on
+  =use-package-always-ensure= for third-party packages.
 
   #+begin_src emacs-lisp
-    (unless (package-installed-p 'use-package)
-      (package-refresh-contents)
-      (package-install 'use-package))
-
     (eval-when-compile
       (require 'use-package))
   #+end_src
@@ -270,8 +264,10 @@
        :init
        (setq fontaine-latest-state-file
              (locate-user-emacs-file "fontaine-latest-state.eld"))
+       ;; `fontaine-mode' persists the latest preset on every change and
+       ;; on Emacs exit -- supersedes the old manual kill-emacs-hook.
+       (fontaine-mode 1)
        (fontaine-set-preset (or (fontaine-restore-latest-preset) 'regular))
-       (add-hook 'kill-emacs-hook #'fontaine-store-latest-preset)
 
        :bind
        (("C-c f" . fontaine-set-preset)
@@ -503,6 +499,7 @@ pleasing to look at.
       (marginalia-mode t))
 
     (use-package corfu
+      :demand t
       :after vertico
       :custom
       (corfu-cycle t)
@@ -590,8 +587,12 @@ pleasing to look at.
        (org-agenda-dim-blocked-tasks t)
        (org-highlight-latex-and-related '(native latex script))
        (org-confirm-babel-evaluate
-        (lambda (lang body)
-          (not (memq (intern lang) '(c shell python dot ditaa)))))
+        (lambda (lang _body)
+          ;; Only auto-run inert graphics formatters. Anything that can
+          ;; touch the filesystem or shell out (shell, python, C, ...)
+          ;; must prompt; opening an untrusted .org file should never
+          ;; silently execute code.
+          (not (member lang '("dot" "ditaa" "plantuml")))))
 
        ;; Log timestamp upon completion
        (org-log-done 'time)
@@ -657,10 +658,13 @@ pleasing to look at.
                       ("\\paragraph{%s}" . "\\paragraph*{%s}")
                       ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
 
-     (use-package org-bullets
-       :hook (org-mode . org-bullets-mode)
+     (use-package org-modern
+       :hook ((org-mode . org-modern-mode)
+              (org-agenda-finalize . org-modern-agenda))
        :custom
-       (org-hide-leading-stars t))
+       (org-modern-star 'replace)
+       (org-modern-table-vertical 1)
+       (org-modern-hide-stars nil))
    #+end_src
 
 ** Setup =ox-ioslide=
@@ -950,7 +954,7 @@ pleasing to look at.
   Use =*.m= as default extension for octave files
 
   #+begin_src emacs-lisp
-    (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
+    (add-to-list 'auto-mode-alist '("\\.m\\'" . octave-mode))
   #+end_src
 
 * Setup =markdown-mode=
@@ -968,15 +972,12 @@ pleasing to look at.
   #+begin_src emacs-lisp
     (use-package yasnippet
       :demand t
+      :custom
+      (yas-verbosity 1)
+      (yas-wrap-around-region t)
+      (yas-snippet-dirs (list (expand-file-name "personal-snippets" user-emacs-directory)))
       :config
-      (setq yas-verbosity 1
-            yas-wrap-around-region t)
-
-      (with-eval-after-load 'yasnippet
-        (setq yas-snippet-dirs (list "~/.emacs.d/personal-snippets")))
-
-      (yas-reload-all)
-      (yas-global-mode))
+      (yas-global-mode 1))
   #+end_src
 
 * Setup =sly=
@@ -1055,11 +1056,14 @@ pleasing to look at.
       (erc-fill-static-center 20)
       (erc-default-server "irc.libera.chat")
       (erc-autojoin-channels-alist '(("libera.chat" "#emacs" "#guix" "#systemcrafters")))
-      (erc-quit-reason (lambda (s) (or s "Later...")))
-      (erc-modules
-       '(autoaway autojoin button completion image fill irccontrols keep-place
-                  list match menu move-to-prompt netsplit networks noncommands
-                  readonly ring stamp track hl-nicks)))
+      (erc-quit-reason (lambda (s) (or s "Later..."))))
+
+    ;; Add to the default `erc-modules' instead of replacing it, so
+    ;; future ERC releases can ship new modules we'll pick up
+    ;; automatically.
+    (with-eval-after-load 'erc
+      (dolist (m '(image hl-nicks))
+        (cl-pushnew m erc-modules)))
   #+end_src
 
 * Setup =scad-mode=
@@ -1090,21 +1094,23 @@ pleasing to look at.
       :config
       (setq indent-tabs-mode nil)
       :custom
-      (rust-format-on-save t))
-
-    (use-package cargo
-      :after rust-mode
-      :hook (rust-mode . cargo-minor-mode)
-      :bind
-      ("C-c C-c n" . cargo-process-new))
+      ;; Rustic owns formatting (see below). Avoid double-format races.
+      (rust-format-on-save nil))
 
     (use-package rustic
       :after rust-mode
-      :config
-      (setq rustic-format-on-save t)
-      (setq rustic-lsp-client 'eglot)
-      (setq rustic-lsp-server 'rust-analyzer)
-      (setq rustic-rustfmt-config-alist '((edition . "2024"))))
+      :custom
+      (rustic-format-on-save t)
+      (rustic-lsp-client 'eglot)
+      (rustic-lsp-server 'rust-analyzer)
+      (rustic-rustfmt-config-alist '((edition . "2024"))))
+
+    (use-package cargo
+      :after rust-mode
+      :hook ((rust-mode . cargo-minor-mode)
+             (rustic-mode . cargo-minor-mode))
+      :bind
+      ("C-c C-c n" . cargo-process-new))
   #+end_src
 
 * Setup =typst-ts-mode=
@@ -1145,7 +1151,10 @@ pleasing to look at.
 
 #+begin_src emacs-lisp
   (use-package eglot
-    :hook ((rust-mode python-mode scala-ts-mode typst-ts-mode) . eglot-ensure)
+    :hook ((rust-mode rust-ts-mode
+            python-mode python-ts-mode
+            scala-ts-mode
+            typst-ts-mode) . eglot-ensure)
     :bind (:map eglot-mode-map
                 ("C-M-i" . eglot-momentary-inlay-hints))
     :config
@@ -1220,10 +1229,5 @@ pleasing to look at.
 
    #+begin_src emacs-lisp
      (setq epg-gpg-program "/usr/bin/gpg2")
-   #+end_src
-** Reduce Garbage Collection Threshold
-
-   #+begin_src emacs-lisp
-     (setq gc-cons-threshold (* 2 1024 1024))
    #+end_src
 
