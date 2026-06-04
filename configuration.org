@@ -214,6 +214,26 @@
      (tooltip-mode -1)
    #+end_src
 
+** Built-in Quality-of-Life Modes
+
+   A handful of built-in modes that everyone eventually turns on.
+   Grouped here so they're all visible in one place.
+
+   #+begin_src emacs-lisp
+     (savehist-mode 1)              ; persist minibuffer history
+     (save-place-mode 1)            ; remember point per file
+     (recentf-mode 1)
+     (setq recentf-max-saved-items 200)
+     (global-auto-revert-mode 1)    ; reload externally-changed files
+     (setq global-auto-revert-non-file-buffers t)   ; also reload Dired
+     (repeat-mode 1)                ; repeat-keymap support
+     (when (fboundp 'pixel-scroll-precision-mode)
+       (pixel-scroll-precision-mode 1))
+     ;; Short y/n answers everywhere -- but `confirm-kill-emacs' still
+     ;; uses the long form because it's set to `yes-or-no-p' directly.
+     (setq use-short-answers t)
+   #+end_src
+
 * Require =use-package=
 
   =use-package= is built in since Emacs 29, so we only need to load it
@@ -231,6 +251,38 @@
   #+begin_src emacs-lisp
     (setq use-package-always-ensure t
           use-package-always-defer  t)
+  #+end_src
+
+* Setup =which-key=
+
+  Built in since Emacs 30. Pops up a buffer showing available bindings
+  for the prefix you just hit -- essential for a config this size.
+
+  #+begin_src emacs-lisp
+    (use-package which-key
+      :ensure nil            ; built-in
+      :demand t
+      :custom
+      (which-key-idle-delay 0.4)
+      (which-key-idle-secondary-delay 0.05)
+      :config
+      (which-key-mode 1))
+  #+end_src
+
+* Setup =gcmh=
+
+  Adaptive garbage collection: raises =gc-cons-threshold= during normal
+  activity, drops it during idle. Replaces the manual GC tuning that
+  used to live at the end of this file.
+
+  #+begin_src emacs-lisp
+    (use-package gcmh
+      :demand t
+      :custom
+      (gcmh-idle-delay 'auto)
+      (gcmh-high-cons-threshold (* 64 1024 1024))
+      :config
+      (gcmh-mode 1))
   #+end_src
 
 * Setup =fontaine=
@@ -439,7 +491,15 @@ pleasing to look at.
       :custom
       (vertico-cycle t)
       :init
-      (vertico-mode t))
+      (vertico-mode t)
+      :config
+      ;; Built-in vertico extension: backspace deletes a path component
+      ;; in find-file, and RET enters the directory under point.
+      (require 'vertico-directory)
+      :bind (:map vertico-map
+                  ("RET"   . vertico-directory-enter)
+                  ("DEL"   . vertico-directory-delete-char)
+                  ("M-DEL" . vertico-directory-delete-word)))
 
     (use-package orderless
       :demand t
@@ -465,9 +525,18 @@ pleasing to look at.
              ("C-c g" . consult-git-grep)
              ("C-c o" . consult-imenu)
              ("C-x b" . consult-buffer)
+             ("C-x p b" . consult-project-buffer)
              ("C-x C-d" . project-find-file)
              ("M-y" . consult-yank-pop)
              ("M-g M-g" . consult-goto-line)
+             ("M-X" . consult-mode-command)
+             ("M-s r" . consult-ripgrep)
+             ("M-s g" . consult-grep)
+             ("M-s f" . consult-find)
+             ("M-s L" . consult-line-multi)
+             ("M-s e" . consult-isearch-history)
+             :map flymake-mode-map
+             ("C-c ! l" . consult-flymake)
              :map minibuffer-local-map
              ("C-r" . consult-history)))
 
@@ -485,9 +554,13 @@ pleasing to look at.
       (corfu-auto t)
       (corfu-separator ?\s)
       (corfu-quit-no-match 'separator)
+      (corfu-popupinfo-delay '(0.5 . 0.2))
 
       :init
-      (global-corfu-mode))
+      (global-corfu-mode)
+      :config
+      ;; Docs in a popup next to the completion list.
+      (corfu-popupinfo-mode 1))
 
     (use-package emacs
       :init
@@ -499,6 +572,28 @@ pleasing to look at.
       ;; Enable indentation+completion using the TAB key.
       ;; `completion-at-point' is often bound to M-TAB.
       (setq tab-always-indent 'complete))
+  #+end_src
+
+* Setup =embark=, =embark-consult=, and =wgrep=
+
+  =embark= gives you act-on-candidate ("the universal context menu")
+  via =C-.= -- works in any completion buffer and on most regions of
+  text. =embark-consult= wires it into consult buffers. =wgrep= makes
+  grep buffers editable and writes the changes back to the source
+  files -- powerful with =consult-ripgrep= + =embark-export=.
+
+  #+begin_src emacs-lisp
+    (use-package embark
+      :demand t
+      :bind (("C-." . embark-act)
+             ("M-." . embark-dwim)
+             ("C-h B" . embark-bindings)))
+
+    (use-package embark-consult
+      :demand t
+      :after (embark consult))
+
+    (use-package wgrep)
   #+end_src
 
 * Setup =spacious-padding=
@@ -992,6 +1087,17 @@ pleasing to look at.
              ("C-S-c C-S-c" . mc/edit-lines)))
   #+end_src
 
+* Setup =expand-region=
+
+  Grows the region by semantic units. Pairs naturally with
+  =multiple-cursors= -- expand to the thing you want to edit, then
+  =C->= to add cursors at every other occurrence.
+
+  #+begin_src emacs-lisp
+    (use-package expand-region
+      :bind ("C-=" . er/expand-region))
+  #+end_src
+
 * Setup =dts-mode=
 
   #+begin_src emacs-lisp
@@ -1157,6 +1263,18 @@ pleasing to look at.
                       :typeHints                 (:enable t))))))
 #+end_src
 
+* Setup =eldoc-box=
+
+  Show eldoc documentation in a child frame near point instead of
+  cramming it into the echo area. Most useful with =eglot=.
+
+  #+begin_src emacs-lisp
+    (use-package eldoc-box
+      :hook (eglot-managed-mode . eldoc-box-hover-at-point-mode)
+      :init
+      (setq eldoc-echo-area-use-multiline-p nil))
+  #+end_src
+
 * Setup =elec-pair=
 
   #+begin_src emacs-lisp
@@ -1173,13 +1291,25 @@ pleasing to look at.
     :ensure t)
 #+end_src
 
-* All The Icons
+* Nerd Icons
+
+  Modern replacement for =all-the-icons=: one font (Nerd Font Mono)
+  instead of six, lighter, with better fallback. After first install
+  run =M-x nerd-icons-install-fonts= once.
 
   #+begin_src emacs-lisp
-    (use-package all-the-icons)
+    (use-package nerd-icons
+      :demand t)
 
-    (use-package all-the-icons-dired
-      :hook (dired-mode . all-the-icons-dired-mode))
+    (use-package nerd-icons-dired
+      :hook (dired-mode . nerd-icons-dired-mode))
+
+    (use-package nerd-icons-completion
+      :after marginalia
+      :config
+      (nerd-icons-completion-mode 1)
+      (add-hook 'marginalia-mode-hook
+                #'nerd-icons-completion-marginalia-setup))
   #+end_src
 
 * Outro
