@@ -963,10 +963,17 @@
 
     Hooked into `before-save-hook' locally by `fb/ledger-enable-autoclean'
     when `ledger-mode' turns on, so every save leaves the buffer in
-    canonical date-sorted, whitespace-tight form."
+    canonical date-sorted, whitespace-tight form.
+
+    Do NOT wrap this in `save-excursion': `ledger-mode-clean-buffer'
+    already restores point to the equivalent location after sorting
+    (it remembers the current line's text and the offset within the
+    transaction, then searches forward for that text post-sort).
+    `save-excursion' here would actively break that, because
+    `ledger-sort-region' uses `sort-subr', which deletes and re-inserts
+    the entire sort region — collapsing the saved marker to position 1."
       (when (derived-mode-p 'ledger-mode)
-        (save-excursion
-          (ledger-mode-clean-buffer))))
+        (ledger-mode-clean-buffer)))
 
     (defun fb/ledger-enable-autoclean ()
       "Enable auto-clean-on-save locally in this ledger-mode buffer."
