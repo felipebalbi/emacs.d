@@ -992,6 +992,12 @@
       (ledger-reconcile-force-window-bottom t)
       ;; ISO 8601 dates everywhere instead of the default YYYY/MM/DD.
       (ledger-default-date-format "%Y-%m-%d")
+      ;; Push amount alignment further right (default is 52) for
+      ;; breathing room when account names are long (e.g.,
+      ;; Assets:Retirement:401k:Fidelity:TexasInstruments:*). The
+      ;; minimum 2-space gap before the amount is hardcoded in
+      ;; ledger-post.el; this is the only knob.
+      (ledger-post-amount-alignment-column 78)
       ;; Resolve the master ledger via the standard $LEDGER_FILE env
       ;; var so the actual location lives in the shell environment,
       ;; not in this config file.
