@@ -1232,8 +1232,7 @@
 
 #+begin_src emacs-lisp
   ;; Enable scala-mode for highlighting, indentation and motion commands
-  (use-package scala-mode
-    :interpreter ("scala" . scala-mode))
+  (use-package scala-ts-mode)
 
   ;; Enable sbt mode for executing sbt commands
   (use-package sbt-mode
@@ -1262,6 +1261,7 @@
     :config
     (add-to-list 'eglot-server-programs '(rust-mode . ("rust-analyzer")))
     (add-to-list 'eglot-server-programs '(typst-ts-mode . ("tinymist")))
+    (add-to-list 'eglot-server-programs '(scala-ts-mode . ("metals")))
     (setq-default eglot-workspace-configuration
                   '(:rust-analyzer
                     (:inlayHints
