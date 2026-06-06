@@ -1010,7 +1010,10 @@
       ;; not in this config file.
       (ledger-master-file (getenv "LEDGER_FILE"))
       (ledger-reports
-       '(;; Daily validation — must exit cleanly.
+       '(
+         ;; Balance of Bank and Credit cards
+         ("balance" "%(binary) -f %(ledger-file) bal Assets Liabilities")
+         ;; Daily validation — must exit cleanly.
          ("validate" "%(binary) -f %(ledger-file) --strict --pedantic bal")
          ;; Snapshots. -V re-prices commodities using pricedb.
          ("net-worth"     "%(binary) -f %(ledger-file) bal Assets Liabilities")
