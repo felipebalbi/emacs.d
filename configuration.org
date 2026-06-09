@@ -514,6 +514,9 @@
     (use-package consult
       :demand t
       :after vertico
+      :init
+      ;; Ensure flymake-mode-map is bound before :bind below evaluates.
+      (require 'flymake)
       :config
       ;; Use `consult-completion-in-region' if Vertico is enabled.
       ;; Otherwise use the default `completion--in-region' function.
