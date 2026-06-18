@@ -1094,11 +1094,28 @@
 
   Learning me some haskell.
 
+  =eglot-ensure= is added in the [[Setup =eglot=]] block so that
+  =haskell-language-server= (installed via =ghcup=) starts
+  automatically. The process settings target =stack=, and saving a
+  buffer runs the HLS formatter (=fourmolu=).
+
   #+begin_src emacs-lisp
     (use-package haskell-mode
-      :init
-      (add-hook 'haskell-mode-hook #'interactive-haskell-mode)
-      (add-hook 'haskell-mode-hook #'haskell-indentation-mode))
+      :hook ((haskell-mode . interactive-haskell-mode)
+             (haskell-mode . haskell-indentation-mode))
+      :custom
+      (haskell-process-type 'stack-ghci)
+      (haskell-process-auto-import-loaded-modules t)
+      (haskell-process-suggest-remove-import-lines t)
+      :config
+      (defun my/haskell-eglot-format-on-save ()
+        "Enable eglot/HLS format-on-save in the current Haskell buffer."
+        (add-hook 'before-save-hook
+                  (lambda ()
+                    (when (eglot-current-server)
+                      (eglot-format-buffer)))
+                  nil t))
+      (add-hook 'haskell-mode-hook #'my/haskell-eglot-format-on-save))
   #+end_src
 
 * Setup =multiple-cursors=
@@ -1261,6 +1278,7 @@
     :hook ((rust-mode rust-ts-mode
             python-mode python-ts-mode
             scala-ts-mode
+            haskell-mode
             typst-ts-mode) . eglot-ensure)
     :bind (:map eglot-mode-map
                 ("C-M-i" . eglot-momentary-inlay-hints))
@@ -1283,7 +1301,9 @@
                                                   :useParameterNames t)
                       :parameterHints            (:enable t)
                       :rangeExclusiveHints       (:enable t)
-                      :typeHints                 (:enable t))))))
+                      :typeHints                 (:enable t)))
+                    :haskell
+                    (:formattingProvider "fourmolu"))))
 #+end_src
 
 * Setup =eldoc-box=
