@@ -938,6 +938,16 @@
       ;; :ensure nil
       :config
       (require 'smtpmail)
+      (defun fb/notmuch-search-delete ()
+        "Mark the selected thread or region deleted and remove it from the inbox."
+        (interactive)
+        (notmuch-search-tag '("+deleted" "-inbox")))
+      (defun fb/notmuch-show-delete ()
+        "Mark the current message deleted and remove it from the inbox."
+        (interactive)
+        (notmuch-show-tag '("+deleted" "-inbox")))
+      (define-key notmuch-search-mode-map (kbd "d") #'fb/notmuch-search-delete)
+      (define-key notmuch-show-mode-map (kbd "d") #'fb/notmuch-show-delete)
       (add-hook 'message-setup-hook 'mml-secure-message-sign-pgpmime)
       (setq-default message-kill-buffer-on-exit t
                     mail-specify-envelope-from t
@@ -1382,4 +1392,3 @@
    #+begin_src emacs-lisp
      (setq epg-gpg-program "/usr/bin/gpg2")
    #+end_src
-
